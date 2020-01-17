@@ -6,9 +6,14 @@ public final class Constants {
 
     // GENERAL CONSTANTS
 
+    // feeder constants
+    public static final double FEEDER_IN_SPEED = 0;
+    public static final double FEEDER_OUT_SPEED = 0;
     // intake constants
-    public static final int INTAKE_IN_SPEED = 0;
-    public static final int INTAKE_OUT_SPEED = 0;
+    public static final double INTAKE_IN_SPEED = 0;
+    public static final double INTAKE_OUT_SPEED = 0;
+    // shooter constants
+    public static final double SHOOTER_OUTTAKE_SPEED = 0;
 
 
     // HARDWARE CONSTANTS

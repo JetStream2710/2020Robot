@@ -69,19 +69,10 @@ public class Drivetrain extends SubsystemBase {
 
   
   // autonomous functions
-
-  public void shoot(){
-
-  }
-
   public void move(){
 
   }
-
-  public void shootNMove(){
-
-  }
-
+  
 
   // utility functions
 

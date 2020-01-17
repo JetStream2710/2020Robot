@@ -29,7 +29,39 @@ public class Feeder extends SubsystemBase {
     verticalVictor.setNeutralMode(NeutralMode.Brake);
 
     horizontalVictor.configVoltageCompSaturation(12);
+    verticalVictor.configVoltageCompSaturation(12);
+
+    horizontalVictor.enableVoltageCompensation(true);
     verticalVictor.enableVoltageCompensation(true);
+  }
+
+  // TODO: double check positive and negative values for forward/backwards
+  public void onAll(){
+    logger.info("onAll speed: " + Constants.FEEDER_IN_SPEED);
+    horizontalVictor.set(Constants.FEEDER_IN_SPEED);
+    verticalVictor.set(Constants.FEEDER_IN_SPEED);
+  }
+
+  public void onHorizontal(){
+    logger.info("onHorizontal speed: " + Constants.FEEDER_IN_SPEED);
+    horizontalVictor.set(Constants.FEEDER_IN_SPEED);
+  }
+
+  public void onVertical(){
+    logger.info("onVertical speed: " + Constants.FEEDER_IN_SPEED);
+    verticalVictor.set(Constants.FEEDER_IN_SPEED);
+  }
+
+  public void reverseAll(){
+    logger.info("reverseAll speed: " + Constants.FEEDER_OUT_SPEED);
+    horizontalVictor.set(Constants.FEEDER_OUT_SPEED);
+    verticalVictor.set(Constants.FEEDER_OUT_SPEED);
+  }
+
+  public void offAll(){
+    logger.info("offAll");
+    horizontalVictor.set(0);
+    verticalVictor.set(0);
   }
 
   @Override

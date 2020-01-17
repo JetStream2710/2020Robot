@@ -56,7 +56,7 @@ public class Intake extends SubsystemBase {
   }
 
   public void intakeStop(){
-    logger.info("intakeOut");
+    logger.info("intakeStop");
     victor.set(0);
   }
 
