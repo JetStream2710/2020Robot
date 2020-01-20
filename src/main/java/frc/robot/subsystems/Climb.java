@@ -7,12 +7,18 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.util.Logger;
+import frc.robot.util.MotorFactory;
 
 public class Climb extends SubsystemBase {
 
-  Logger logger = new Logger(Feeder.class.getName());
+  private static final Logger logger = new Logger(Climb.class.getName());
 
-  private WPI_TalonSRX verticalTalon;
+  private static final double EXTEND = 0.4;
+  private static final double RETRACT = 0.4;
+  private static final double MOVE = 0.4;
+
+  private WPI_TalonSRX extendTalon;
+  private WPI_TalonSRX retractTalon;
   private WPI_VictorSPX horizontalVictor;
 
   public Climb() {
@@ -20,20 +26,29 @@ public class Climb extends SubsystemBase {
 
     logger.detail("constructor");
 
-    verticalTalon = new WPI_TalonSRX(Constants.CLIMB_VERTICAL_TALON);
-    horizontalVictor = new WPI_VictorSPX(Constants.CLIMB_HORIZONTAL_VICTOR);
+    extendTalon = MotorFactory.makeTalon(Constants.CLIMB_EXTEND_TALON, "extendTalon");
+    retractTalon = MotorFactory.makeTalon(Constants.CLIMB_RETRACT_TALON, "retractTalon");
+    horizontalVictor = MotorFactory.makeVictor(Constants.CLIMB_HORIZONTAL_VICTOR, "horizontalVictor");
+  }
 
-    verticalTalon.setSafetyEnabled(false);
-    horizontalVictor.setSafetyEnabled(false);
+  public void extend(){
+    logger.info("extend");
+    extendTalon.set(EXTEND);
+  }
 
-    verticalTalon.setNeutralMode(NeutralMode.Brake);
-    horizontalVictor.setNeutralMode(NeutralMode.Brake);
+  public void retract(){
+    logger.info("retract");
+    retractTalon.set(RETRACT);
+  }
 
-    verticalTalon.configVoltageCompSaturation(12);
-    horizontalVictor.configVoltageCompSaturation(12);
+  public void moveLeft(){
+    logger.info("move left");
+    horizontalVictor.set(MOVE);
+  }
 
-    verticalTalon.enableVoltageCompensation(true);
-    horizontalVictor.enableVoltageCompensation(true);
+  public void moveRight(){
+    logger.info("move right");
+    horizontalVictor.set(-MOVE);
   }
 
   @Override

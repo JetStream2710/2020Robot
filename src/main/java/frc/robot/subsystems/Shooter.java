@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -25,6 +26,9 @@ public class Shooter extends SubsystemBase {
     // check this please
     leftSparkMax = new CANSparkMax(Constants.SHOOTER_LEFT_SPARKMAX, MotorType.kBrushless);
     rightSparkMax = new CANSparkMax(Constants.SHOOTER_RIGHT_SPARKMAX, MotorType.kBrushless);
+
+    leftSparkMax.setIdleMode(IdleMode.kBrake);
+    rightSparkMax.setIdleMode(IdleMode.kBrake);
 
     leftSparkMax.enableVoltageCompensation(12);
     rightSparkMax.enableVoltageCompensation(12);

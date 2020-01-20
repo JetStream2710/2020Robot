@@ -7,10 +7,14 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.util.Logger;
+import frc.robot.util.MotorFactory;
 
 public class Intake extends SubsystemBase {
 
-  private Logger logger = new Logger(Intake.class.getName());
+  private static final Logger logger = new Logger(Intake.class.getName());
+
+  public static final double INTAKE_IN_SPEED = 0;
+  public static final double INTAKE_OUT_SPEED = 0;
 
   private Solenoid solenoidOn;
   private Solenoid solenoidOff;
@@ -25,11 +29,7 @@ public class Intake extends SubsystemBase {
     solenoidOn = new Solenoid(Constants.PCM_NODE, Constants.INTAKE_SOLENOID_ON);
     solenoidOff = new Solenoid(Constants.PCM_NODE, Constants.INTAKE_SOLENOID_OFF);
 
-    victor = new WPI_VictorSPX(Constants.INTAKE_VICTOR);
-    victor.setSafetyEnabled(false);
-    victor.setNeutralMode(NeutralMode.Brake);
-    victor.configVoltageCompSaturation(12);
-    victor.enableVoltageCompensation(true);
+    victor = MotorFactory.makeVictor(Constants.INTAKE_VICTOR, "victor");
   }
 
   // TODO: verify solenoid values
@@ -46,13 +46,13 @@ public class Intake extends SubsystemBase {
   }
 
   public void intakeIn(){
-    logger.info("intakeIn speed: " + Constants.INTAKE_IN_SPEED);
-    victor.set(Constants.INTAKE_IN_SPEED);
+    logger.info("intakeIn speed: " + INTAKE_IN_SPEED);
+    victor.set(INTAKE_IN_SPEED);
   }
 
   public void intakeOut(){
-    logger.info("intakeOut speed: " + Constants.INTAKE_OUT_SPEED);
-    victor.set(Constants.INTAKE_OUT_SPEED);
+    logger.info("intakeOut speed: " + INTAKE_OUT_SPEED);
+    victor.set(INTAKE_OUT_SPEED);
   }
 
   public void intakeStop(){

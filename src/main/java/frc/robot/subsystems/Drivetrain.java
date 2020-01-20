@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.util.Logger;
+import frc.robot.util.MotorFactory;
 
 public class Drivetrain extends SubsystemBase {
   
@@ -29,30 +30,10 @@ public class Drivetrain extends SubsystemBase {
     logger.detail("constructor");
 
     // motors defined
-    frontLeftTalon = new WPI_TalonSRX(Constants.DRIVETRAIN_FRONT_LEFT_TALON);
-    rearLeftTalon = new WPI_TalonSRX(Constants.DRIVETRAIN_REAR_LEFT_TALON);
-    frontRightTalon = new WPI_TalonSRX(Constants.DRIVETRAIN_FRONT_RIGHT_TALON);
-    rearRightTalon = new WPI_TalonSRX(Constants.DRIVETRAIN_REAR_RIGHT_TALON);
-
-    frontLeftTalon.setSafetyEnabled(false);
-    rearLeftTalon.setSafetyEnabled(false);
-    frontRightTalon.setSafetyEnabled(false);
-    rearRightTalon.setSafetyEnabled(false);
-
-    frontLeftTalon.setNeutralMode(NeutralMode.Brake);
-    rearLeftTalon.setNeutralMode(NeutralMode.Brake);
-    frontRightTalon.setNeutralMode(NeutralMode.Brake);
-    rearRightTalon.setNeutralMode(NeutralMode.Brake);
-
-    frontLeftTalon.configVoltageCompSaturation(12);
-    rearLeftTalon.configVoltageCompSaturation(12);
-    frontRightTalon.configVoltageCompSaturation(12);
-    rearRightTalon.configVoltageCompSaturation(12);
-
-    frontLeftTalon.enableVoltageCompensation(true);
-    rearLeftTalon.enableVoltageCompensation(true);
-    frontRightTalon.enableVoltageCompensation(true);
-    rearRightTalon.enableVoltageCompensation(true);
+    frontLeftTalon = MotorFactory.makeTalon(Constants.DRIVETRAIN_FRONT_LEFT_TALON, "frontLeftTalon");
+    rearLeftTalon = MotorFactory.makeTalon(Constants.DRIVETRAIN_REAR_LEFT_TALON, "rearLeftTalon");
+    frontRightTalon = MotorFactory.makeTalon(Constants.DRIVETRAIN_FRONT_RIGHT_TALON, "frontRightTalon");
+    rearRightTalon = MotorFactory.makeTalon(Constants.DRIVETRAIN_REAR_RIGHT_TALON, "rearRightTalon");
 
     // groups defined
     leftGroup = new SpeedControllerGroup(frontLeftTalon, rearLeftTalon);
