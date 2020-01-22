@@ -1,5 +1,7 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.util.Logger;
@@ -9,10 +11,12 @@ public class DriveCommand extends CommandBase {
   private static final Logger logger = new Logger(ClimbRetract.class.getName());
 
   private final Drivetrain drivetrain;
+  private final XboxController driverController;
 
-  public DriveCommand(Drivetrain drivetrain) {
+  public DriveCommand(Drivetrain drivetrain, XboxController driverController) {
     logger.detail("constructor");
     this.drivetrain = drivetrain;
+    this.driverController = driverController;
     addRequirements(drivetrain);
   }
 
@@ -23,9 +27,9 @@ public class DriveCommand extends CommandBase {
 
   @Override
   public void execute() {
-    double moveSpeed = -1 * RobotContainer.joystick.getRawAxis(Constants.DRIVER_MOVE_AXIS);
-    double rotateSpeed = -1* RobotContainer.joystick.getRawAxis(Constants.DRIVER_ROTATE_AXIS);
-    logger.detail("execute moveSpeed: " + moveSpeed + " rotateSpeed: " rotateSpeed);
+    double moveSpeed = -1 * driverController.getY(Hand.kRight);
+    double rotateSpeed = -1* driverController.getX(Hand.kLeft);
+    logger.detail("execute moveSpeed: " + moveSpeed + " rotateSpeed: " + rotateSpeed);
     drivetrain.arcadeDrive(moveSpeed, rotateSpeed);
   }
 

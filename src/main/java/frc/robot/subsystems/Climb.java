@@ -14,7 +14,6 @@ public class Climb extends SubsystemBase {
 
   private static final double EXTEND = 0.4;
   private static final double RETRACT = 0.4;
-  private static final double MOVE = 0.4;
 
   private final WPI_TalonSRX extendTalon;
   private final WPI_TalonSRX retractTalon;
@@ -47,19 +46,9 @@ public class Climb extends SubsystemBase {
     retractTalon.set(0);
   }
 
-  public void moveLeft(){
-    logger.info("move left");
-    horizontalVictor.set(MOVE);
-  }
-
-  public void moveRight(){
-    logger.info("move right");
-    horizontalVictor.set(-MOVE);
-  }
-
-  public void moveStop(){
-    logger.info("move stop");
-    horizontalVictor.set(0);
+  public void move(double speed){
+    logger.info("move at: " + speed);
+    horizontalVictor.set(speed);
   }
 
   @Override
