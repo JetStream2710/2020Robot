@@ -1,6 +1,5 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
@@ -17,15 +16,12 @@ public class Climb extends SubsystemBase {
   private static final double RETRACT = 0.4;
   private static final double MOVE = 0.4;
 
-  private WPI_TalonSRX extendTalon;
-  private WPI_TalonSRX retractTalon;
-  private WPI_VictorSPX horizontalVictor;
+  private final WPI_TalonSRX extendTalon;
+  private final WPI_TalonSRX retractTalon;
+  private final WPI_VictorSPX horizontalVictor;
 
   public Climb() {
-    super();
-
     logger.detail("constructor");
-
     extendTalon = MotorFactory.makeTalon(Constants.CLIMB_EXTEND_TALON, "extendTalon");
     retractTalon = MotorFactory.makeTalon(Constants.CLIMB_RETRACT_TALON, "retractTalon");
     horizontalVictor = MotorFactory.makeVictor(Constants.CLIMB_HORIZONTAL_VICTOR, "horizontalVictor");
@@ -53,6 +49,5 @@ public class Climb extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
   }
 }

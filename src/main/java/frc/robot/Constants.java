@@ -38,4 +38,8 @@ public final class Constants {
     public static final int TURRET_ENCODER = 0;
     // pneumatics
     public static final int PCM_NODE = 0;
+
+    // Controller constants
+    public static final int DRIVE_CONTROLLER_PORT = 1;
+    public static final int AUX_CONTROLLER_PORT = 2;
 }
