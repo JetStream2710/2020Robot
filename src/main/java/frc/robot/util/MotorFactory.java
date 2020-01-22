@@ -1,6 +1,7 @@
 package frc.robot.util;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
@@ -12,6 +13,16 @@ public class MotorFactory {
 
     public static WPI_TalonSRX makeTalon(int id, String name){
         WPI_TalonSRX talon = new WPI_TalonSRX(id);
+        talon.setSafetyEnabled(false);
+        talon.setNeutralMode(NeutralMode.Brake);
+        talon.configVoltageCompSaturation(12);
+        talon.enableVoltageCompensation(true);   
+        logger.detail("created " + name + " talon with " + id);
+        return talon;
+    }
+
+    public static WPI_TalonFX makeTalonFX(int id, String name){
+        WPI_TalonFX talon = new WPI_TalonFX(id);
         talon.setSafetyEnabled(false);
         talon.setNeutralMode(NeutralMode.Brake);
         talon.configVoltageCompSaturation(12);

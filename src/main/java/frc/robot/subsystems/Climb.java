@@ -1,6 +1,5 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
@@ -22,8 +21,6 @@ public class Climb extends SubsystemBase {
   private WPI_VictorSPX horizontalVictor;
 
   public Climb() {
-    super();
-
     logger.detail("constructor");
 
     extendTalon = MotorFactory.makeTalon(Constants.CLIMB_EXTEND_TALON, "extendTalon");
@@ -36,9 +33,19 @@ public class Climb extends SubsystemBase {
     extendTalon.set(EXTEND);
   }
 
+  public void stopExtend(){
+    logger.info("stop extend");
+    extendTalon.set(0);
+  }
+
   public void retract(){
     logger.info("retract");
     retractTalon.set(RETRACT);
+  }
+  
+  public void stopRetract(){
+    logger.info("stop retract");
+    retractTalon.set(0);
   }
 
   public void moveLeft(){
@@ -49,6 +56,11 @@ public class Climb extends SubsystemBase {
   public void moveRight(){
     logger.info("move right");
     horizontalVictor.set(-MOVE);
+  }
+
+  public void moveStop(){
+    logger.info("move stop");
+    horizontalVictor.set(0);
   }
 
   @Override

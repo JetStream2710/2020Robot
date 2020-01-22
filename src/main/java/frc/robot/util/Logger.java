@@ -19,13 +19,18 @@ public class Logger{
 
         // Subsystems
         LOG_LEVELS.put(Climb.class.getName(), Level.INFO);
+        LOG_LEVELS.put(ColorSensor.class.getName(), Level.INFO);
         LOG_LEVELS.put(ControlPanel.class.getName(), Level.INFO);
         LOG_LEVELS.put(Drivetrain.class.getName(), Level.INFO);
         LOG_LEVELS.put(Feeder.class.getName(), Level.INFO);
         LOG_LEVELS.put(Intake.class.getName(), Level.INFO);
         LOG_LEVELS.put(Shooter.class.getName(), Level.INFO);
+        LOG_LEVELS.put(NavX.class.getName(), Level.INFO);
+        LOG_LEVELS.put(Vision.class.getName(), Level.INFO);
+        LOG_LEVELS.put(Turret.class.getName(), Level.INFO);
 
-        // Autonomous Comman
+        // Autonomous Commands
+        
 
         // Commands
     }

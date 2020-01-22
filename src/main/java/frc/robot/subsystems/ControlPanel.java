@@ -20,8 +20,6 @@ public class ControlPanel extends SubsystemBase {
   private Solenoid solenoidOff;
 
   public ControlPanel() {
-    super();
-
     logger.detail("constructor");
 
     solenoidOn = new Solenoid(Constants.PCM_NODE, Constants.INTAKE_SOLENOID_ON);
@@ -34,6 +32,11 @@ public class ControlPanel extends SubsystemBase {
   public void turn(){
     logger.info("turn at " + TURN);
     turnTalon.set(TURN);
+  }
+
+  public void turnStop(){
+    logger.info("turn stopped");
+    turnTalon.set(0);
   }
 
   // TODO: check solenoid values

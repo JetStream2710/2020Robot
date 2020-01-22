@@ -12,7 +12,6 @@ public class NavX extends SubsystemBase {
   private AHRS ahrs;
 
   public NavX() {
-    super();
     logger.detail("constructor");
 
     ahrs = new AHRS(SPI.Port.kMXP);

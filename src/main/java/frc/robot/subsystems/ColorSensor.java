@@ -21,8 +21,6 @@ public class ColorSensor extends SubsystemBase {
   private final ColorSensorV3 colorSensor;
 
   public ColorSensor() {
-    super();
-    
     logger.detail("constructor");
 
     colorSensor = new ColorSensorV3(I2C.Port.kOnboard);

@@ -19,11 +19,8 @@ public class Shooter extends SubsystemBase {
   private SpeedControllerGroup sparkMaxGroup;
 
   public Shooter() {
-    super();
-
     logger.detail("constructor");
 
-    // check this please
     leftSparkMax = new CANSparkMax(Constants.SHOOTER_LEFT_SPARKMAX, MotorType.kBrushless);
     rightSparkMax = new CANSparkMax(Constants.SHOOTER_RIGHT_SPARKMAX, MotorType.kBrushless);
 
@@ -37,13 +34,13 @@ public class Shooter extends SubsystemBase {
   }
 
   // TODO: set w specific encoder value?
-  public void shootOn(){
-    logger.info("shootOn speed: " + Constants.SHOOTER_OUTTAKE_SPEED);    
+  public void on(){
+    logger.info("on speed: " + Constants.SHOOTER_OUTTAKE_SPEED);    
     sparkMaxGroup.set(Constants.SHOOTER_OUTTAKE_SPEED);
   }
 
-  public void shootOff(){
-    logger.info("shootOff");
+  public void off(){
+    logger.info("off");
     sparkMaxGroup.stopMotor();
   }
 

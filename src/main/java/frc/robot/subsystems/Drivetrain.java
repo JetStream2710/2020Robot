@@ -1,7 +1,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -14,10 +14,10 @@ public class Drivetrain extends SubsystemBase {
   
   private Logger logger = new Logger(Drivetrain.class.getName());
 
-  private WPI_TalonSRX frontLeftTalon;
-  private WPI_TalonSRX rearLeftTalon;
-  private WPI_TalonSRX frontRightTalon;
-  private WPI_TalonSRX rearRightTalon;
+  private WPI_TalonFX frontLeftTalon;
+  private WPI_TalonFX rearLeftTalon;
+  private WPI_TalonFX frontRightTalon;
+  private WPI_TalonFX rearRightTalon;
 
   private SpeedControllerGroup leftGroup;
   private SpeedControllerGroup rightGroup;
@@ -30,10 +30,10 @@ public class Drivetrain extends SubsystemBase {
     logger.detail("constructor");
 
     // motors defined
-    frontLeftTalon = MotorFactory.makeTalon(Constants.DRIVETRAIN_FRONT_LEFT_TALON, "frontLeftTalon");
-    rearLeftTalon = MotorFactory.makeTalon(Constants.DRIVETRAIN_REAR_LEFT_TALON, "rearLeftTalon");
-    frontRightTalon = MotorFactory.makeTalon(Constants.DRIVETRAIN_FRONT_RIGHT_TALON, "frontRightTalon");
-    rearRightTalon = MotorFactory.makeTalon(Constants.DRIVETRAIN_REAR_RIGHT_TALON, "rearRightTalon");
+    frontLeftTalon = MotorFactory.makeTalonFX(Constants.DRIVETRAIN_FRONT_LEFT_TALON, "frontLeftTalon");
+    rearLeftTalon = MotorFactory.makeTalonFX(Constants.DRIVETRAIN_REAR_LEFT_TALON, "rearLeftTalon");
+    frontRightTalon = MotorFactory.makeTalonFX(Constants.DRIVETRAIN_FRONT_RIGHT_TALON, "frontRightTalon");
+    rearRightTalon = MotorFactory.makeTalonFX(Constants.DRIVETRAIN_REAR_RIGHT_TALON, "rearRightTalon");
 
     // groups defined
     leftGroup = new SpeedControllerGroup(frontLeftTalon, rearLeftTalon);

@@ -1,6 +1,5 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.Solenoid;
@@ -22,8 +21,6 @@ public class Intake extends SubsystemBase {
   private WPI_VictorSPX victor;
 
   public Intake() {
-    super();
-
     logger.detail("constructor");
 
     solenoidOn = new Solenoid(Constants.PCM_NODE, Constants.INTAKE_SOLENOID_ON);
@@ -33,30 +30,30 @@ public class Intake extends SubsystemBase {
   }
 
   // TODO: verify solenoid values
-  public void intakeRaise(){
-    logger.info("intakeRaise called");
+  public void raise(){
+    logger.info("raise called");
     solenoidOn.set(false);
     solenoidOff.set(true);
   }
 
-  public void intakeLower(){
-    logger.info("intakeLower called");
+  public void lower(){
+    logger.info("lower called");
     solenoidOn.set(true);
     solenoidOff.set(false);
   }
 
-  public void intakeIn(){
-    logger.info("intakeIn speed: " + INTAKE_IN_SPEED);
+  public void on(){
+    logger.info("in speed: " + INTAKE_IN_SPEED);
     victor.set(INTAKE_IN_SPEED);
   }
 
-  public void intakeOut(){
-    logger.info("intakeOut speed: " + INTAKE_OUT_SPEED);
+  public void reverse(){
+    logger.info("out speed: " + INTAKE_OUT_SPEED);
     victor.set(INTAKE_OUT_SPEED);
   }
 
-  public void intakeStop(){
-    logger.info("intakeStop");
+  public void off(){
+    logger.info("stop");
     victor.set(0);
   }
 
