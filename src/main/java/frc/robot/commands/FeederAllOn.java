@@ -5,7 +5,6 @@ import frc.robot.subsystems.Feeder;
 import frc.robot.util.Logger;
 
 public class FeederAllOn extends CommandBase {
-
   private static final Logger logger = new Logger(FeederAllOn.class.getName());
 
   private final Feeder feeder;

@@ -1,11 +1,6 @@
 package frc.robot;
 
 public final class Constants {
-    
-    // shooter constants
-    public static final double SHOOTER_OUTTAKE_SPEED = 0;
-
-
     // HARDWARE CONSTANTS
 
     // climb hardware constants

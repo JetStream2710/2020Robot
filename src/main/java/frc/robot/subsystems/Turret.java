@@ -8,25 +8,29 @@ import frc.robot.util.Logger;
 import frc.robot.util.MotorFactory;
 
 public class Turret extends SubsystemBase {
-
   private static final Logger logger = new Logger(Turret.class.getName());
 
-  private WPI_TalonSRX talon;
+  private final WPI_TalonSRX talon;
 
   public Turret() {
     logger.detail("constructor");
-
-    talon = MotorFactory.makeTalon(Constants.TURRET_TALON, "talon");
+    talon = MotorFactory.makeTalon(Constants.TURRET_TALON, "Turret Talon");
   }
 
-  public void move(double speed){
-    logger.info("move");
+  public void move(double speed) {
     talon.set(speed);
+    logger.dashboard("turret speed", speed);
   }
 
-  public void moveStop(){
-    logger.info("moveStop");
+  public void moveStop() {
     talon.set(0);
+    logger.dashboard("turret speed", 0);
+  }
+
+  public int getPosition() {
+    int position = talon.getSelectedSensorPosition();
+    logger.dashboard("turret position", position);
+    return position;
   }
 
   @Override

@@ -58,45 +58,46 @@ public class Logger{
     this.name = name;
   }
 
-  public void detail(String s){
-    log(name, Level.DETAIL, s);
+  public void detail(String s, Object... args){
+    log(name, Level.DETAIL, s, args);
   }
 
-  public void info(String s){
-    log(name, Level.INFO, s);
+  public void info(String s, Object... args){
+    log(name, Level.INFO, s, args);
   }
 
-  public void warning(String s){
-    log(name, Level.WARNING, s);
+  public void warning(String s, Object... args){
+    log(name, Level.WARNING, s, args);
   }
 
-  public void severe(String s){
-    log(name, Level.SEVERE, s);
+  public void severe(String s, Object... args){
+    log(name, Level.SEVERE, s, args);
   }
 
-  private void log(String name, Level level, String s){
+  private void log(String name, Level level, String s, Object[] args){
     if (LOG_LEVELS.get(name).value() >= level.value()){
-      SmartDashboard.putString(level.toString(), String.format("%s: %s", name, s));
+      System.out.println(String.format("%s %s: %s", level.toString(), name, args != null && args.length > 0 ? String.format(s, args) : s));
     }
   }
 
-  public void dashboard(String label, String s){
+  public void dashboard(String label, String s, Object... args){
+    String msg = args != null && args.length > 0 ? String.format(s, args) : s;
     if (LOG_LEVELS.get(name).value() >= Level.INFO.value()){
-      System.out.println(String.format("%s %s: %s", Level.INFO.toString(), name, s));
+      System.out.println(String.format("%s %s %s: %s", Level.INFO.toString(), name, label, msg));
     }
-    SmartDashboard.putString(label, s);
+    SmartDashboard.putString(label, msg);
   }
 
-  public void dashboard(String label, int i){
+  public void dashboard(String label, int i) {
     if (LOG_LEVELS.get(name).value() >= Level.INFO.value()){
-      System.out.println(String.format("%s %s: %d", Level.INFO.toString(), name, i));
+      System.out.println(String.format("%s %s %s: %d", Level.INFO.toString(), name, label, i));
     }
     SmartDashboard.putNumber(label, i);
   }
 
-  public void dashboard(String label, double d){
+  public void dashboard(String label, double d) {
     if (LOG_LEVELS.get(name).value() >= Level.INFO.value()){
-      System.out.println(String.format("%s %s: %f", Level.INFO.toString(), name, d));
+      System.out.println(String.format("%s %s %s: %f", Level.INFO.toString(), name, label, d));
     }
     SmartDashboard.putNumber(label, d);
   }

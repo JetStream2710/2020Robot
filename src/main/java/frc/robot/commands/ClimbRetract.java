@@ -5,7 +5,6 @@ import frc.robot.subsystems.Climb;
 import frc.robot.util.Logger;
 
 public class ClimbRetract extends CommandBase {
-
   private static final Logger logger = new Logger(ClimbRetract.class.getName());
   
   private final Climb climb;
@@ -30,7 +29,7 @@ public class ClimbRetract extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     logger.info("end");
-    climb.stopRetract();
+    climb.stop();
   }
 
   @Override

@@ -5,7 +5,6 @@ import frc.robot.subsystems.ControlPanel;
 import frc.robot.util.Logger;
 
 public class ControlPanelTurn extends CommandBase {
-
   private static final Logger logger = new Logger(ControlPanelTurn.class.getName());
 
   private final ControlPanel cp;

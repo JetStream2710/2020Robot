@@ -7,16 +7,15 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.util.Logger;
 
 public class DriveCommand extends CommandBase {
-
   private static final Logger logger = new Logger(ClimbRetract.class.getName());
 
   private final Drivetrain drivetrain;
-  private final XboxController driverController;
+  private final XboxController controller;
 
-  public DriveCommand(Drivetrain drivetrain, XboxController driverController) {
+  public DriveCommand(Drivetrain drivetrain, XboxController controller) {
     logger.detail("constructor");
     this.drivetrain = drivetrain;
-    this.driverController = driverController;
+    this.controller = controller;
     addRequirements(drivetrain);
   }
 
@@ -27,9 +26,9 @@ public class DriveCommand extends CommandBase {
 
   @Override
   public void execute() {
-    double moveSpeed = -1 * driverController.getY(Hand.kRight);
-    double rotateSpeed = -1* driverController.getX(Hand.kLeft);
-    logger.detail("execute moveSpeed: " + moveSpeed + " rotateSpeed: " + rotateSpeed);
+    double moveSpeed = -1 * controller.getY(Hand.kRight);
+    double rotateSpeed = -1 * controller.getX(Hand.kLeft);
+    logger.detail("execute moveSpeed: %f  rotateSpeed: %f", moveSpeed, rotateSpeed);
     drivetrain.arcadeDrive(moveSpeed, rotateSpeed);
   }
 

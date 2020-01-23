@@ -7,7 +7,6 @@ import frc.robot.subsystems.Climb;
 import frc.robot.util.Logger;
 
 public class ClimbMove extends CommandBase {
-
   private static final Logger logger = new Logger(ClimbMove.class.getName());
 
   private final Climb climb;
@@ -28,7 +27,7 @@ public class ClimbMove extends CommandBase {
   @Override
   public void execute() {
     double speed = -1 * controller.getY(Hand.kRight);
-    logger.info("execute speed: " + speed);
+    logger.info("execute speed: ", speed);
     climb.move(speed);
      
   }

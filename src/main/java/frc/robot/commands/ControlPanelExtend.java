@@ -5,7 +5,6 @@ import frc.robot.subsystems.ControlPanel;
 import frc.robot.util.Logger;
 
 public class ControlPanelExtend extends CommandBase {
-
   private static final Logger logger = new Logger(ControlPanelExtend.class.getName());
 
   private final ControlPanel cp;

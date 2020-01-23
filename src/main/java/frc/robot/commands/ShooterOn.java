@@ -5,7 +5,6 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.util.Logger;
 
 public class ShooterOn extends CommandBase {
-
   private static final Logger logger = new Logger(ShooterOn.class.getName());
 
   private final Shooter shooter;
@@ -33,7 +32,6 @@ public class ShooterOn extends CommandBase {
     shooter.off();
   }
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;

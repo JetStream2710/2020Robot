@@ -5,7 +5,6 @@ import frc.robot.subsystems.Intake;
 import frc.robot.util.Logger;
 
 public class IntakeRaise extends CommandBase {
-
   private static final Logger logger = new Logger(IntakeRaise.class.getName());
 
   private final Intake intake;

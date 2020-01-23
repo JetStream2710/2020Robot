@@ -10,13 +10,14 @@ import frc.robot.Constants;
 import frc.robot.util.Logger;
 
 public class Shooter extends SubsystemBase {
+  private static final Logger logger = new Logger(Shooter.class.getName());
 
-  private Logger logger = new Logger(Feeder.class.getName());
+  public static final double SHOOTER_SPEED = 0.4;
 
-  private CANSparkMax leftSparkMax;
-  private CANSparkMax rightSparkMax;
+  private final CANSparkMax leftSparkMax;
+  private final CANSparkMax rightSparkMax;
 
-  private SpeedControllerGroup sparkMaxGroup;
+  private final SpeedControllerGroup sparkMaxGroup;
 
   public Shooter() {
     logger.detail("constructor");
@@ -34,14 +35,21 @@ public class Shooter extends SubsystemBase {
   }
 
   // TODO: set w specific encoder value?
-  public void on(){
-    logger.info("on speed: " + Constants.SHOOTER_OUTTAKE_SPEED);    
-    sparkMaxGroup.set(Constants.SHOOTER_OUTTAKE_SPEED);
+  public void on() {
+    sparkMaxGroup.set(SHOOTER_SPEED);
+    logger.dashboard("shooter", "on");    
   }
 
-  public void off(){
-    logger.info("off");
+  public void off() {
     sparkMaxGroup.stopMotor();
+    logger.dashboard("shooter", "off");
+  }
+
+  public double speed() {
+    // TODO: this should report the actual speed, not the last set speed
+    double speed = (leftSparkMax.get() + rightSparkMax.get()) / 2;
+    logger.dashboard("shooter speed", speed);
+    return speed;
   }
 
   @Override

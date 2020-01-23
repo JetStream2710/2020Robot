@@ -16,8 +16,10 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.NavX;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Vision;
+import frc.robot.util.Logger;
 
 public class RobotContainer {
+  private static final Logger logger = new Logger(RobotContainer.class.getName());
 
   // Motorized subsystems
   private final Drivetrain drivetrain;

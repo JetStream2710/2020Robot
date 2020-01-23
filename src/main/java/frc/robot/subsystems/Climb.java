@@ -9,7 +9,6 @@ import frc.robot.util.Logger;
 import frc.robot.util.MotorFactory;
 
 public class Climb extends SubsystemBase {
-
   private static final Logger logger = new Logger(Climb.class.getName());
 
   private static final double EXTEND = 0.4;
@@ -21,34 +20,35 @@ public class Climb extends SubsystemBase {
 
   public Climb() {
     logger.detail("constructor");
-    extendTalon = MotorFactory.makeTalon(Constants.CLIMB_EXTEND_TALON, "extendTalon");
-    retractTalon = MotorFactory.makeTalon(Constants.CLIMB_RETRACT_TALON, "retractTalon");
-    horizontalVictor = MotorFactory.makeVictor(Constants.CLIMB_HORIZONTAL_VICTOR, "horizontalVictor");
+    extendTalon = MotorFactory.makeTalon(Constants.CLIMB_EXTEND_TALON, "Climb Extend Talon");
+    retractTalon = MotorFactory.makeTalon(Constants.CLIMB_RETRACT_TALON, "Climb Retract Talon");
+    horizontalVictor = MotorFactory.makeVictor(Constants.CLIMB_HORIZONTAL_VICTOR, "Climb Horizontal Victor");
   }
 
-  public void extend(){
-    logger.info("extend");
+  public void extend() {
     extendTalon.set(EXTEND);
+    retractTalon.set(-RETRACT);
+    logger.dashboard("climb extend", EXTEND);
+    logger.dashboard("climb retract", -RETRACT);
   }
 
-  public void stopExtend(){
-    logger.info("stop extend");
-    extendTalon.set(0);
-  }
-
-  public void retract(){
-    logger.info("retract");
+  public void retract() {
+    extendTalon.set(-EXTEND);
     retractTalon.set(RETRACT);
+    logger.dashboard("climb extend", -EXTEND);
+    logger.dashboard("climb retract", RETRACT);
   }
   
-  public void stopRetract(){
-    logger.info("stop retract");
+  public void stop() {
+    extendTalon.set(0);
     retractTalon.set(0);
+    logger.dashboard("climb extend", 0);
+    logger.dashboard("climb retract", 0);
   }
 
-  public void move(double speed){
-    logger.info("move at: " + speed);
+  public void move(double speed) {
     horizontalVictor.set(speed);
+    logger.dashboard("climb move speed: %f", speed);
   }
 
   @Override
