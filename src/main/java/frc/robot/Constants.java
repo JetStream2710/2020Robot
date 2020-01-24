@@ -6,13 +6,15 @@ public final class Constants {
     // climb hardware constants
     public static final int CLIMB_EXTEND_TALON = 0;
     public static final int CLIMB_RETRACT_TALON = 0;
-    public static final int CLIMB_ENCODER = 0;
+    public static final int CLIMB_ENCODERA = 0;
+    public static final int CLIMB_ENCODERB = 0;
     public static final int CLIMB_HORIZONTAL_VICTOR = 0;
     // control panel hardware constants
     public static final int CONTROL_PANEL_SOLENOID_ON = 0;
     public static final int CONTROL_PANEL_SOLENOID_OFF = 0;
     public static final int CONTROL_PANEL_TALON = 0;
-    public static final int CONTROL_PANEL_ENCODER = 0;
+    public static final int CONTROL_PANEL_ENCODERA = 0;
+    public static final int CONTROL_PANEL_ENCODERB = 0;
     // drivetrain hardware constants
     public static final int DRIVETRAIN_FRONT_LEFT_TALON = 0;
     public static final int DRIVETRAIN_REAR_LEFT_TALON = 0;
@@ -30,7 +32,8 @@ public final class Constants {
     public static final int SHOOTER_RIGHT_SPARKMAX = 0;
     // turret hardware constants
     public static final int TURRET_TALON = 0;
-    public static final int TURRET_ENCODER = 0;
+    public static final int TURRET_ENCODERA = 0;
+    public static final int TURRET_ENCODERB = 0;
     // pneumatics
     public static final int PCM_NODE = 0;
 

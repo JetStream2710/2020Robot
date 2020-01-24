@@ -2,7 +2,9 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import com.revrobotics.EncoderType;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.util.Logger;
@@ -18,12 +20,19 @@ public class Climb extends SubsystemBase {
   private final WPI_TalonSRX retractTalon;
   private final WPI_VictorSPX horizontalVictor;
 
+  private final Encoder enc;
+
   public Climb() {
     logger.detail("constructor");
     extendTalon = MotorFactory.makeTalon(Constants.CLIMB_EXTEND_TALON, "Climb Extend Talon");
     retractTalon = MotorFactory.makeTalon(Constants.CLIMB_RETRACT_TALON, "Climb Retract Talon");
     horizontalVictor = MotorFactory.makeVictor(Constants.CLIMB_HORIZONTAL_VICTOR, "Climb Horizontal Victor");
-  }
+    // constructor: (int channelA, int channelB, boolean reverseDirection, CounterBase.EncodingType encodingType)
+    enc = new Encoder(Constants.CLIMB_ENCODERA, Constants.CLIMB_ENCODERB, false, Encoder.EncodingType.k4X);
+    enc.reset();
+    // lol why VV
+    enc.setDistancePerPulse(6*Math.PI/1024);
+    }
 
   public void extend() {
     extendTalon.set(EXTEND);
@@ -49,6 +58,32 @@ public class Climb extends SubsystemBase {
   public void move(double speed) {
     horizontalVictor.set(speed);
     logger.dashboard("climb move speed: %f", speed);
+  }
+
+  // encoder, but how does the logger work now?
+
+  public int getCount(){
+    int count = enc.get();
+    logger.dashboard("climb encoder count: %d" , count);
+    return count;
+  }
+
+  public int getRaw(){
+    int raw = enc.getRaw();
+    logger.dashboard("climb encoder raw: %d" , raw);
+    return raw;
+  }
+
+  public double getRate(){
+    double rate = enc.getRate();
+    logger.dashboard("climb encoder rate: %f" , rate);
+    return rate;
+  }
+
+  public double getDistance(){
+    double distance = enc.getDistance();
+    logger.dashboard("climb encoder distance: %f" , distance);
+    return distance;
   }
 
   @Override
