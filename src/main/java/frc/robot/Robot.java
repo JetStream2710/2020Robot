@@ -14,9 +14,9 @@ import frc.robot.util.Logger;
 public class Robot extends TimedRobot {
   private static final Logger logger = new Logger(Robot.class.getName());
 
-  private Command m_autonomousCommand;
+  private Command autonomousCommand;
 
-  private RobotContainer m_robotContainer;
+  private RobotContainer robotContainer;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -24,9 +24,10 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    logger.info("Robot Init");
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-    m_robotContainer = new RobotContainer();
+    robotContainer = new RobotContainer();
   }
 
   /**
@@ -50,6 +51,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
+    logger.info("Disabled Init");
   }
 
   @Override
@@ -61,11 +63,12 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    logger.info("Autonomous Init");
+    autonomousCommand = robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.schedule();
+    if (autonomousCommand != null) {
+      autonomousCommand.schedule();
     }
   }
 
@@ -78,14 +81,15 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    logger.info("Teleop Init");
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.cancel();
+    if (autonomousCommand != null) {
+      autonomousCommand.cancel();
     }
-    m_robotContainer.drivetrain.setCoastMode();
+    robotContainer.setCoastMode();
   }
 
   /**
@@ -97,6 +101,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testInit() {
+    logger.info("Test Init");
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
   }

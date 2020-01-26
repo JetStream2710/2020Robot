@@ -34,6 +34,23 @@ public class Logger{
 
     // Commands
     LOG_LEVELS.put(DriveCommand.class.getName(), Level.INFO);
+    LOG_LEVELS.put(ClimbExtend.class.getName(), Level.INFO);
+    LOG_LEVELS.put(ClimbMove.class.getName(), Level.INFO);
+    LOG_LEVELS.put(ClimbRetract.class.getName(), Level.INFO);
+    LOG_LEVELS.put(ControlPanelExtend.class.getName(), Level.INFO);
+    LOG_LEVELS.put(ControlPanelRetract.class.getName(), Level.INFO);
+    LOG_LEVELS.put(ControlPanelTurn.class.getName(), Level.INFO);
+    LOG_LEVELS.put(DriveCommand.class.getName(), Level.INFO);
+    LOG_LEVELS.put(FeederAllOn.class.getName(), Level.INFO);
+    LOG_LEVELS.put(FeederHorizontalOn.class.getName(), Level.INFO);
+    LOG_LEVELS.put(FeederReverse.class.getName(), Level.INFO);
+    LOG_LEVELS.put(FeederVerticalOn.class.getName(), Level.INFO);
+    LOG_LEVELS.put(IntakeLower.class.getName(), Level.INFO);
+    LOG_LEVELS.put(IntakeOn.class.getName(), Level.INFO);
+    LOG_LEVELS.put(IntakeRaise.class.getName(), Level.INFO);
+    LOG_LEVELS.put(IntakeReverse.class.getName(), Level.INFO);
+    LOG_LEVELS.put(LockTarget.class.getName(), Level.INFO);
+    LOG_LEVELS.put(ShooterOn.class.getName(), Level.INFO);
   }
 
   public enum Level{

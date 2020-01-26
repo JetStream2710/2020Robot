@@ -1,10 +1,14 @@
 package frc.robot;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.commands.ClimbMove;
 import frc.robot.commands.DriveCommand;
 import frc.robot.subsystems.Climb;
@@ -22,17 +26,17 @@ public class RobotContainer {
   private static final Logger logger = new Logger(RobotContainer.class.getName());
 
   // Motorized subsystems
-  public final Drivetrain drivetrain;
-//  private final Intake intake;
-//  private final Feeder feeder;
-//  private final Shooter shooter;
-//  private final ControlPanel controlPanel;
-//  private final Climb climb;
+  private final Drivetrain drivetrain;
+  private final Intake intake;
+  private final Feeder feeder;
+  private final Shooter shooter;
+  private final ControlPanel controlPanel;
+  private final Climb climb;
 
   // Sensor subsystems
-  // private final Vision vision;
-  // private final NavX navx;
-  // private final ColorSensor colorSensor;
+  private final Vision vision;
+  private final NavX navx;
+  private final ColorSensor colorSensor;
 
   // Controllers
   private final XboxController driverController;
@@ -42,17 +46,15 @@ public class RobotContainer {
 
   public RobotContainer() {
     drivetrain = new Drivetrain();
-    /*
     intake = new Intake();
     feeder = new Feeder();
     shooter = new Shooter();
     controlPanel = new ControlPanel();
     climb = new Climb();
-    */
 
-    // vision = new Vision();
-    // navx = new NavX();
-    // colorSensor = new ColorSensor();
+    vision = new Vision();
+    navx = new NavX();
+    colorSensor = new ColorSensor();
 
     driverController = new XboxController(Constants.DRIVE_CONTROLLER_PORT);
     auxController = new XboxController(Constants.AUX_CONTROLLER_PORT);
@@ -62,8 +64,36 @@ public class RobotContainer {
     drivetrain.setCoastMode();
     //climb.setDefaultCommand(new ClimbMove(climb, auxController));
 
+    chooser.addOption("Coast Mode", new Command(){
+      @Override
+      public Set<Subsystem> getRequirements() {
+        Set<Subsystem> subsystems = new HashSet<>();
+        subsystems.add(drivetrain);
+        return subsystems;
+      }
+      @Override
+      public void initialize() {
+        logger.dashboard("Brake Mode", "COAST");
+        setCoastMode();
+      }
+    });
+
+    chooser.addOption("Brake Mode", new Command(){
+      @Override
+      public Set<Subsystem> getRequirements() {
+        Set<Subsystem> subsystems = new HashSet<>();
+        subsystems.add(drivetrain);
+        return subsystems;
+      }
+      @Override
+      public void initialize() {
+        logger.dashboard("Brake Mode", "BRAKE");
+        setCoastMode();
+      }
+    });
+
 //    chooser.addOption("Autonomous Command 1", new AutonomousCommand());
-//    Shuffleboard.getTab("Autonomous").add(chooser);
+    Shuffleboard.getTab("Autonomous").add(chooser);
   }
 
   private void configureButtonBindings() {
@@ -72,5 +102,13 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     return chooser.getSelected();
+  }
+
+  public void setCoastMode() {
+    drivetrain.setCoastMode();
+  }
+
+  public void setBrakeMode() {
+    drivetrain.setBrakeMode();
   }
 }
