@@ -31,7 +31,7 @@ public class Drivetrain extends SubsystemBase {
     rearLeftTalon = MotorFactory.makeTalonFX(Constants.DRIVETRAIN_REAR_LEFT_TALON, "Drivetrain RearLeft Talon");
     frontRightTalon = MotorFactory.makeTalonFX(Constants.DRIVETRAIN_FRONT_RIGHT_TALON, "Drivetrain FrontRight Talon");
     rearRightTalon = MotorFactory.makeTalonFX(Constants.DRIVETRAIN_REAR_RIGHT_TALON, "Drivetrain RearRight Talon");
-
+  
     // groups defined
     leftGroup = new SpeedControllerGroup(frontLeftTalon, rearLeftTalon);
     rightGroup = new SpeedControllerGroup(frontRightTalon, rearRightTalon);
@@ -44,6 +44,8 @@ public class Drivetrain extends SubsystemBase {
     logger.dashboard("drive rotate speed", rotateSpeed);
     differentialDrive.arcadeDrive(moveSpeed, rotateSpeed);
     logger.detail("leftGroup: %f  rightGroup: %f", leftGroup.get(), rightGroup.get());
+    logger.info("FRONT: left position: %d  right position: %d", frontLeftTalon.getSelectedSensorPosition(), frontRightTalon.getSelectedSensorPosition());
+    logger.info("REAR: left position: %d  right position: %d", rearLeftTalon.getSelectedSensorPosition(), rearRightTalon.getSelectedSensorPosition());
   }
   
   // autonomous functions

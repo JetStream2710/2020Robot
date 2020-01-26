@@ -16,6 +16,7 @@ public class Logger{
     // Robot systems
     LOG_LEVELS.put(Robot.class.getName(), Level.INFO);
     LOG_LEVELS.put(RobotContainer.class.getName(), Level.INFO);
+    LOG_LEVELS.put(MotorFactory.class.getName(), Level.INFO);
 
     // Subsystems
     LOG_LEVELS.put(Climb.class.getName(), Level.INFO);
@@ -32,6 +33,7 @@ public class Logger{
     // Autonomous Commands
 
     // Commands
+    LOG_LEVELS.put(DriveCommand.class.getName(), Level.INFO);
   }
 
   public enum Level{
@@ -75,7 +77,11 @@ public class Logger{
   }
 
   private void log(String name, Level level, String s, Object[] args){
-    if (LOG_LEVELS.get(name).value() >= level.value()){
+    Level def = LOG_LEVELS.get(name);
+    if (def == null) {
+      def = Level.INFO;
+    }
+    if (def.value() >= level.value()){
       System.out.println(String.format("%s %s: %s", level.toString(), name, args != null && args.length > 0 ? String.format(s, args) : s));
     }
   }
@@ -83,21 +89,21 @@ public class Logger{
   public void dashboard(String label, String s, Object... args){
     String msg = args != null && args.length > 0 ? String.format(s, args) : s;
     if (LOG_LEVELS.get(name).value() >= Level.INFO.value()){
-      System.out.println(String.format("%s %s %s: %s", Level.INFO.toString(), name, label, msg));
+      //System.out.println(String.format("%s %s %s: %s", Level.INFO.toString(), name, label, msg));
     }
     SmartDashboard.putString(label, msg);
   }
 
   public void dashboard(String label, int i) {
     if (LOG_LEVELS.get(name).value() >= Level.INFO.value()){
-      System.out.println(String.format("%s %s %s: %d", Level.INFO.toString(), name, label, i));
+      //System.out.println(String.format("%s %s %s: %d", Level.INFO.toString(), name, label, i));
     }
     SmartDashboard.putNumber(label, i);
   }
 
   public void dashboard(String label, double d) {
     if (LOG_LEVELS.get(name).value() >= Level.INFO.value()){
-      System.out.println(String.format("%s %s %s: %f", Level.INFO.toString(), name, label, d));
+      //System.out.println(String.format("%s %s %s: %f", Level.INFO.toString(), name, label, d));
     }
     SmartDashboard.putNumber(label, d);
   }

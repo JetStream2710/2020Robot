@@ -16,7 +16,8 @@ public class MotorFactory {
         talon.setSafetyEnabled(false);
         talon.setNeutralMode(NeutralMode.Brake);
         talon.configVoltageCompSaturation(12);
-        talon.enableVoltageCompensation(true);   
+        talon.enableVoltageCompensation(true);
+        talon.setSelectedSensorPosition(0);
         logger.detail("created " + name + " talon with " + id);
         return talon;
     }
@@ -26,7 +27,8 @@ public class MotorFactory {
         talon.setSafetyEnabled(false);
         talon.setNeutralMode(NeutralMode.Brake);
         talon.configVoltageCompSaturation(12);
-        talon.enableVoltageCompensation(true);   
+        talon.enableVoltageCompensation(true);
+        talon.setSelectedSensorPosition(0);
         logger.detail("created " + name + " talon with " + id);
         return talon;
     }

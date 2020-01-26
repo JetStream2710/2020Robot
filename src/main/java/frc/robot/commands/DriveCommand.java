@@ -26,8 +26,8 @@ public class DriveCommand extends CommandBase {
 
   @Override
   public void execute() {
-    double moveSpeed = -1 * controller.getY(Hand.kRight);
-    double rotateSpeed = -1 * controller.getX(Hand.kLeft);
+    double moveSpeed = .7 * controller.getRawAxis(1);
+    double rotateSpeed = -.7 * controller.getRawAxis(2);
     logger.detail("execute moveSpeed: %f  rotateSpeed: %f", moveSpeed, rotateSpeed);
     drivetrain.arcadeDrive(moveSpeed, rotateSpeed);
   }

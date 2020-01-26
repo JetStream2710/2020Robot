@@ -22,17 +22,17 @@ public class RobotContainer {
   private static final Logger logger = new Logger(RobotContainer.class.getName());
 
   // Motorized subsystems
-  private final Drivetrain drivetrain;
-  private final Intake intake;
-  private final Feeder feeder;
-  private final Shooter shooter;
-  private final ControlPanel controlPanel;
-  private final Climb climb;
+  public final Drivetrain drivetrain;
+//  private final Intake intake;
+//  private final Feeder feeder;
+//  private final Shooter shooter;
+//  private final ControlPanel controlPanel;
+//  private final Climb climb;
 
   // Sensor subsystems
-  private final Vision vision;
-  private final NavX navx;
-  private final ColorSensor colorSensor;
+  // private final Vision vision;
+  // private final NavX navx;
+  // private final ColorSensor colorSensor;
 
   // Controllers
   private final XboxController driverController;
@@ -42,22 +42,25 @@ public class RobotContainer {
 
   public RobotContainer() {
     drivetrain = new Drivetrain();
+    /*
     intake = new Intake();
     feeder = new Feeder();
     shooter = new Shooter();
     controlPanel = new ControlPanel();
     climb = new Climb();
+    */
 
-    vision = new Vision();
-    navx = new NavX();
-    colorSensor = new ColorSensor();
+    // vision = new Vision();
+    // navx = new NavX();
+    // colorSensor = new ColorSensor();
 
     driverController = new XboxController(Constants.DRIVE_CONTROLLER_PORT);
     auxController = new XboxController(Constants.AUX_CONTROLLER_PORT);
     configureButtonBindings();
 
     drivetrain.setDefaultCommand(new DriveCommand(drivetrain, driverController));
-    climb.setDefaultCommand(new ClimbMove(climb, auxController));
+    drivetrain.setCoastMode();
+    //climb.setDefaultCommand(new ClimbMove(climb, auxController));
 
 //    chooser.addOption("Autonomous Command 1", new AutonomousCommand());
 //    Shuffleboard.getTab("Autonomous").add(chooser);
