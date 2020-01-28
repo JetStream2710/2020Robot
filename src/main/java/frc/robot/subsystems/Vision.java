@@ -1,12 +1,14 @@
 package frc.robot.subsystems;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.util.Logger;
 
-public class Vision extends SubsystemBase {
+public class Vision extends SubsystemBase implements DoubleSupplier {
   private static final Logger logger = new Logger(Vision.class.getName());
 
   public static final NetworkTableInstance inst = NetworkTableInstance.getDefault();
@@ -25,6 +27,7 @@ public class Vision extends SubsystemBase {
     private final String label;
     private final NetworkTableEntry entry;
     private double value;
+    
     Entry(String entryName, String entryLabel) {
       label = entryLabel;
       entry = limelight.getEntry(entryName);
@@ -50,8 +53,13 @@ public class Vision extends SubsystemBase {
     }
   }
 
+  @Override
+  public double getAsDouble() {
+    return hasValidTargets() ? Entry.HORIZONTAL_OFFSET.getValue() : 0.0;
+  }
+
   public boolean hasValidTargets() {
-    return Entry.VALID_TARGETS.getValue() != 0;
+    return Entry.VALID_TARGETS.getValue() > 0.5;
   }
 
   public void turnOnCamLeds() {

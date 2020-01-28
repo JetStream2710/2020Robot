@@ -23,6 +23,12 @@ public class Drivetrain extends SubsystemBase {
 
   private final DifferentialDrive differentialDrive;
 
+  private static final int MAX_PERIOD_COUNT = 10;
+  private int periodicIndex;
+  private long[] periodicTimestampArray = new long[MAX_PERIOD_COUNT];
+  private int[] leftSidePositionArray = new int[MAX_PERIOD_COUNT];
+  private int[] rightSidePositionArray = new int[MAX_PERIOD_COUNT];
+
   public Drivetrain() {
     logger.detail("constructor");
 
@@ -72,6 +78,26 @@ public class Drivetrain extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    // TODO: check and see if this needs to be synchronous
+    periodicIndex++;
+    if (periodicIndex >= MAX_PERIOD_COUNT) {
+      periodicIndex = 0;
+    }
+    periodicTimestampArray[periodicIndex] = System.nanoTime();
+    leftSidePositionArray[periodicIndex] = frontLeftTalon.getSelectedSensorPosition();
+    rightSidePositionArray[periodicIndex] = frontRightTalon.getSelectedSensorPosition();
+  }
+
+  public double getSpeed() {
+    // Currently set to take the oldest index
+    int lastIndex = periodicIndex + 1;
+    if (lastIndex >= MAX_PERIOD_COUNT) {
+      lastIndex = 0;
+    }
+    // (1000 * (left-side-diff + right-side-diff)) / (2 * time-diff)
+    // Returned units are encoder units per milliseconds
+    return 500 * ((leftSidePositionArray[periodicIndex] - leftSidePositionArray[lastIndex]) +
+        (rightSidePositionArray[periodicIndex] - rightSidePositionArray[lastIndex])) /
+        (periodicTimestampArray[periodicIndex] - periodicTimestampArray[lastIndex]);
   }
 }

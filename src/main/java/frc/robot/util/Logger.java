@@ -14,6 +14,7 @@ public class Logger{
 
   static {
     // Robot systems
+    LOG_LEVELS.put(CANDeviceFinder.class.getName(), Level.INFO);
     LOG_LEVELS.put(Robot.class.getName(), Level.INFO);
     LOG_LEVELS.put(RobotContainer.class.getName(), Level.INFO);
     LOG_LEVELS.put(MotorFactory.class.getName(), Level.INFO);

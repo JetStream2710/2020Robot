@@ -20,6 +20,7 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.NavX;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Vision;
+import frc.robot.util.CANDeviceFinder;
 import frc.robot.util.Logger;
 
 public class RobotContainer {
@@ -99,6 +100,9 @@ public class RobotContainer {
 //    chooser.addOption("Autonomous Command 1", new AutonomousCommand());
     Shuffleboard.getTab("Autonomous").add(chooser);
     */
+
+    CANDeviceFinder can = new CANDeviceFinder();
+    can.debug();
   }
 
   private void configureButtonBindings() {

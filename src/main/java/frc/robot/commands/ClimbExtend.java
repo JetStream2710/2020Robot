@@ -29,7 +29,7 @@ public class ClimbExtend extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     logger.info("end");
-    climb.stop();;
+    climb.stop();
   }
 
   @Override

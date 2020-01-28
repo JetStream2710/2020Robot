@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import java.util.function.DoubleSupplier;
+
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Solenoid;
@@ -8,7 +10,7 @@ import frc.robot.Constants;
 import frc.robot.util.Logger;
 import frc.robot.util.MotorFactory;
 
-public class ControlPanel extends SubsystemBase {
+public class ControlPanel extends SubsystemBase implements DoubleSupplier {
   private static final Logger logger = new Logger(ControlPanel.class.getName());
 
   private static final double TURN = 0.4;
@@ -57,5 +59,10 @@ public class ControlPanel extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+  }
+
+  @Override
+  public double getAsDouble() {
+    return getPosition();
   }
 }

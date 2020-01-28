@@ -11,6 +11,8 @@ public class DriveCommand extends CommandBase {
   private final Drivetrain drivetrain;
   private final XboxController controller;
 
+  private int brakeCounter;
+
   public DriveCommand(Drivetrain drivetrain, XboxController controller) {
     logger.detail("constructor");
     this.drivetrain = drivetrain;
@@ -27,8 +29,21 @@ public class DriveCommand extends CommandBase {
   public void execute() {
     double moveSpeed = controller.getRawAxis(1);
     double rotateSpeed = -1 * controller.getRawAxis(2);
-    logger.detail("execute moveSpeed: %f  rotateSpeed: %f", moveSpeed, rotateSpeed);
-    drivetrain.arcadeDrive(moveSpeed, rotateSpeed);
+    if (moveSpeed > 0.02 || moveSpeed < -0.02) {
+      logger.detail("execute moveSpeed: %f  rotateSpeed: %f  speed: %f", moveSpeed, rotateSpeed, drivetrain.getSpeed());
+      drivetrain.arcadeDrive(moveSpeed, rotateSpeed);
+      brakeCounter = 0;
+    } else {
+      // First version of anti-skid algorithm. Need to factor in speed.
+      logger.detail("braking speed: %f", drivetrain.getSpeed());
+      drivetrain.arcadeDrive(0.0, 0.0);
+      if (brakeCounter % 2 == 0) {
+        drivetrain.setCoastMode();
+      } else {
+        drivetrain.setBrakeMode();
+      }
+      brakeCounter++;
+    }
   }
 
   @Override
