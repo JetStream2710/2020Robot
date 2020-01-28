@@ -27,6 +27,7 @@ public class RobotContainer {
 
   // Motorized subsystems
   private final Drivetrain drivetrain;
+  /*
   private final Intake intake;
   private final Feeder feeder;
   private final Shooter shooter;
@@ -37,6 +38,7 @@ public class RobotContainer {
   private final Vision vision;
   private final NavX navx;
   private final ColorSensor colorSensor;
+  */
 
   // Controllers
   private final XboxController driverController;
@@ -46,6 +48,7 @@ public class RobotContainer {
 
   public RobotContainer() {
     drivetrain = new Drivetrain();
+    /*
     intake = new Intake();
     feeder = new Feeder();
     shooter = new Shooter();
@@ -55,7 +58,7 @@ public class RobotContainer {
     vision = new Vision();
     navx = new NavX();
     colorSensor = new ColorSensor();
-
+    */
     driverController = new XboxController(Constants.DRIVE_CONTROLLER_PORT);
     auxController = new XboxController(Constants.AUX_CONTROLLER_PORT);
     configureButtonBindings();
@@ -64,6 +67,7 @@ public class RobotContainer {
     drivetrain.setCoastMode();
     //climb.setDefaultCommand(new ClimbMove(climb, auxController));
 
+    /*
     chooser.addOption("Coast Mode", new Command(){
       @Override
       public Set<Subsystem> getRequirements() {
@@ -94,6 +98,7 @@ public class RobotContainer {
 
 //    chooser.addOption("Autonomous Command 1", new AutonomousCommand());
     Shuffleboard.getTab("Autonomous").add(chooser);
+    */
   }
 
   private void configureButtonBindings() {
