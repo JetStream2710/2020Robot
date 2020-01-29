@@ -4,9 +4,10 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.util.Logger;
+import frc.robot.util.Logger.Level;
 
 public class DriveCommand extends CommandBase {
-  private static final Logger logger = new Logger(ClimbRetract.class.getName());
+  private static final Logger logger = new Logger(DriveCommand.class.getName(), Level.INFO, false);
 
   private final Drivetrain drivetrain;
   private final XboxController controller;
@@ -30,12 +31,12 @@ public class DriveCommand extends CommandBase {
     double moveSpeed = controller.getRawAxis(1);
     double rotateSpeed = -1 * controller.getRawAxis(2);
     if (moveSpeed > 0.02 || moveSpeed < -0.02) {
-      logger.detail("execute moveSpeed: %f  rotateSpeed: %f  speed: %f", moveSpeed, rotateSpeed, drivetrain.getSpeed());
+      logger.info("execute moveSpeed: %f  rotateSpeed: %f  speed: %f", moveSpeed, rotateSpeed, drivetrain.getSpeed());
       drivetrain.arcadeDrive(moveSpeed, rotateSpeed);
       brakeCounter = 0;
     } else {
       // First version of anti-skid algorithm. Need to factor in speed.
-      logger.detail("braking speed: %f", drivetrain.getSpeed());
+      logger.info("braking speed: %f", drivetrain.getSpeed());
       drivetrain.arcadeDrive(0.0, 0.0);
       if (brakeCounter % 2 == 0) {
         drivetrain.setCoastMode();
@@ -48,7 +49,7 @@ public class DriveCommand extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
-    logger.info("end");
+    logger.detail("end");
     drivetrain.arcadeDrive(0, 0);
   }
 

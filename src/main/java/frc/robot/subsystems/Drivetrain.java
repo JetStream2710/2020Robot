@@ -9,9 +9,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.util.Logger;
 import frc.robot.util.MotorFactory;
+import frc.robot.util.Logger.Level;
 
 public class Drivetrain extends SubsystemBase {
-  private static final Logger logger = new Logger(Drivetrain.class.getName());
+  private static final Logger logger = new Logger(Drivetrain.class.getName(), Level.INFO, false);
 
   private final WPI_TalonFX frontLeftTalon;
   private final WPI_TalonFX rearLeftTalon;
@@ -54,10 +55,6 @@ public class Drivetrain extends SubsystemBase {
     logger.info("REAR: left position: %d  right position: %d", rearLeftTalon.getSelectedSensorPosition(), rearRightTalon.getSelectedSensorPosition());
   }
   
-  // autonomous functions
-  public void move() {
-  }
-  
   // utility functions
 
   public void setBrakeMode() {
@@ -94,10 +91,21 @@ public class Drivetrain extends SubsystemBase {
     if (lastIndex >= MAX_PERIOD_COUNT) {
       lastIndex = 0;
     }
+    long period = periodicTimestampArray[periodicIndex] - periodicTimestampArray[lastIndex];
+    if (period == 0) {
+      period = 1000;  // default to 1 ms
+    }
     // (1000 * (left-side-diff + right-side-diff)) / (2 * time-diff)
     // Returned units are encoder units per milliseconds
     return 500 * ((leftSidePositionArray[periodicIndex] - leftSidePositionArray[lastIndex]) +
-        (rightSidePositionArray[periodicIndex] - rightSidePositionArray[lastIndex])) /
-        (periodicTimestampArray[periodicIndex] - periodicTimestampArray[lastIndex]);
+        (rightSidePositionArray[periodicIndex] - rightSidePositionArray[lastIndex])) / period;
+  }
+
+  public int getLeftPosition() {
+    return frontLeftTalon.getSelectedSensorPosition();
+  }
+
+  public int getRightPosition() {
+    return frontRightTalon.getSelectedSensorPosition();
   }
 }

@@ -9,7 +9,7 @@ import frc.robot.subsystems.Vision;
 import frc.robot.util.Logger;
 
 public class LockTarget extends CommandBase {
-  private static final Logger logger = new Logger(IntakeReverse.class.getName());
+  private static final Logger logger = new Logger(LockTarget.class.getName());
 
   private final Vision vision;
   private final NavX navx;
@@ -23,7 +23,9 @@ public class LockTarget extends CommandBase {
     this.shooter = shooter;
     this.turret = turret;
     addRequirements(vision);
-
+    addRequirements(navx);
+    addRequirements(shooter);
+    addRequirements(turret);
   }
 
   @Override
@@ -46,8 +48,6 @@ public class LockTarget extends CommandBase {
   @Override
   public void end(boolean interrupted) {
   }
-
-  
 
   @Override
   public boolean isFinished() {
