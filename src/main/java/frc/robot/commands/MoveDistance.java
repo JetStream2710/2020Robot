@@ -7,84 +7,104 @@ import frc.robot.util.Logger;
 public class MoveDistance extends CommandBase {
   private static final Logger logger = new Logger(MoveDistance.class.getName());
 
+  private static final double ENCODER_UNITS_PER_FOOT = (12 * 4096) / (Math.PI * 6);
+  private static final double INIT_OUTPUT = 0.4;
+  private static final double MAX_OUTPUT = 1.0;
+  private static final double MIN_OUTPUT = 0.2;
+  private static final double ACCELERATION_OUTPUT_PER_PERIOD = 0.001;
+  private static final double DECELERATION_OUTPUT_PER_PERIOD = 0.001;
+
   private final Drivetrain drivetrain;
-  private final double distance;
+  private final int targetEncoderDistance;
+  private final boolean isMovingForward;
 
-  private static final double INIT_SPEED = 0.4;
-  private static final double MAX_SPEED = 1;
-
-  private int leftInitial;
-  private int rightInitial;
   private int leftPosition;
   private int rightPosition;
-  private int position;
-  private double speed;
+  private int leftTargetPosition;
+  private int rightTargetPosition;
+  private double output;
 
-  private static final double FEET_TO_REV = 12/(6*Math.PI);
-  // NOTE: internet said it was 4096 pulses per revolution, but i thought it was 1000
-  private static final double REV_TO_ENCODER = 4096;
-  
-  public MoveDistance(Drivetrain drivetrain, double distance) {
+  public MoveDistance(Drivetrain drivetrain, double distanceInFeet) {
     logger.detail("constructor");
     this.drivetrain = drivetrain;
-    this.distance = distance*FEET_TO_REV*REV_TO_ENCODER;
+    targetEncoderDistance = (int)(distanceInFeet * ENCODER_UNITS_PER_FOOT);
+    isMovingForward = distanceInFeet > 0;
     addRequirements(drivetrain);
   }
 
   @Override
   public void initialize() {
-    logger.info("initialize");
-    speed = INIT_SPEED;
-    leftInitial = drivetrain.getLeftPosition();
-    rightInitial = drivetrain.getRightPosition();
+    logger.detail("initialize");
+    updatePosition();
+
+    if (isMovingForward) {
+      leftTargetPosition = leftPosition + targetEncoderDistance;
+      rightTargetPosition = rightPosition + targetEncoderDistance;
+      drivetrain.arcadeDrive(INIT_OUTPUT, 0);
+    } else {
+      leftTargetPosition = leftPosition - targetEncoderDistance;
+      rightTargetPosition = rightPosition - targetEncoderDistance;
+      drivetrain.arcadeDrive(-INIT_OUTPUT, 0);
+    }
+    logger.info("left pos: %d [target: %d]  right pos: %d [target: %d]", leftPosition, leftTargetPosition, rightPosition, rightTargetPosition);
   }
 
   @Override
   public void execute() {
-    logger.info("execute");
-    leftPosition = drivetrain.getLeftPosition() - leftInitial;
-    rightPosition = drivetrain.getRightPosition() - rightInitial;
-    position = (leftPosition + rightPosition)/2;
+    logger.detail("execute");
+    updatePosition();
 
-/*
-    // proportionate to distance
-    // acceleration
-    // arbitrary point to end acceleration
-    if (position < distance*.2){
-        speed += (position/distance/0.2)*MAX_SPEED + INIT_SPEED;
+    int decelOffset = calculateDecelOffset();
+    int leftDecelPosition = leftTargetPosition - decelOffset;
+    int rightDecelPosition = rightTargetPosition - decelOffset;
+    if (isMovingForward) {
+      // Check if we should decelerate
+      if (leftPosition >= leftDecelPosition || rightPosition >= rightDecelPosition) {
+        if (output > MIN_OUTPUT) {
+          output -= DECELERATION_OUTPUT_PER_PERIOD;
+          logger.info("FORWARD DECEL: %f  left pos: %d [decel: %d]  right pos: %d [decel: %d]", output, leftPosition, leftDecelPosition, rightPosition, rightDecelPosition);
+        }
+      } else if (output < MAX_OUTPUT) {
+        output += ACCELERATION_OUTPUT_PER_PERIOD;
+        logger.info("FORWARD ACCEL: %f  left pos: %d [decel: %d]  right pos: %d [decel: %d]", output, leftPosition, leftDecelPosition, rightPosition, rightDecelPosition);        
+      }
+    } else {
+      // Check if we should decelerate
+      if (leftPosition <= leftDecelPosition || rightPosition <= rightDecelPosition) {
+        if (output < -MIN_OUTPUT) {
+          output += DECELERATION_OUTPUT_PER_PERIOD;
+          logger.info("BACKWARD DECEL: %f  left pos: %d [decel: %d]  right pos: %d [decel: %d]", output, leftPosition, leftDecelPosition, rightPosition, rightDecelPosition);
+        }
+      } else if (output > -MAX_OUTPUT) {
+        output -= ACCELERATION_OUTPUT_PER_PERIOD;
+        logger.info("BACKWARD ACCEL: %f  left pos: %d [decel: %d]  right pos: %d [decel: %d]", output, leftPosition, leftDecelPosition, rightPosition, rightDecelPosition);
+      }
     }
-    // decceleration
-    else if (position > distance*.8){
-      speed += ((1-position)/distance/0.2)*MAX_SPEED;
-    }
-    else {
-      speed = MAX_SPEED;
-    }
-*/
-
-    // by distance
-    if (speed != MAX_SPEED && position < distance/2){
-      speed += 0.01;
-    }
-    else if (position > distance-800){
-      speed -= 0.01;
-    }
-    else {
-      speed = MAX_SPEED;
-    }
-
-    drivetrain.arcadeDrive(speed, 0);
+    drivetrain.arcadeDrive(output, 0);
   }
 
   @Override
   public void end(boolean interrupted) {
-    logger.info("end");
+    logger.detail("end");
     drivetrain.arcadeDrive(0, 0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return isMovingForward
+        ? (leftPosition >= leftTargetPosition || rightPosition >= rightTargetPosition)
+        : (leftPosition <= leftTargetPosition || rightPosition <= rightTargetPosition);
+  }
+
+  private void updatePosition() {
+    leftPosition = drivetrain.getLeftPosition();
+    rightPosition = drivetrain.getRightPosition();
+  }
+
+  private int calculateDecelOffset() {
+    return isMovingForward
+      ? (int) ((output - MIN_OUTPUT) / DECELERATION_OUTPUT_PER_PERIOD)
+      : (int) ((output + MIN_OUTPUT) / DECELERATION_OUTPUT_PER_PERIOD);
   }
 }
