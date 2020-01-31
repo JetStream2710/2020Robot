@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.autonomous;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
@@ -12,7 +12,7 @@ public class MoveDistance extends CommandBase {
   private static final double INIT_OUTPUT = 0.4;
   private static final double MAX_OUTPUT = 1.0;
   private static final double MIN_OUTPUT = 0.2;
-  private static final double ACCELERATION_OUTPUT_PER_PERIOD = 0.01;
+  private static final double ACCELERATION_OUTPUT_PER_PERIOD = 0.001;
   private static final double DECELERATION_OUTPUT_PER_PERIOD = 0.01;
 
   private final Drivetrain drivetrain;
@@ -31,7 +31,8 @@ public class MoveDistance extends CommandBase {
     targetEncoderDistance = (int)(distanceInFeet * ENCODER_UNITS_PER_FOOT);
     isMovingForward = distanceInFeet > 0;
     addRequirements(drivetrain);
-    initialize();
+    // TODO: figure out if we need the following line
+    //initialize();
   }
 
   @Override
@@ -42,11 +43,11 @@ public class MoveDistance extends CommandBase {
     if (isMovingForward) {
       leftTargetPosition = leftPosition + targetEncoderDistance;
       rightTargetPosition = rightPosition + targetEncoderDistance;
-      //drivetrain.arcadeDrive(INIT_OUTPUT, 0);
+      drivetrain.arcadeDrive(INIT_OUTPUT, 0);
     } else {
       leftTargetPosition = leftPosition - targetEncoderDistance;
       rightTargetPosition = rightPosition - targetEncoderDistance;
-      //drivetrain.arcadeDrive(-INIT_OUTPUT, 0);
+      drivetrain.arcadeDrive(-INIT_OUTPUT, 0);
     }
     logger.warning("left pos: %d [target: %d]  right pos: %d [target: %d]", leftPosition, leftTargetPosition, rightPosition, rightTargetPosition);
   }
@@ -87,7 +88,7 @@ public class MoveDistance extends CommandBase {
         logger.info("BACKWARD ACCEL: %f  left pos: %d [decel: %d]  right pos: %d [decel: %d]", output, leftPosition, leftDecelPosition, rightPosition, rightDecelPosition);
       }
     }
-    drivetrain.arcadeDrive(output, 0);
+    drivetrain.arcadeDrive(-output, 0);
   }
 
   @Override

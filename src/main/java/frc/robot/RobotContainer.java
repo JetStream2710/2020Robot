@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.commands.ClimbMove;
 import frc.robot.commands.DriveCommand;
-import frc.robot.commands.MoveDistance;
+import frc.robot.autonomous.DefaultSequence;
 import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.ControlPanel;
@@ -99,8 +99,8 @@ public class RobotContainer {
     });
     */
 
-    chooser.addOption("Autonomous Command 1", new MoveDistance(drivetrain, 1));
-    Shuffleboard.getTab("Autonomous").add(chooser);
+    //chooser.addOption("Autonomous Command 1", new MoveDistance(drivetrain, 1));
+    //Shuffleboard.getTab("Autonomous").add(chooser);
 
     CANDeviceFinder can = new CANDeviceFinder();
     can.debug();
@@ -112,7 +112,7 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     //return chooser.getSelected();
-    return new MoveDistance(drivetrain, 1);
+    return new DefaultSequence(drivetrain);
   }
 
   public void setCoastMode() {
