@@ -28,22 +28,28 @@ public class DriveCommand extends CommandBase {
 
   @Override
   public void execute() {
-    double moveSpeed = controller.getRawAxis(1);
+    double moveSpeed = 1 * controller.getRawAxis(1);
     double rotateSpeed = -1 * controller.getRawAxis(2);
+    double currentSpeed = drivetrain.getSpeed();
     if (moveSpeed > 0.02 || moveSpeed < -0.02) {
-      logger.info("execute moveSpeed: %f  rotateSpeed: %f  speed: %f", moveSpeed, rotateSpeed, drivetrain.getSpeed());
+      logger.info("execute moveSpeed: %f  rotateSpeed: %f  speed: %f", moveSpeed, rotateSpeed, currentSpeed);
       drivetrain.arcadeDrive(moveSpeed, rotateSpeed);
       brakeCounter = 0;
     } else {
       // First version of anti-skid algorithm. Need to factor in speed.
-      logger.info("braking speed: %f", drivetrain.getSpeed());
+      //logger.info("braking speed: %f", drivetrain.getSpeed());
       drivetrain.arcadeDrive(0.0, 0.0);
-      if (brakeCounter % 2 == 0) {
-        drivetrain.setCoastMode();
-      } else {
+      if (currentSpeed < 100) {
         drivetrain.setBrakeMode();
+      } else {
+        int brakingPower = (int) Math.sqrt(currentSpeed);
+        if (brakeCounter % brakingPower == 0) {
+          drivetrain.setBrakeMode();
+        } else {
+          drivetrain.setCoastMode();
+        }
+        brakeCounter++;
       }
-      brakeCounter++;
     }
   }
 

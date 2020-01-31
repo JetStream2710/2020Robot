@@ -7,6 +7,7 @@ import frc.robot.util.Logger;
 public class TurnDegrees extends CommandBase {
   private static final Logger logger = new Logger(TurnDegrees.class.getName());
 
+  private static final double WHEELBASE_RADIUS = 22.25 / 2;
   private final Drivetrain drivetrain;
   private final double degrees;
   private boolean isPositive = true;

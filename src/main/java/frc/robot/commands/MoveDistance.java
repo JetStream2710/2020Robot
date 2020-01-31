@@ -7,7 +7,7 @@ import frc.robot.util.Logger;
 public class MoveDistance extends CommandBase {
   private static final Logger logger = new Logger(MoveDistance.class.getName());
 
-  private static final double ENCODER_UNITS_PER_FOOT = (12 * 4096) / (Math.PI * 6);
+  private static final double ENCODER_UNITS_PER_FOOT = (12 * 24000) / (Math.PI * 6);
   private static final double INIT_OUTPUT = 0.4;
   private static final double MAX_OUTPUT = 1.0;
   private static final double MIN_OUTPUT = 0.2;

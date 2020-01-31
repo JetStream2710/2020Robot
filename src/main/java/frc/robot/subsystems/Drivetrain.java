@@ -81,8 +81,8 @@ public class Drivetrain extends SubsystemBase {
       periodicIndex = 0;
     }
     periodicTimestampArray[periodicIndex] = System.nanoTime();
-    leftSidePositionArray[periodicIndex] = frontLeftTalon.getSelectedSensorPosition();
-    rightSidePositionArray[periodicIndex] = frontRightTalon.getSelectedSensorPosition();
+    leftSidePositionArray[periodicIndex] = getLeftPosition();
+    rightSidePositionArray[periodicIndex] = getRightPosition();
   }
 
   public double getSpeed() {
@@ -91,10 +91,14 @@ public class Drivetrain extends SubsystemBase {
     if (lastIndex >= MAX_PERIOD_COUNT) {
       lastIndex = 0;
     }
-    long period = periodicTimestampArray[periodicIndex] - periodicTimestampArray[lastIndex];
+    long period = (periodicTimestampArray[periodicIndex] - periodicTimestampArray[lastIndex]) / 1000;
     if (period == 0) {
       period = 1000;  // default to 1 ms
     }
+    System.out.println("period: " + period + "  idx: " + periodicIndex + "  left: " +
+    (leftSidePositionArray[periodicIndex] - leftSidePositionArray[lastIndex]) + "  right: " +
+    (rightSidePositionArray[periodicIndex] - rightSidePositionArray[lastIndex]));
+    
     // (1000 * (left-side-diff + right-side-diff)) / (2 * time-diff)
     // Returned units are encoder units per milliseconds
     return 500 * ((leftSidePositionArray[periodicIndex] - leftSidePositionArray[lastIndex]) +
@@ -102,7 +106,7 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public int getLeftPosition() {
-    return frontLeftTalon.getSelectedSensorPosition();
+    return -frontLeftTalon.getSelectedSensorPosition();
   }
 
   public int getRightPosition() {
