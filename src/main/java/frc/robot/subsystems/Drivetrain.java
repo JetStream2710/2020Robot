@@ -51,8 +51,8 @@ public class Drivetrain extends SubsystemBase {
     logger.dashboard("drive rotate speed", rotateSpeed);
     differentialDrive.arcadeDrive(moveSpeed, rotateSpeed);
     logger.detail("leftGroup: %f  rightGroup: %f", leftGroup.get(), rightGroup.get());
-    logger.info("FRONT: left position: %d  right position: %d", frontLeftTalon.getSelectedSensorPosition(), frontRightTalon.getSelectedSensorPosition());
-    logger.info("REAR: left position: %d  right position: %d", rearLeftTalon.getSelectedSensorPosition(), rearRightTalon.getSelectedSensorPosition());
+    //logger.info("FRONT: left position: %d  right position: %d", frontLeftTalon.getSelectedSensorPosition(), frontRightTalon.getSelectedSensorPosition());
+    //logger.info("REAR: left position: %d  right position: %d", rearLeftTalon.getSelectedSensorPosition(), rearRightTalon.getSelectedSensorPosition());
   }
   
   // utility functions
@@ -95,9 +95,11 @@ public class Drivetrain extends SubsystemBase {
     if (period == 0) {
       period = 1000;  // default to 1 ms
     }
+    /*
     System.out.println("period: " + period + "  idx: " + periodicIndex + "  left: " +
     (leftSidePositionArray[periodicIndex] - leftSidePositionArray[lastIndex]) + "  right: " +
     (rightSidePositionArray[periodicIndex] - rightSidePositionArray[lastIndex]));
+    */
     
     // (1000 * (left-side-diff + right-side-diff)) / (2 * time-diff)
     // Returned units are encoder units per milliseconds

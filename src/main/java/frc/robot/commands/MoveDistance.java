@@ -3,16 +3,17 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.util.Logger;
+import frc.robot.util.Logger.Level;
 
 public class MoveDistance extends CommandBase {
-  private static final Logger logger = new Logger(MoveDistance.class.getName());
+  private static final Logger logger = new Logger(MoveDistance.class.getName(), Level.WARNING, false);
 
   private static final double ENCODER_UNITS_PER_FOOT = (12 * 24000) / (Math.PI * 6);
   private static final double INIT_OUTPUT = 0.4;
   private static final double MAX_OUTPUT = 1.0;
   private static final double MIN_OUTPUT = 0.2;
-  private static final double ACCELERATION_OUTPUT_PER_PERIOD = 0.001;
-  private static final double DECELERATION_OUTPUT_PER_PERIOD = 0.001;
+  private static final double ACCELERATION_OUTPUT_PER_PERIOD = 0.01;
+  private static final double DECELERATION_OUTPUT_PER_PERIOD = 0.01;
 
   private final Drivetrain drivetrain;
   private final int targetEncoderDistance;
@@ -30,6 +31,7 @@ public class MoveDistance extends CommandBase {
     targetEncoderDistance = (int)(distanceInFeet * ENCODER_UNITS_PER_FOOT);
     isMovingForward = distanceInFeet > 0;
     addRequirements(drivetrain);
+    initialize();
   }
 
   @Override
@@ -40,19 +42,24 @@ public class MoveDistance extends CommandBase {
     if (isMovingForward) {
       leftTargetPosition = leftPosition + targetEncoderDistance;
       rightTargetPosition = rightPosition + targetEncoderDistance;
-      drivetrain.arcadeDrive(INIT_OUTPUT, 0);
+      //drivetrain.arcadeDrive(INIT_OUTPUT, 0);
     } else {
       leftTargetPosition = leftPosition - targetEncoderDistance;
       rightTargetPosition = rightPosition - targetEncoderDistance;
-      drivetrain.arcadeDrive(-INIT_OUTPUT, 0);
+      //drivetrain.arcadeDrive(-INIT_OUTPUT, 0);
     }
-    logger.info("left pos: %d [target: %d]  right pos: %d [target: %d]", leftPosition, leftTargetPosition, rightPosition, rightTargetPosition);
+    logger.warning("left pos: %d [target: %d]  right pos: %d [target: %d]", leftPosition, leftTargetPosition, rightPosition, rightTargetPosition);
   }
 
   @Override
   public void execute() {
     logger.detail("execute");
     updatePosition();
+
+    if (isFinished()) {
+      drivetrain.arcadeDrive(0, 0);
+      return;
+    }
 
     int decelOffset = calculateDecelOffset();
     int leftDecelPosition = leftTargetPosition - decelOffset;

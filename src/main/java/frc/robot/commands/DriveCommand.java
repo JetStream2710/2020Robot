@@ -39,10 +39,10 @@ public class DriveCommand extends CommandBase {
       // First version of anti-skid algorithm. Need to factor in speed.
       //logger.info("braking speed: %f", drivetrain.getSpeed());
       drivetrain.arcadeDrive(0.0, 0.0);
-      if (currentSpeed < 100) {
+      if (currentSpeed < 50) {
         drivetrain.setBrakeMode();
       } else {
-        int brakingPower = (int) Math.sqrt(currentSpeed);
+        int brakingPower = 200;//(int) currentSpeed;//(int) Math.sqrt(currentSpeed);
         if (brakeCounter % brakingPower == 0) {
           drivetrain.setBrakeMode();
         } else {
