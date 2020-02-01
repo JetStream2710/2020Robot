@@ -1,6 +1,8 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 
@@ -8,46 +10,39 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.util.Logger;
+import frc.robot.util.MotorFactory;
 
 public class Shooter extends SubsystemBase {
   private static final Logger logger = new Logger(Shooter.class.getName());
 
-  public static final double SHOOTER_SPEED = 0.4;
+  public static final double SHOOTER_SPEED = .8;
 
-  private final CANSparkMax leftSparkMax;
-  private final CANSparkMax rightSparkMax;
-
-  private final SpeedControllerGroup sparkMaxGroup;
+  private final WPI_TalonFX leftTalon;
+  private final WPI_TalonFX rightTalon;
 
   public Shooter() {
     logger.detail("constructor");
 
-    leftSparkMax = new CANSparkMax(Constants.SHOOTER_LEFT_SPARKMAX, MotorType.kBrushless);
-    rightSparkMax = new CANSparkMax(Constants.SHOOTER_RIGHT_SPARKMAX, MotorType.kBrushless);
-
-    leftSparkMax.setIdleMode(IdleMode.kBrake);
-    rightSparkMax.setIdleMode(IdleMode.kBrake);
-
-    leftSparkMax.enableVoltageCompensation(12);
-    rightSparkMax.enableVoltageCompensation(12);
-
-    sparkMaxGroup = new SpeedControllerGroup(leftSparkMax, rightSparkMax);
+    leftTalon = MotorFactory.makeTalonFX(Constants.SHOOTER_LEFT_TALON, "leftTalon");
+    rightTalon = MotorFactory.makeTalonFX(Constants.SHOOTER_RIGHT_TALON, "rightTalon");
   }
 
   // TODO: set w specific encoder value?
   public void on() {
-    sparkMaxGroup.set(SHOOTER_SPEED);
+    leftTalon.set(-SHOOTER_SPEED);
+    rightTalon.set(SHOOTER_SPEED);
     logger.dashboard("shooter", "on");    
   }
 
   public void off() {
-    sparkMaxGroup.stopMotor();
+    leftTalon.set(0);
+    rightTalon.set(0);
     logger.dashboard("shooter", "off");
   }
 
   public double speed() {
     // TODO: this should report the actual speed, not the last set speed
-    double speed = (leftSparkMax.get() + rightSparkMax.get()) / 2;
+    double speed = (leftTalon.get() + rightTalon.get()) / 2;
     logger.dashboard("shooter speed", speed);
     return speed;
   }

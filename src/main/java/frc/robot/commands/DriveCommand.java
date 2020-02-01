@@ -7,7 +7,7 @@ import frc.robot.util.Logger;
 import frc.robot.util.Logger.Level;
 
 public class DriveCommand extends CommandBase {
-  private static final Logger logger = new Logger(DriveCommand.class.getName(), Level.INFO, false);
+  private static final Logger logger = new Logger(DriveCommand.class.getName(), Level.WARNING, false);
 
   private final Drivetrain drivetrain;
   private final XboxController controller;
@@ -31,9 +31,15 @@ public class DriveCommand extends CommandBase {
     double moveSpeed = 1 * controller.getRawAxis(1);
     double rotateSpeed = -1 * controller.getRawAxis(2);
     double currentSpeed = drivetrain.getSpeed();
+
+    logger.info("execute moveSpeed: %f  rotateSpeed: %f  speed: %f", moveSpeed, rotateSpeed, currentSpeed);
+    drivetrain.arcadeDrive(moveSpeed, rotateSpeed);
+
+/*
     if (moveSpeed > 0.02 || moveSpeed < -0.02) {
       logger.info("execute moveSpeed: %f  rotateSpeed: %f  speed: %f", moveSpeed, rotateSpeed, currentSpeed);
       drivetrain.arcadeDrive(moveSpeed, rotateSpeed);
+//      drivetrain.moveSpecific(moveSpeed, 3); // testing each motor individually
       brakeCounter = 0;
     } else {
       // First version of anti-skid algorithm. Need to factor in speed.
@@ -51,6 +57,7 @@ public class DriveCommand extends CommandBase {
         brakeCounter++;
       }
     }
+*/
   }
 
   @Override

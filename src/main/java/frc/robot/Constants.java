@@ -12,10 +12,10 @@ public final class Constants {
     public static final int CONTROL_PANEL_SOLENOID_OFF = 2;
     public static final int CONTROL_PANEL_TALON = 0;
     // drivetrain hardware constants
-    public static final int DRIVETRAIN_FRONT_LEFT_TALON = 2;
-    public static final int DRIVETRAIN_REAR_LEFT_TALON = 1;
-    public static final int DRIVETRAIN_FRONT_RIGHT_TALON = 4;
-    public static final int DRIVETRAIN_REAR_RIGHT_TALON = 3;
+    public static final int DRIVETRAIN_FRONT_LEFT_TALON = 3;
+    public static final int DRIVETRAIN_REAR_LEFT_TALON = 4;
+    public static final int DRIVETRAIN_FRONT_RIGHT_TALON = 1;
+    public static final int DRIVETRAIN_REAR_RIGHT_TALON = 2;
     // feeder hardware constants
     public static final int FEEDER_HORIZONTAL_VICTOR = 0;
     public static final int FEEDER_VERTICAL_VICTOR = 0;
@@ -24,10 +24,10 @@ public final class Constants {
     public static final int INTAKE_SOLENOID_OFF = 4;
     public static final int INTAKE_VICTOR = 0;
     // shooter hardware constants
-    public static final int SHOOTER_LEFT_SPARKMAX = 0;
-    public static final int SHOOTER_RIGHT_SPARKMAX = 0;
+    public static final int SHOOTER_LEFT_TALON = 5;
+    public static final int SHOOTER_RIGHT_TALON = 6;
     // turret hardware constants
-    public static final int TURRET_TALON = 0;
+    public static final int TURRET_TALON = 7;
     public static final int TURRET_ENCODERA = 0;
     public static final int TURRET_ENCODERB = 0;
     // pneumatics

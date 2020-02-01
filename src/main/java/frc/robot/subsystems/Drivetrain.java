@@ -29,6 +29,7 @@ public class Drivetrain extends SubsystemBase {
   private long[] periodicTimestampArray = new long[MAX_PERIOD_COUNT];
   private int[] leftSidePositionArray = new int[MAX_PERIOD_COUNT];
   private int[] rightSidePositionArray = new int[MAX_PERIOD_COUNT];
+  private WPI_TalonFX[] motors = new WPI_TalonFX[4];
 
   public Drivetrain() {
     logger.detail("constructor");
@@ -39,11 +40,20 @@ public class Drivetrain extends SubsystemBase {
     frontRightTalon = MotorFactory.makeTalonFX(Constants.DRIVETRAIN_FRONT_RIGHT_TALON, "Drivetrain FrontRight Talon");
     rearRightTalon = MotorFactory.makeTalonFX(Constants.DRIVETRAIN_REAR_RIGHT_TALON, "Drivetrain RearRight Talon");
   
+    // frontRightTalon.setInverted(true);
+    // rearRightTalon.setInverted(true);
+
     // groups defined
     leftGroup = new SpeedControllerGroup(frontLeftTalon, rearLeftTalon);
     rightGroup = new SpeedControllerGroup(frontRightTalon, rearRightTalon);
 
     differentialDrive = new DifferentialDrive(leftGroup, rightGroup);
+
+    // test functions
+    motors[0] = frontLeftTalon; 
+    motors[1] = frontRightTalon;
+    motors[2] = rearLeftTalon;
+    motors[3] = rearRightTalon;
   }
 
   public void arcadeDrive(final double moveSpeed, final double rotateSpeed) {
@@ -51,8 +61,8 @@ public class Drivetrain extends SubsystemBase {
     logger.dashboard("drive rotate speed", rotateSpeed);
     differentialDrive.arcadeDrive(moveSpeed, rotateSpeed);
     logger.detail("leftGroup: %f  rightGroup: %f", leftGroup.get(), rightGroup.get());
-    //logger.info("FRONT: left position: %d  right position: %d", frontLeftTalon.getSelectedSensorPosition(), frontRightTalon.getSelectedSensorPosition());
-    //logger.info("REAR: left position: %d  right position: %d", rearLeftTalon.getSelectedSensorPosition(), rearRightTalon.getSelectedSensorPosition());
+    logger.info("FRONT: left position: %d  right position: %d", frontLeftTalon.getSelectedSensorPosition(), frontRightTalon.getSelectedSensorPosition());
+    logger.info("REAR: left position: %d  right position: %d", rearLeftTalon.getSelectedSensorPosition(), rearRightTalon.getSelectedSensorPosition());
   }
   
   // utility functions
@@ -113,5 +123,11 @@ public class Drivetrain extends SubsystemBase {
 
   public int getRightPosition() {
     return frontRightTalon.getSelectedSensorPosition();
+  }
+
+  // test function
+  public void moveSpecific(double speed, int id){
+    motors[id].set(speed);
+    logger.detail("driver encoder value: %d", motors[id].getSelectedSensorPosition());
   }
 }

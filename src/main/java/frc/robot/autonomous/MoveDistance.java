@@ -62,6 +62,7 @@ public class MoveDistance extends CommandBase {
       return;
     }
 
+    // initialize output?
     int decelOffset = calculateDecelOffset();
     int leftDecelPosition = leftTargetPosition - decelOffset;
     int rightDecelPosition = rightTargetPosition - decelOffset;

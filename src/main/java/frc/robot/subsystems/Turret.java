@@ -13,14 +13,14 @@ public class Turret extends SubsystemBase {
 
   private final WPI_TalonSRX talon;
 
-  private final Encoder enc;
+//  private final Encoder enc;
 
   public Turret() {
     logger.detail("constructor");
     talon = MotorFactory.makeTalon(Constants.TURRET_TALON, "Turret Talon");
-    enc = new Encoder(Constants.TURRET_ENCODERA, Constants.TURRET_ENCODERB, false, Encoder.EncodingType.k4X);
-    enc.reset();
-    enc.setDistancePerPulse(6*Math.PI/1024);
+//    enc = new Encoder(Constants.TURRET_ENCODERA, Constants.TURRET_ENCODERB, false, Encoder.EncodingType.k4X);
+//    enc.reset();
+//    enc.setDistancePerPulse(6*Math.PI/1024);
   }
 
   public void move(double speed) {
@@ -39,6 +39,7 @@ public class Turret extends SubsystemBase {
     return position;
   }
 
+/*
   public int getCount(){
     int count = enc.get();
     logger.dashboard("climb encoder count: %d" , count);
@@ -62,7 +63,8 @@ public class Turret extends SubsystemBase {
     logger.dashboard("climb encoder distance: %f" , distance);
     return distance;
   }
-  
+*/
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
