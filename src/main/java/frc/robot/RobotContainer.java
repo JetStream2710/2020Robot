@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ClimbMove;
 import frc.robot.commands.DriveCommand;
+import frc.robot.commands.LockTarget;
 import frc.robot.commands.ShooterOn;
 import frc.robot.commands.TurretCommand;
 import frc.robot.autonomous.DefaultSequence;
@@ -42,7 +43,7 @@ public class RobotContainer {
 //  private final Climb climb;
 
   // Sensor subsystems
-//  private final Vision vision;
+  private final Vision vision;
 //  private final NavX navx;
 //  private final ColorSensor colorSensor;
 
@@ -63,8 +64,8 @@ public class RobotContainer {
 //    controlPanel = new ControlPanel();
 //    climb = new Climb();
 
-//    vision = new Vision();
-//   navx = new NavX();
+    vision = new Vision();
+//    navx = new NavX();
 //    colorSensor = new ColorSensor();
     
     driverController = new XboxController(Constants.DRIVE_CONTROLLER_PORT);
@@ -115,6 +116,7 @@ public class RobotContainer {
 
   private void configureButtonBindings() {
     new JoystickButton(driverController, Button.kA.value).whileHeld(new ShooterOn(shooter));
+    new JoystickButton(driverController, Button.kB.value).whileHeld(new LockTarget(vision, shooter, turret));
   }
 
   public Command getAutonomousCommand() {

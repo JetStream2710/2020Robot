@@ -47,6 +47,14 @@ public class Shooter extends SubsystemBase {
     return speed;
   }
 
+  public int getLeftPosition() {
+    return -1 * leftTalon.getSelectedSensorPosition();
+  }
+
+  public int getRightPosition() {
+    return rightTalon.getSelectedSensorPosition();
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
