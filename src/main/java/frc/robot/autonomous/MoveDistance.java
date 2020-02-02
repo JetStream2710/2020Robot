@@ -6,14 +6,14 @@ import frc.robot.util.Logger;
 import frc.robot.util.Logger.Level;
 
 public class MoveDistance extends CommandBase {
-  private static final Logger logger = new Logger(MoveDistance.class.getName(), Level.WARNING, false);
+  private static final Logger logger = new Logger(MoveDistance.class.getName(), Level.DETAIL, false);
 
   private static final double ENCODER_UNITS_PER_FOOT = (12 * 24000) / (Math.PI * 6);
-  private static final double INIT_OUTPUT = 0.4;
+  private static final double INIT_OUTPUT = 0.5;
   private static final double MAX_OUTPUT = 1.0;
   private static final double MIN_OUTPUT = 0.2;
-  private static final double ACCELERATION_OUTPUT_PER_PERIOD = 0.001;
-  private static final double DECELERATION_OUTPUT_PER_PERIOD = 0.01;
+  private static final double ACCELERATION_OUTPUT_PER_PERIOD = 0.01;
+  private static final double DECELERATION_OUTPUT_PER_PERIOD = 0.002;
 
   private final Drivetrain drivetrain;
   private final int targetEncoderDistance;
@@ -24,6 +24,10 @@ public class MoveDistance extends CommandBase {
   private int leftTargetPosition;
   private int rightTargetPosition;
   private double output;
+
+  private int decelOffset;
+  private int leftDecelPosition;
+  private int rightDecelPosition;
 
   public MoveDistance(Drivetrain drivetrain, double distanceInFeet) {
     logger.detail("constructor");
@@ -40,13 +44,18 @@ public class MoveDistance extends CommandBase {
     logger.detail("initialize");
     updatePosition();
 
+    decelOffset = calculateDecelOffset();
     if (isMovingForward) {
       leftTargetPosition = leftPosition + targetEncoderDistance;
       rightTargetPosition = rightPosition + targetEncoderDistance;
+      leftDecelPosition = leftTargetPosition - decelOffset;
+      rightDecelPosition = rightTargetPosition - decelOffset;  
       drivetrain.arcadeDrive(INIT_OUTPUT, 0);
     } else {
       leftTargetPosition = leftPosition - targetEncoderDistance;
       rightTargetPosition = rightPosition - targetEncoderDistance;
+      leftDecelPosition = leftTargetPosition + decelOffset;
+      rightDecelPosition = rightTargetPosition + decelOffset;  
       drivetrain.arcadeDrive(-INIT_OUTPUT, 0);
     }
     logger.warning("left pos: %d [target: %d]  right pos: %d [target: %d]", leftPosition, leftTargetPosition, rightPosition, rightTargetPosition);
@@ -63,9 +72,9 @@ public class MoveDistance extends CommandBase {
     }
 
     // initialize output?
-    int decelOffset = calculateDecelOffset();
-    int leftDecelPosition = leftTargetPosition - decelOffset;
-    int rightDecelPosition = rightTargetPosition - decelOffset;
+    // int decelOffset = calculateDecelOffset();
+    // int leftDecelPosition = leftTargetPosition - decelOffset;
+    // int rightDecelPosition = rightTargetPosition - decelOffset;
     if (isMovingForward) {
       // Check if we should decelerate
       if (leftPosition >= leftDecelPosition || rightPosition >= rightDecelPosition) {
