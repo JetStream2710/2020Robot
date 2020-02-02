@@ -24,12 +24,13 @@ public class DriveCommand extends CommandBase {
   @Override
   public void initialize() {
     logger.detail("initialize");
+//    drivetrain.setCoastMode();
   }
 
   @Override
   public void execute() {
-    double moveSpeed = 1 * controller.getRawAxis(1);
-    double rotateSpeed = -1 * controller.getRawAxis(2);
+    double moveSpeed = -1 * controller.getRawAxis(1);
+    double rotateSpeed = 1 * controller.getRawAxis(2);
     double currentSpeed = drivetrain.getSpeed();
 
     logger.info("execute moveSpeed: %f  rotateSpeed: %f  speed: %f", moveSpeed, rotateSpeed, currentSpeed);
@@ -38,7 +39,7 @@ public class DriveCommand extends CommandBase {
     if (moveSpeed > 0.02 || moveSpeed < -0.02 || rotateSpeed > 0.02 || rotateSpeed < 0.02) {
       logger.info("execute moveSpeed: %f  rotateSpeed: %f  speed: %f", moveSpeed, rotateSpeed, currentSpeed);
       drivetrain.arcadeDrive(moveSpeed, rotateSpeed);
-//      drivetrain.moveSpecific(moveSpeed, 3); // testing each motor individually
+//      drivetrain.moveSpecific(moveSpeed, 1); // testing each motor individually
       brakeCounter = 0;
     } else {
       // First version of anti-skid algorithm. Need to factor in speed.

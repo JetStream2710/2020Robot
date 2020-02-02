@@ -12,7 +12,7 @@ import frc.robot.util.MotorFactory;
 import frc.robot.util.Logger.Level;
 
 public class Drivetrain extends SubsystemBase {
-  private static final Logger logger = new Logger(Drivetrain.class.getName(), Level.INFO, false);
+  private static final Logger logger = new Logger(Drivetrain.class.getName(), Level.WARNING, false);
 
   private final WPI_TalonFX frontLeftTalon;
   private final WPI_TalonFX rearLeftTalon;
@@ -40,8 +40,10 @@ public class Drivetrain extends SubsystemBase {
     frontRightTalon = MotorFactory.makeTalonFX(Constants.DRIVETRAIN_FRONT_RIGHT_TALON, "Drivetrain FrontRight Talon");
     rearRightTalon = MotorFactory.makeTalonFX(Constants.DRIVETRAIN_REAR_RIGHT_TALON, "Drivetrain RearRight Talon");
   
-    // frontRightTalon.setInverted(true);
-    // rearRightTalon.setInverted(true);
+    frontLeftTalon.setInverted(true);
+    rearLeftTalon.setInverted(true);
+    frontRightTalon.setInverted(true);
+    rearRightTalon.setInverted(true);
 
     // groups defined
     leftGroup = new SpeedControllerGroup(frontLeftTalon, rearLeftTalon);
@@ -118,11 +120,11 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public int getLeftPosition() {
-    return -frontLeftTalon.getSelectedSensorPosition();
+    return frontLeftTalon.getSelectedSensorPosition();
   }
 
   public int getRightPosition() {
-    return frontRightTalon.getSelectedSensorPosition();
+    return -1 * frontRightTalon.getSelectedSensorPosition();
   }
 
   // test function

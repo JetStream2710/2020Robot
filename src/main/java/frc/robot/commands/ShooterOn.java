@@ -5,7 +5,7 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.util.Logger;
 
 public class ShooterOn extends CommandBase {
-  private static final Logger logger = new Logger(ShooterOn.class.getName());
+  private static final Logger logger = new Logger(ShooterOn.class.getName(), Logger.Level.DETAIL, false);
 
   private static final int MAX_PERIOD_COUNT = 10;
   private int periodicIndex;

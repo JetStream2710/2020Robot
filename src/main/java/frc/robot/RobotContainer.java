@@ -13,9 +13,11 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ClimbMove;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.LockTarget;
+import frc.robot.commands.ShooterOff;
 import frc.robot.commands.ShooterOn;
 import frc.robot.commands.TurretCommand;
 import frc.robot.autonomous.DefaultSequence;
+import frc.robot.autonomous.MoveDistance;
 import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.ControlPanel;
@@ -120,8 +122,7 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    //return chooser.getSelected();
-    return new DefaultSequence(drivetrain);
+    return new MoveDistance(drivetrain, 1);
   }
 
   public void setCoastMode() {

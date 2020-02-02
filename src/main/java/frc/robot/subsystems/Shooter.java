@@ -15,10 +15,17 @@ import frc.robot.util.MotorFactory;
 public class Shooter extends SubsystemBase {
   private static final Logger logger = new Logger(Shooter.class.getName());
 
-  public static final double SHOOTER_SPEED = .8;
+  public static final double SHOOTER_SPEED = 0.8;
 
   private final WPI_TalonFX leftTalon;
   private final WPI_TalonFX rightTalon;
+
+  private static final int MAX_PERIOD_COUNT = 10;
+
+  private int periodicIndex;
+  private long[] periodicTimestampArray = new long[MAX_PERIOD_COUNT];
+  private int[] leftSidePositionArray = new int[MAX_PERIOD_COUNT];
+  private int[] rightSidePositionArray = new int[MAX_PERIOD_COUNT];
 
   public Shooter() {
     logger.detail("constructor");
@@ -42,7 +49,7 @@ public class Shooter extends SubsystemBase {
 
   public double speed() {
     // TODO: this should report the actual speed, not the last set speed
-    double speed = (leftTalon.get() + rightTalon.get()) / 2;
+    double speed = (-leftTalon.get() + rightTalon.get()) / 2;
     logger.dashboard("shooter speed", speed);
     return speed;
   }
@@ -57,6 +64,36 @@ public class Shooter extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    periodicIndex++;
+    if (periodicIndex >= MAX_PERIOD_COUNT) {
+      periodicIndex = 0;
+    }
+    periodicTimestampArray[periodicIndex] = System.nanoTime();
+    leftSidePositionArray[periodicIndex] = getLeftPosition();
+    rightSidePositionArray[periodicIndex] = getRightPosition();
+
+    logger.info("shooter speed: %f   speed2: %f", speed(), getSpeed());
+  }
+
+  public double getSpeed() {
+    // Currently set to take the oldest index
+    int lastIndex = periodicIndex + 1;
+    if (lastIndex >= MAX_PERIOD_COUNT) {
+      lastIndex = 0;
+    }
+    long period = (periodicTimestampArray[periodicIndex] - periodicTimestampArray[lastIndex]) / 1000;
+    if (period == 0) {
+      period = 1000;  // default to 1 ms
+    }
+    /*
+    System.out.println("period: " + period + "  idx: " + periodicIndex + "  left: " +
+    (leftSidePositionArray[periodicIndex] - leftSidePositionArray[lastIndex]) + "  right: " +
+    (rightSidePositionArray[periodicIndex] - rightSidePositionArray[lastIndex]));
+    */
+    
+    // (1000 * (left-side-diff + right-side-diff)) / (2 * time-diff)
+    // Returned units are encoder units per milliseconds
+    return 500 * ((leftSidePositionArray[periodicIndex] - leftSidePositionArray[lastIndex]) +
+        (rightSidePositionArray[periodicIndex] - rightSidePositionArray[lastIndex])) / period;
   }
 }
