@@ -8,7 +8,8 @@ public class TurnDegrees extends CommandBase {
   private static final Logger logger = new Logger(TurnDegrees.class.getName());
 
   private static final double WHEELBASE_RADIUS = 22.25 / 2;
-  private static final double ENCODER_UNITS_PER_DEGREE = (Math.sqrt(25*25 + 23*23) * 24000) / (360 * 6);
+  private static final double ENCODER_UNITS_PER_DEGREE = ((24000 / (Math.PI * 6)) * (2 * Math.PI * WHEELBASE_RADIUS)) / 360;
+//  private static final double ENCODER_UNITS_PER_DEGREE = (Math.sqrt(25*25 + 23*23) * 24000) / (360 * 6);
   private static final double INIT_OUTPUT = 0.4;
   private static final double MAX_OUTPUT = 1.0;
   private static final double MIN_OUTPUT = 0.2;
@@ -38,7 +39,7 @@ public class TurnDegrees extends CommandBase {
   public TurnDegrees(Drivetrain drivetrain, double distanceInDegrees) {
     logger.detail("constructor");
     this.drivetrain = drivetrain;
-    targetEncoderDistance = (int) (distanceInDegrees* ENCODER_UNITS_PER_DEGREE);
+    targetEncoderDistance = (int) (distanceInDegrees * ENCODER_UNITS_PER_DEGREE);
     isTurningRight = distanceInDegrees > 0;
     addRequirements(drivetrain);
   }

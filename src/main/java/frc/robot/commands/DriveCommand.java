@@ -35,8 +35,7 @@ public class DriveCommand extends CommandBase {
     logger.info("execute moveSpeed: %f  rotateSpeed: %f  speed: %f", moveSpeed, rotateSpeed, currentSpeed);
     drivetrain.arcadeDrive(moveSpeed, rotateSpeed);
 
-/*
-    if (moveSpeed > 0.02 || moveSpeed < -0.02) {
+    if (moveSpeed > 0.02 || moveSpeed < -0.02 || rotateSpeed > 0.02 || rotateSpeed < 0.02) {
       logger.info("execute moveSpeed: %f  rotateSpeed: %f  speed: %f", moveSpeed, rotateSpeed, currentSpeed);
       drivetrain.arcadeDrive(moveSpeed, rotateSpeed);
 //      drivetrain.moveSpecific(moveSpeed, 3); // testing each motor individually
@@ -57,7 +56,6 @@ public class DriveCommand extends CommandBase {
         brakeCounter++;
       }
     }
-*/
   }
 
   @Override
