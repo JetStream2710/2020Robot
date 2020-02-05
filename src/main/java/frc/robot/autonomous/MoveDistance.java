@@ -82,6 +82,7 @@ public class MoveDistance extends CommandBase {
           output -= DECELERATION_OUTPUT_PER_PERIOD;
           logger.info("FORWARD DECEL: %f  left pos: %d [decel: %d]  right pos: %d [decel: %d]", output, leftPosition, leftDecelPosition, rightPosition, rightDecelPosition);
         }
+        // should we maintain it here,, like keep at min_output
       } else if (output < MAX_OUTPUT) {
         output += ACCELERATION_OUTPUT_PER_PERIOD;
         logger.info("FORWARD ACCEL: %f  left pos: %d [decel: %d]  right pos: %d [decel: %d]", output, leftPosition, leftDecelPosition, rightPosition, rightDecelPosition);        
