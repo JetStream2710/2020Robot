@@ -26,9 +26,10 @@ public class TurretCommand extends CommandBase {
 
   @Override
   public void execute() {
-    double speed = -1 * controller.getRawAxis(1);
+    double speed = -1 * controller.getRawAxis(0);
     logger.info("execute speed: %f", speed);
     turret.move(speed);
+    logger.info("sensor position %d", turret.getPosition());
   }
 
   @Override

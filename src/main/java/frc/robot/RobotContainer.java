@@ -39,7 +39,7 @@ public class RobotContainer {
   
 //  private final Intake intake;
 //  private final Feeder feeder;
-  private final Shooter shooter;
+//  private final Shooter shooter;
   private final Turret turret;
 //  private final ControlPanel controlPanel;
 //  private final Climb climb;
@@ -61,7 +61,7 @@ public class RobotContainer {
     
 //    intake = new Intake();
 //    feeder = new Feeder();
-    shooter = new Shooter();
+//    shooter = new Shooter();
     turret = new Turret();
 //    controlPanel = new ControlPanel();
 //    climb = new Climb();
@@ -117,12 +117,12 @@ public class RobotContainer {
   }
 
   private void configureButtonBindings() {
-    new JoystickButton(driverController, Button.kA.value).whileHeld(new ShooterOn(shooter));
-    new JoystickButton(driverController, Button.kB.value).whileHeld(new LockTarget(vision, shooter, turret));
+//    new JoystickButton(driverController, Button.kA.value).whileHeld(new ShooterOn(shooter));
+//    // new JoystickButton(driverController, Button.kB.value).whileHeld(new LockTarget(vision, shooter, turret));
   }
 
   public Command getAutonomousCommand() {
-    return new MoveDistance(drivetrain, 1);
+    return new MoveDistance(drivetrain, 10);
   }
 
   public void setCoastMode() {

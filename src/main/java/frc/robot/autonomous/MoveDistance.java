@@ -13,7 +13,7 @@ public class MoveDistance extends CommandBase {
   private static final double MAX_OUTPUT = 1.0;
   private static final double MIN_OUTPUT = 0.2;
   private static final double ACCELERATION_OUTPUT_PER_PERIOD = 0.01;
-  private static final double DECELERATION_OUTPUT_PER_PERIOD = 0.002;
+  private static final double DECELERATION_OUTPUT_PER_PERIOD = 0.1;
 
   private final Drivetrain drivetrain;
   private final int targetEncoderDistance;
@@ -44,7 +44,7 @@ public class MoveDistance extends CommandBase {
     logger.detail("initialize");
     updatePosition();
 
-    decelOffset = calculateDecelOffset();
+    decelOffset = 30000;//calculateDecelOffset();
     if (isMovingForward) {
       leftTargetPosition = leftPosition + targetEncoderDistance;
       rightTargetPosition = rightPosition + targetEncoderDistance;
@@ -81,8 +81,7 @@ public class MoveDistance extends CommandBase {
         if (output > MIN_OUTPUT) {
           output -= DECELERATION_OUTPUT_PER_PERIOD;
           logger.info("FORWARD DECEL: %f  left pos: %d [decel: %d]  right pos: %d [decel: %d]", output, leftPosition, leftDecelPosition, rightPosition, rightDecelPosition);
-        }
-        // should we maintain it here,, like keep at min_output
+        } 
       } else if (output < MAX_OUTPUT) {
         output += ACCELERATION_OUTPUT_PER_PERIOD;
         logger.info("FORWARD ACCEL: %f  left pos: %d [decel: %d]  right pos: %d [decel: %d]", output, leftPosition, leftDecelPosition, rightPosition, rightDecelPosition);        
@@ -99,7 +98,7 @@ public class MoveDistance extends CommandBase {
         logger.info("BACKWARD ACCEL: %f  left pos: %d [decel: %d]  right pos: %d [decel: %d]", output, leftPosition, leftDecelPosition, rightPosition, rightDecelPosition);
       }
     }
-    drivetrain.arcadeDrive(-output, 0);
+    drivetrain.arcadeDrive(output, 0);
   }
 
   @Override
