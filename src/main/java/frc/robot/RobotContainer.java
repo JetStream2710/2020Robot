@@ -117,7 +117,7 @@ public class RobotContainer {
   }
 
   private void configureButtonBindings() {
-    new JoystickButton(driverController, Button.kA.value).whileHeld(new ShooterOn(shooter));
+    new JoystickButton(driverController, Button.kA.value).whileHeld(new ShooterOn(shooter, feeder));
     new JoystickButton(driverController, Button.kB.value).whileHeld(new LockTarget(vision, shooter, turret));
   }
 

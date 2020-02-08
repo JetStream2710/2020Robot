@@ -50,8 +50,10 @@ public class LockTarget extends CommandBase {
         logger.info("moving negative at offset: %f", offset);
       }
 
+      logger.info("Area: %f  Horiz: %f  Vert: %f",
+        Vision.Entry.AREA.getValue(), Vision.Entry.HORIZONTAL_LENGTH.getValue(), Vision.Entry.VERTICAL_LENGTH);
       logger.info("Distance from area: %f  horiz: %f  vert: %f",
-       vision.getDistanceFromArea(), vision.getDistanceFromHorizontal(), vision.getDistanceFromVertical());
+        vision.getDistanceFromArea(), vision.getDistanceFromHorizontal(), vision.getDistanceFromVertical());
     }
     /**
    * first receive information from vision about distance and from navx about angle
