@@ -32,9 +32,9 @@ public class MoveDistance extends CommandBase {
   public MoveDistance(Drivetrain drivetrain, double distanceInFeet) {
     logger.detail("constructor");
     this.drivetrain = drivetrain;
+    addRequirements(drivetrain);
     targetEncoderDistance = (int)(distanceInFeet * ENCODER_UNITS_PER_FOOT);
     isMovingForward = distanceInFeet > 0;
-    addRequirements(drivetrain);
     // TODO: figure out if we need the following line
     //initialize();
   }
@@ -44,19 +44,21 @@ public class MoveDistance extends CommandBase {
     logger.detail("initialize");
     updatePosition();
 
-    decelOffset = 30000;//calculateDecelOffset();
+    decelOffset = calculateDecelOffset();
     if (isMovingForward) {
       leftTargetPosition = leftPosition + targetEncoderDistance;
       rightTargetPosition = rightPosition + targetEncoderDistance;
       leftDecelPosition = leftTargetPosition - decelOffset;
-      rightDecelPosition = rightTargetPosition - decelOffset;  
-      drivetrain.arcadeDrive(INIT_OUTPUT, 0);
+      rightDecelPosition = rightTargetPosition - decelOffset;
+      output = INIT_OUTPUT;
+      drivetrain.arcadeDrive(output, 0);
     } else {
       leftTargetPosition = leftPosition - targetEncoderDistance;
       rightTargetPosition = rightPosition - targetEncoderDistance;
       leftDecelPosition = leftTargetPosition + decelOffset;
       rightDecelPosition = rightTargetPosition + decelOffset;  
-      drivetrain.arcadeDrive(-INIT_OUTPUT, 0);
+      output = -INIT_OUTPUT;
+      drivetrain.arcadeDrive(output, 0);
     }
     logger.warning("left pos: %d [target: %d]  right pos: %d [target: %d]", leftPosition, leftTargetPosition, rightPosition, rightTargetPosition);
   }
