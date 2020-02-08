@@ -70,11 +70,26 @@ public class Vision extends SubsystemBase implements DoubleSupplier {
     limelight.getEntry("ledMode").setNumber(1);
   }
 
-  public void setVisionMode(){
+  public void setVisionMode() {
     limelight.getEntry("camMode").setNumber(0);
   }
 
-  public void setCameraMode(){
+  public void setCameraMode() {
     limelight.getEntry("camMode").setNumber(1);
-  }    
+  }
+
+  public double getDistanceFromArea() {
+    // Inches to the target based on area
+    return 76.48 / Math.sqrt(Entry.AREA.getValue());
+  }
+
+  public double getDistanceFromHorizontal() {
+    // Inches to the target based on area
+    return 20 / Entry.HORIZONTAL_LENGTH.getValue();
+  }
+
+  public double getDistanceFromVertical() {
+    // Inches to the target based on area
+    return 18 / Entry.VERTICAL_LENGTH.getValue();
+  }
 }
