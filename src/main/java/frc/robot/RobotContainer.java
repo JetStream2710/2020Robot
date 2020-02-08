@@ -38,7 +38,7 @@ public class RobotContainer {
   private final Drivetrain drivetrain;
   
 //  private final Intake intake;
-//  private final Feeder feeder;
+  private final Feeder feeder;
 //  private final Shooter shooter;
   private final Turret turret;
 //  private final ControlPanel controlPanel;
@@ -60,7 +60,7 @@ public class RobotContainer {
     drivetrain = new Drivetrain();
     
 //    intake = new Intake();
-//    feeder = new Feeder();
+    feeder = new Feeder();
 //    shooter = new Shooter();
     turret = new Turret();
 //    controlPanel = new ControlPanel();
