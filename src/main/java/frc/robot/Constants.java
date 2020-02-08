@@ -17,8 +17,8 @@ public final class Constants {
     public static final int DRIVETRAIN_FRONT_LEFT_TALON = 3;
     public static final int DRIVETRAIN_REAR_LEFT_TALON = 4;
     // feeder hardware constants
-    public static final int FEEDER_HORIZONTAL_VICTOR = 0;
-    public static final int FEEDER_VERTICAL_VICTOR = 0;
+    public static final int FEEDER_HORIZONTAL_VICTOR = 8;
+    public static final int FEEDER_VERTICAL_VICTOR = 9;
     // intake hardware constants
     public static final int INTAKE_SOLENOID_ON = 3;
     public static final int INTAKE_SOLENOID_OFF = 4;

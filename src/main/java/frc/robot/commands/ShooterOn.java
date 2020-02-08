@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Shooter;
 import frc.robot.util.Logger;
 
@@ -14,10 +15,12 @@ public class ShooterOn extends CommandBase {
   private int[] rightSidePositionArray = new int[MAX_PERIOD_COUNT];
 
   private final Shooter shooter;
+  private final Feeder feeder;
   
-  public ShooterOn(Shooter shooter) {
+  public ShooterOn(Shooter shooter, Feeder feeder) {
     logger.detail("constructor");
     this.shooter = shooter;
+    this.feeder = feeder;
     addRequirements(shooter);
   }
 
@@ -25,6 +28,7 @@ public class ShooterOn extends CommandBase {
   public void initialize() {
     logger.info("initialize");
     shooter.on();
+    feeder.allOn();
   }
 
   @Override
@@ -45,6 +49,7 @@ public class ShooterOn extends CommandBase {
   public void end(boolean interrupted) {
     logger.info("end");
     shooter.off();
+    feeder.allOff();
   }
 
   @Override

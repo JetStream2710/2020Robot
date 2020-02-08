@@ -40,6 +40,8 @@ public class RobotContainer {
 //  private final Intake intake;
 //  private final Feeder feeder;
   private final Shooter shooter;
+  private final Feeder feeder;
+//  private final Shooter shooter;
   private final Turret turret;
 //  private final ControlPanel controlPanel;
 //  private final Climb climb;
@@ -60,8 +62,13 @@ public class RobotContainer {
     drivetrain = new Drivetrain();
     
 //    intake = new Intake();
+<<<<<<< HEAD
 //    feeder = new Feeder();
     shooter = new Shooter();
+=======
+    feeder = new Feeder();
+//    shooter = new Shooter();
+>>>>>>> 25d9768a073fac3edba9387b200bfe43d3bde520
     turret = new Turret();
 //    controlPanel = new ControlPanel();
 //    climb = new Climb();
