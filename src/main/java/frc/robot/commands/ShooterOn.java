@@ -21,13 +21,14 @@ public class ShooterOn extends CommandBase {
     logger.detail("constructor");
     this.shooter = shooter;
     this.feeder = feeder;
-    addRequirements(shooter);
+    addRequirements(feeder);
   }
 
   @Override
   public void initialize() {
     logger.info("initialize");
     shooter.on();
+    //shooter.triggerOn();
     feeder.allOn();
   }
 
@@ -49,6 +50,7 @@ public class ShooterOn extends CommandBase {
   public void end(boolean interrupted) {
     logger.info("end");
     shooter.off();
+    //shooter.triggerOff();
     feeder.allOff();
   }
 

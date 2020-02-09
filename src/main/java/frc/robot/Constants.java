@@ -26,6 +26,8 @@ public final class Constants {
     // shooter hardware constants
     public static final int SHOOTER_LEFT_TALON = 5;
     public static final int SHOOTER_RIGHT_TALON = 6;
+    public static final int SHOOTER_TRIGGER_VICTOR = 8;
+    public static final int SHOOTER_ACCEL_VICTOR = 12;
     // turret hardware constants
     public static final int TURRET_TALON = 7;
     public static final int TURRET_ENCODERA = 0;

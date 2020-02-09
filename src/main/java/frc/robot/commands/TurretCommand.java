@@ -7,7 +7,7 @@ import frc.robot.util.Logger;
 import frc.robot.util.Logger.Level;
 
 public class TurretCommand extends CommandBase {
-  private static final Logger logger = new Logger(TurretCommand.class.getName(), Level.WARNING, false);
+  private static final Logger logger = new Logger(TurretCommand.class.getName(), Level.SEVERE, false);
 
   private final Turret turret;
   private final XboxController controller;
@@ -26,8 +26,13 @@ public class TurretCommand extends CommandBase {
 
   @Override
   public void execute() {
-    double speed = -1 * controller.getRawAxis(0);
+    double speed = -0.35 * controller.getRawAxis(0);
     logger.info("execute speed: %f", speed);
+    if ((speed < 0 && turret.getPosition() > 7000) ||
+        (speed > 0 && turret.getPosition() < -7000)) {
+      turret.move(0);
+      return;
+    }
     turret.move(speed);
     logger.info("sensor position %d", turret.getPosition());
   }

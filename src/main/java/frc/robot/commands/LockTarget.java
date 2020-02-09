@@ -7,9 +7,10 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.Vision;
 import frc.robot.util.Logger;
+import frc.robot.util.Logger.Level;
 
 public class LockTarget extends CommandBase {
-  private static final Logger logger = new Logger(LockTarget.class.getName());
+  private static final Logger logger = new Logger(LockTarget.class.getName(), Level.DETAIL, false);
 
   private final Vision vision;
 //  private final NavX navx;
@@ -39,8 +40,8 @@ public class LockTarget extends CommandBase {
     if (vision.hasValidTargets()){
       logger.info("has valid target");
       double offset = Vision.Entry.HORIZONTAL_OFFSET.getValue();
-      double speed = 0.1 + (0.3 * offset / 160);
-      //double speed = offset > 2 ? 0.3 : -0.3;
+      //double speed = 0.1 + (0.3 * offset / 160);
+      double speed = offset > 2 ? -0.5 : 0.5;
       if (offset > 2) {
         turret.move(speed);
         logger.info("moving positive at offset: %f", offset);
@@ -48,10 +49,13 @@ public class LockTarget extends CommandBase {
       else if (offset < -2){
         turret.move(speed);
         logger.info("moving negative at offset: %f", offset);
+      } else {
+        turret.move(0);
+        logger.info("stopping");
       }
 
       logger.info("Area: %f  Horiz: %f  Vert: %f",
-        Vision.Entry.AREA.getValue(), Vision.Entry.HORIZONTAL_LENGTH.getValue(), Vision.Entry.VERTICAL_LENGTH);
+        Vision.Entry.AREA.getValue(), Vision.Entry.HORIZONTAL_LENGTH.getValue(), Vision.Entry.VERTICAL_LENGTH.getValue());
       logger.info("Distance from area: %f  horiz: %f  vert: %f",
         vision.getDistanceFromArea(), vision.getDistanceFromHorizontal(), vision.getDistanceFromVertical());
     }

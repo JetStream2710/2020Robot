@@ -15,6 +15,7 @@ import frc.robot.commands.DriveCommand;
 import frc.robot.commands.LockTarget;
 import frc.robot.commands.ShooterOff;
 import frc.robot.commands.ShooterOn;
+import frc.robot.commands.ShooterTrigger;
 import frc.robot.commands.TurretCommand;
 import frc.robot.autonomous.DefaultSequence;
 import frc.robot.autonomous.MoveDistance;
@@ -120,6 +121,7 @@ public class RobotContainer {
     new JoystickButton(driverController, Button.kA.value).whileHeld(new ShooterOn(shooter, feeder));
 //    // new JoystickButton(driverController, Button.kB.value).whileHeld(new LockTarget(vision, shooter, turret));
     new JoystickButton(driverController, Button.kB.value).whileHeld(new LockTarget(vision, shooter, turret));
+    new JoystickButton(driverController, Button.kX.value).whileHeld(new ShooterTrigger(shooter));
   }
 
   public Command getAutonomousCommand() {
