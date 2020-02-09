@@ -18,7 +18,7 @@ public class ShooterOff extends CommandBase {
   @Override
   public void initialize() {
     logger.info("initialize");
-    shooter.off();
+    shooter.allOff();
   }
 
   @Override

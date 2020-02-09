@@ -3,6 +3,7 @@ package frc.robot;
 import java.util.HashSet;
 import java.util.Set;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -19,6 +20,7 @@ import frc.robot.commands.ShooterTrigger;
 import frc.robot.commands.TurretCommand;
 import frc.robot.autonomous.DefaultSequence;
 import frc.robot.autonomous.MoveDistance;
+import frc.robot.autonomous.TurnDegrees;
 import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.ControlPanel;
@@ -49,6 +51,7 @@ public class RobotContainer {
   private final Vision vision;
 //  private final NavX navx;
 //  private final ColorSensor colorSensor;
+  private final DigitalInput turretLimitSwitch;
 
 
   // Controllers
@@ -70,6 +73,7 @@ public class RobotContainer {
     vision = new Vision();
 //    navx = new NavX();
 //    colorSensor = new ColorSensor();
+    turretLimitSwitch = new DigitalInput(0);
     
     driverController = new XboxController(Constants.DRIVE_CONTROLLER_PORT);
     auxController = new XboxController(Constants.AUX_CONTROLLER_PORT);
@@ -78,7 +82,7 @@ public class RobotContainer {
     drivetrain.setDefaultCommand(new DriveCommand(drivetrain, driverController));
     drivetrain.setCoastMode();
     //climb.setDefaultCommand(new ClimbMove(climb, auxController));
-    turret.setDefaultCommand(new TurretCommand(turret, auxController));
+    turret.setDefaultCommand(new TurretCommand(turret, auxController, turretLimitSwitch));
 
     /*
     chooser.addOption("Coast Mode", new Command(){
@@ -118,14 +122,15 @@ public class RobotContainer {
   }
 
   private void configureButtonBindings() {
-    new JoystickButton(driverController, Button.kA.value).whileHeld(new ShooterOn(shooter, feeder));
+//    new JoystickButton(driverController, Button.kA.value).whileHeld(new ShooterOn(shooter, feeder));
 //    // new JoystickButton(driverController, Button.kB.value).whileHeld(new LockTarget(vision, shooter, turret));
     new JoystickButton(driverController, Button.kB.value).whileHeld(new LockTarget(vision, shooter, turret));
-    new JoystickButton(driverController, Button.kX.value).whileHeld(new ShooterTrigger(shooter));
-  }
+//    new JoystickButton(driverController, Button.kX.value).whileHeld(new ShooterTrigger(shooter));
+    new JoystickButton(driverController, Button.kBumperLeft.value).whileHeld(new ShooterOn(shooter, feeder));
+}
 
   public Command getAutonomousCommand() {
-    return new MoveDistance(drivetrain, 10);
+    return new TurnDegrees(drivetrain, 90);
   }
 
   public void setCoastMode() {

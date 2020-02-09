@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Turret;
@@ -11,11 +12,13 @@ public class TurretCommand extends CommandBase {
 
   private final Turret turret;
   private final XboxController controller;
+  private final DigitalInput limit;
 
-  public TurretCommand(Turret turret, XboxController controller) {
+  public TurretCommand(Turret turret, XboxController controller, DigitalInput limit) {
     logger.detail("constructor");
     this.turret = turret;
     this.controller = controller;
+    this.limit = limit;
     addRequirements(turret);
   }
 
@@ -26,7 +29,7 @@ public class TurretCommand extends CommandBase {
 
   @Override
   public void execute() {
-    double speed = -0.35 * controller.getRawAxis(0);
+    double speed = -1 * controller.getRawAxis(0);
     logger.info("execute speed: %f", speed);
     if ((speed < 0 && turret.getPosition() > 7000) ||
         (speed > 0 && turret.getPosition() < -7000)) {
@@ -35,6 +38,10 @@ public class TurretCommand extends CommandBase {
     }
     turret.move(speed);
     logger.info("sensor position %d", turret.getPosition());
+ 
+    if (limit.get()){
+      turret.resetSensor();
+    }
   }
 
   @Override

@@ -35,7 +35,7 @@ public class Shooter extends SubsystemBase {
   }
 
   // TODO: set w specific encoder value?
-  public void on() {
+  public void allOn() {
     leftTalon.set(-SHOOTER_SPEED);
     rightTalon.set(SHOOTER_SPEED);
     accelerator.set(-SHOOTER_SPEED);
@@ -43,12 +43,30 @@ public class Shooter extends SubsystemBase {
     logger.dashboard("shooter", "on");    
   }
 
-  public void off() {
+  public void allOff() {
     leftTalon.set(0);
     rightTalon.set(0);
     accelerator.set(0);
     trigger.set(0);
     logger.dashboard("shooter", "off");
+  }
+
+  public void acceleratorOn(){
+    accelerator.set(-SHOOTER_SPEED);
+  }
+
+  public void acceleratorOff(){
+    accelerator.set(0);
+  }
+
+  public void shooterOn(){
+    leftTalon.set(-SHOOTER_SPEED);
+    rightTalon.set(SHOOTER_SPEED);
+  }
+
+  public void shooterOff(){
+    leftTalon.set(0);
+    rightTalon.set(0);
   }
 
   public void triggerOn() {

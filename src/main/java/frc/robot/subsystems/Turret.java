@@ -34,6 +34,11 @@ public class Turret extends SubsystemBase {
     return position;
   }
 
+  public void resetSensor() {
+    talon.setSelectedSensorPosition(0);
+    logger.dashboard("turret talon sensor reset", 0);
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

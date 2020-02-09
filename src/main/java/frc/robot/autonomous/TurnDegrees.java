@@ -5,7 +5,7 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.util.Logger;
 
 public class TurnDegrees extends CommandBase {
-  private static final Logger logger = new Logger(TurnDegrees.class.getName());
+  private static final Logger logger = new Logger(TurnDegrees.class.getName(), Logger.Level.DETAIL, false);
 
   private static final double WHEELBASE_RADIUS = 22.25 / 2;
   private static final double ENCODER_UNITS_PER_DEGREE = ((24000 / (Math.PI * 6)) * (2 * Math.PI * WHEELBASE_RADIUS)) / 360;
@@ -75,6 +75,7 @@ public class TurnDegrees extends CommandBase {
     int decelOffset = calculateDecelOffset();
     int leftDecelPosition = leftTargetPosition - decelOffset;
     int rightDecelPosition = rightTargetPosition + decelOffset;
+    logger.detail("decelOffset: %d  leftDecelPosition: %d  rightDecelPosition: %d", decelOffset, leftDecelPosition, rightDecelPosition);
     if (isTurningRight) {
       // Check if we should decelerate
       if (leftPosition >= leftDecelPosition || rightPosition <= rightDecelPosition) {
@@ -111,8 +112,8 @@ public class TurnDegrees extends CommandBase {
   @Override
   public boolean isFinished() {
     return isTurningRight
-        ? (leftPosition >= leftTargetPosition || rightPosition >= rightTargetPosition)
-        : (leftPosition <= leftTargetPosition || rightPosition <= rightTargetPosition);
+        ? (leftPosition >= leftTargetPosition || rightPosition <= rightTargetPosition)
+        : (leftPosition <= leftTargetPosition || rightPosition >= rightTargetPosition);
   }
 
   private void updatePosition() {
