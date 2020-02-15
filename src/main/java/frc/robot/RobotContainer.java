@@ -40,16 +40,16 @@ public class RobotContainer {
   // Motorized subsystems
   private final Drivetrain drivetrain;
   
-//  private final Intake intake;
+  private final Intake intake;
   private final Feeder feeder;
   private final Shooter shooter;
   private final Turret turret;
-//  private final ControlPanel controlPanel;
-//  private final Climb climb;
+  private final ControlPanel controlPanel;
+  private final Climb climb;
 
   // Sensor subsystems
   private final Vision vision;
-//  private final NavX navx;
+  private final NavX navx;
 //  private final ColorSensor colorSensor;
   private final DigitalInput turretLimitSwitch;
 
@@ -63,15 +63,15 @@ public class RobotContainer {
   public RobotContainer() {
     drivetrain = new Drivetrain();
     
-//    intake = new Intake();
+    intake = new Intake();
     feeder = new Feeder();
     shooter = new Shooter();
     turret = new Turret();
-//    controlPanel = new ControlPanel();
-//    climb = new Climb();
+    controlPanel = new ControlPanel();
+    climb = new Climb();
 
     vision = new Vision();
-//    navx = new NavX();
+    navx = new NavX();
 //    colorSensor = new ColorSensor();
     turretLimitSwitch = new DigitalInput(0);
     
@@ -81,7 +81,7 @@ public class RobotContainer {
 
     drivetrain.setDefaultCommand(new DriveCommand(drivetrain, driverController));
     drivetrain.setCoastMode();
-    //climb.setDefaultCommand(new ClimbMove(climb, auxController));
+    climb.setDefaultCommand(new ClimbMove(climb, auxController));
     turret.setDefaultCommand(new TurretCommand(turret, auxController, turretLimitSwitch));
 
     /*

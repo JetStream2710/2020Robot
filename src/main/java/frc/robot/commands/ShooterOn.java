@@ -29,7 +29,7 @@ public class ShooterOn extends CommandBase {
     logger.info("initialize");
     shooter.allOn();
     //shooter.triggerOn();
-    feeder.allOn();
+    feeder.on();
   }
 
   @Override
@@ -51,7 +51,7 @@ public class ShooterOn extends CommandBase {
     logger.info("end");
     shooter.allOff();
     //shooter.triggerOff();
-    feeder.allOff();
+    feeder.off();
   }
 
   @Override

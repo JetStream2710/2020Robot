@@ -4,12 +4,12 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Feeder;
 import frc.robot.util.Logger;
 
-public class FeederVerticalOn extends CommandBase {
-  private static final Logger logger = new Logger(FeederVerticalOn.class.getName());
+public class FeederOn extends CommandBase {
+  private static final Logger logger = new Logger(FeederOn.class.getName());
 
   private final Feeder feeder;
 
-  public FeederVerticalOn(Feeder feeder) {
+  public FeederOn(Feeder feeder) {
     logger.detail("constructor");
     this.feeder = feeder;
     addRequirements(feeder);
@@ -18,7 +18,7 @@ public class FeederVerticalOn extends CommandBase {
   @Override
   public void initialize() {
     logger.info("initialize");
-    feeder.verticalOn();
+    feeder.on();
   }
 
   @Override
@@ -29,7 +29,7 @@ public class FeederVerticalOn extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     logger.info("end");
-    feeder.verticalOff();
+    feeder.off();
   }
 
   @Override
