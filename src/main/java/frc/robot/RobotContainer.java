@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.AutoShoot;
 import frc.robot.commands.ClimbMove;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.IntakeOn;
@@ -122,6 +123,22 @@ public class RobotContainer {
     can.debug();
   }
 
+/***
+ * Button names and Controller
+ * kA = X
+ * kB = A
+ * kX = B
+ * kY = Y
+ * kBumperLeft = left bumper
+ * kBumperRight = right bumper
+ * kBack = left trigger
+ * kStart = right trigger
+ * kStickLeft = back
+ * kStickRight = start
+ * 11 = left stick
+ * 12 = right stick 
+ */
+
   private void configureButtonBindings() {
 //    new JoystickButton(driverController, Button.kA.value).whileHeld(new ShooterOn(shooter, feeder));
 //    // new JoystickButton(driverController, Button.kB.value).whileHeld(new LockTarget(vision, shooter, turret));
@@ -129,7 +146,10 @@ public class RobotContainer {
 //    new JoystickButton(driverController, Button.kX.value).whileHeld(new ShooterTrigger(shooter));
     new JoystickButton(driverController, Button.kBumperLeft.value).whileHeld(new ShooterOn(shooter, feeder));
     new JoystickButton(driverController, Button.kBumperRight.value).whileHeld(new IntakeOn(intake));
-}
+    new JoystickButton(driverController, Button.kBack.value)
+      .whenPressed(new AutoShoot(vision, shooter, turret, feeder))
+      .whenReleased(new ShooterOff(shooter));
+  }
 
   public Command getAutonomousCommand() {
     return new TurnDegrees(drivetrain, 180);
@@ -142,4 +162,4 @@ public class RobotContainer {
   public void setBrakeMode() {
     drivetrain.setBrakeMode();
   }
-}
+} 
