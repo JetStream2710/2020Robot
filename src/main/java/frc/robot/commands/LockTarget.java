@@ -41,7 +41,7 @@ public class LockTarget extends CommandBase {
       logger.info("has valid target");
       double offset = Vision.Entry.HORIZONTAL_OFFSET.getValue();
       //double speed = 0.1 + (0.3 * offset / 160);
-      double speed = offset > 2 ? -0.5 : 0.5;
+      double speed = offset > 2 ? -0.1 : 0.1;
       if (offset > 2) {
         turret.move(speed);
         logger.info("moving positive at offset: %f", offset);

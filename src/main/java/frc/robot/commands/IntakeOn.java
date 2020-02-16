@@ -3,9 +3,10 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
 import frc.robot.util.Logger;
+import frc.robot.util.Logger.Level;
 
 public class IntakeOn extends CommandBase {
-  private static final Logger logger = new Logger(IntakeOn.class.getName());
+  private static final Logger logger = new Logger(IntakeOn.class.getName(), Level.DETAIL, false);
 
   private final Intake intake;
 
@@ -23,7 +24,7 @@ public class IntakeOn extends CommandBase {
 
   @Override
   public void execute() {
-    logger.detail("execute");
+    //logger.detail("execute");
   }
 
   @Override

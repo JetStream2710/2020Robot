@@ -7,7 +7,7 @@ import frc.robot.util.Logger;
 import frc.robot.util.Logger.Level;
 
 public class DriveCommand extends CommandBase {
-  private static final Logger logger = new Logger(DriveCommand.class.getName(), Level.WARNING, false);
+  private static final Logger logger = new Logger(DriveCommand.class.getName(), Level.INFO, false);
 
   private final Drivetrain drivetrain;
   private final XboxController controller;
@@ -30,13 +30,14 @@ public class DriveCommand extends CommandBase {
   @Override
   public void execute() {
     double moveSpeed = -1 * controller.getRawAxis(1);
-    double rotateSpeed = 1 * controller.getRawAxis(2);
+    double rotateSpeed = -0.7 * controller.getRawAxis(2);
     double currentSpeed = drivetrain.getSpeed();
 
-    logger.info("execute moveSpeed: %f  rotateSpeed: %f  speed: %f", moveSpeed, rotateSpeed, currentSpeed);
+//    logger.info("execute moveSpeed: %f  rotateSpeed: %f  speed: %f", moveSpeed, rotateSpeed, currentSpeed);
     drivetrain.arcadeDrive(moveSpeed, rotateSpeed);
 
-    if (moveSpeed > 0.02 || moveSpeed < -0.02 || rotateSpeed > 0.02 || rotateSpeed < 0.02) {
+    logger.info("position: %d ", drivetrain.getLeftPosition());
+    if (moveSpeed > 0.02 || moveSpeed < -0.02 || rotateSpeed > 0.02 || rotateSpeed < -0.02) {
       logger.info("execute moveSpeed: %f  rotateSpeed: %f  speed: %f", moveSpeed, rotateSpeed, currentSpeed);
       drivetrain.arcadeDrive(moveSpeed, rotateSpeed);
 //      drivetrain.moveSpecific(moveSpeed, 1); // testing each motor individually
@@ -45,11 +46,11 @@ public class DriveCommand extends CommandBase {
       // First version of anti-skid algorithm. Need to factor in speed.
       //logger.info("braking speed: %f", drivetrain.getSpeed());
       drivetrain.arcadeDrive(0.0, 0.0);
-      if (currentSpeed < 50) {
+      if (currentSpeed < 1) {
         drivetrain.setBrakeMode();
       } else {
-        int brakingPower = 200;//(int) currentSpeed;//(int) Math.sqrt(currentSpeed);
-        if (brakeCounter % brakingPower == 0) {
+        int brakingPower = 2;//(int) currentSpeed;//(int) Math.sqrt(currentSpeed);
+        if (brakeCounter % brakingPower != 0) {
           drivetrain.setBrakeMode();
         } else {
           drivetrain.setCoastMode();

@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ClimbMove;
 import frc.robot.commands.DriveCommand;
+import frc.robot.commands.IntakeOn;
 import frc.robot.commands.LockTarget;
 import frc.robot.commands.ShooterOff;
 import frc.robot.commands.ShooterOn;
@@ -44,8 +45,8 @@ public class RobotContainer {
   private final Feeder feeder;
   private final Shooter shooter;
   private final Turret turret;
-  private final ControlPanel controlPanel;
-  private final Climb climb;
+//  private final ControlPanel controlPanel;
+  //private final Climb climb;
 
   // Sensor subsystems
   private final Vision vision;
@@ -67,8 +68,8 @@ public class RobotContainer {
     feeder = new Feeder();
     shooter = new Shooter();
     turret = new Turret();
-    controlPanel = new ControlPanel();
-    climb = new Climb();
+//    controlPanel = new ControlPanel();
+    //climb = new Climb();
 
     vision = new Vision();
     navx = new NavX();
@@ -81,7 +82,7 @@ public class RobotContainer {
 
     drivetrain.setDefaultCommand(new DriveCommand(drivetrain, driverController));
     drivetrain.setCoastMode();
-    climb.setDefaultCommand(new ClimbMove(climb, auxController));
+    //climb.setDefaultCommand(new ClimbMove(climb, auxController));
     turret.setDefaultCommand(new TurretCommand(turret, auxController, turretLimitSwitch));
 
     /*
@@ -127,10 +128,11 @@ public class RobotContainer {
     new JoystickButton(driverController, Button.kB.value).whileHeld(new LockTarget(vision, shooter, turret));
 //    new JoystickButton(driverController, Button.kX.value).whileHeld(new ShooterTrigger(shooter));
     new JoystickButton(driverController, Button.kBumperLeft.value).whileHeld(new ShooterOn(shooter, feeder));
+    new JoystickButton(driverController, Button.kBumperRight.value).whileHeld(new IntakeOn(intake));
 }
 
   public Command getAutonomousCommand() {
-    return new TurnDegrees(drivetrain, 90);
+    return new TurnDegrees(drivetrain, 180);
   }
 
   public void setCoastMode() {

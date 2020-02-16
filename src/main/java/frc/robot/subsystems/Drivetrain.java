@@ -58,7 +58,8 @@ public class Drivetrain extends SubsystemBase {
     motors[3] = rearRightTalon;
   }
 
-  public void arcadeDrive(final double moveSpeed, final double rotateSpeed) {
+  public void arcadeDrive(double moveSpeed, double rotateSpeed) {
+    rotateSpeed *= -1;
     logger.dashboard("drive move speed", moveSpeed);
     logger.dashboard("drive rotate speed", rotateSpeed);
     differentialDrive.arcadeDrive(moveSpeed, rotateSpeed);

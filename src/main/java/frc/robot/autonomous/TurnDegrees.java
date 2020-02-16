@@ -11,9 +11,9 @@ public class TurnDegrees extends CommandBase {
   private static final double ENCODER_UNITS_PER_DEGREE = ((24000 / (Math.PI * 6)) * (2 * Math.PI * WHEELBASE_RADIUS)) / 360;
 //  private static final double ENCODER_UNITS_PER_DEGREE = (Math.sqrt(25*25 + 23*23) * 24000) / (360 * 6);
   private static final double INIT_OUTPUT = 0.4;
-  private static final double MAX_OUTPUT = 1.0;
-  private static final double MIN_OUTPUT = 0.2;
-  private static final double ACCELERATION_OUTPUT_PER_PERIOD = 0.001;
+  private static final double MAX_OUTPUT = 0.55;
+  private static final double MIN_OUTPUT = 0.0;
+  private static final double ACCELERATION_OUTPUT_PER_PERIOD = 0.05;
   // multiplied deceleration by 5
   private static final double DECELERATION_OUTPUT_PER_PERIOD = 0.05;
 
@@ -122,8 +122,8 @@ public class TurnDegrees extends CommandBase {
   }
 
   private int calculateDecelOffset() {
-    return isTurningRight
+    return 20 * (isTurningRight
       ? (int) ((output - MIN_OUTPUT) / DECELERATION_OUTPUT_PER_PERIOD)
-      : (int) ((output + MIN_OUTPUT) / DECELERATION_OUTPUT_PER_PERIOD);
+      : (int) ((output + MIN_OUTPUT) / DECELERATION_OUTPUT_PER_PERIOD));
   }
 }

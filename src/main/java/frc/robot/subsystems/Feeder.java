@@ -27,7 +27,7 @@ public class Feeder extends SubsystemBase {
   }
 
   public void on(){
-    group.set(FEEDER_IN_SPEED);
+    group.set(-FEEDER_IN_SPEED);
   }
 
   public void off(){

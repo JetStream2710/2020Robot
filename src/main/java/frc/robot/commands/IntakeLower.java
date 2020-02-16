@@ -18,7 +18,7 @@ public class IntakeLower extends CommandBase {
   @Override
   public void initialize() {
     logger.info("initialize");
-    intake.lower();
+//    intake.lower();
   }
 
   @Override

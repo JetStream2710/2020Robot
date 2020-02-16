@@ -15,7 +15,6 @@ public class Turret extends SubsystemBase {
   public Turret() {
     logger.detail("constructor");
     talon = MotorFactory.makeTalon(Constants.TURRET_TALON, "Turret Talon");
-    talon.setSelectedSensorPosition(0);
   }
 
   public void move(double speed) {

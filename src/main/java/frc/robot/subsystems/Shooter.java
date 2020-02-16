@@ -39,7 +39,7 @@ public class Shooter extends SubsystemBase {
     leftTalon.set(-SHOOTER_SPEED);
     rightTalon.set(SHOOTER_SPEED);
     accelerator.set(-SHOOTER_SPEED);
-    trigger.set(-1);
+    trigger.set(1);
     logger.dashboard("shooter", "on");    
   }
 
@@ -70,7 +70,7 @@ public class Shooter extends SubsystemBase {
   }
 
   public void triggerOn() {
-    trigger.set(-1);
+    trigger.set(1);
   }
 
   public void triggerOff() {
