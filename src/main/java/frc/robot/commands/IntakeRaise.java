@@ -18,7 +18,7 @@ public class IntakeRaise extends CommandBase {
   @Override
   public void initialize() {
     logger.info("initialized");
-//    intake.raise();
+    intake.raise();
   }
 
   @Override

@@ -13,8 +13,13 @@ import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.AutoShoot;
 import frc.robot.commands.ClimbMove;
+import frc.robot.commands.ControlPanelExtend;
+import frc.robot.commands.ControlPanelRetract;
+import frc.robot.commands.ControlPanelTurn;
 import frc.robot.commands.DriveCommand;
+import frc.robot.commands.IntakeLower;
 import frc.robot.commands.IntakeOn;
+import frc.robot.commands.IntakeRaise;
 import frc.robot.commands.LockTarget;
 import frc.robot.commands.ShooterOff;
 import frc.robot.commands.ShooterOn;
@@ -46,7 +51,7 @@ public class RobotContainer {
   private final Feeder feeder;
   private final Shooter shooter;
   private final Turret turret;
-//  private final ControlPanel controlPanel;
+  private final ControlPanel controlPanel;
   //private final Climb climb;
 
   // Sensor subsystems
@@ -69,7 +74,7 @@ public class RobotContainer {
     feeder = new Feeder();
     shooter = new Shooter();
     turret = new Turret();
-//    controlPanel = new ControlPanel();
+    controlPanel = new ControlPanel();
     //climb = new Climb();
 
     vision = new Vision();
@@ -144,16 +149,21 @@ public class RobotContainer {
 //    // new JoystickButton(driverController, Button.kB.value).whileHeld(new LockTarget(vision, shooter, turret));
     new JoystickButton(driverController, Button.kB.value).whileHeld(new LockTarget(vision, shooter, turret));
 //    new JoystickButton(driverController, Button.kX.value).whileHeld(new ShooterTrigger(shooter));
-    new JoystickButton(driverController, Button.kBumperLeft.value).whileHeld(new ShooterTrigger(feeder));
-    new JoystickButton(driverController, Button.kBack.value).whileHeld(new ShooterOn(shooter));
-    new JoystickButton(driverController, Button.kBumperRight.value).whileHeld(new IntakeOn(intake));
-    new JoystickButton(driverController, Button.kStart.value)
+    new JoystickButton(driverController, Button.kBumperLeft.value).whileHeld(new ShooterOn(shooter, feeder));
+    new JoystickButton(driverController, Button.kBack.value)
       .whenPressed(new AutoShoot(vision, shooter, turret, feeder))
       .whenReleased(new ShooterOff(shooter));
+
+    new JoystickButton(auxController, Button.kB.value).whileHeld(new IntakeOn(intake));
+    new JoystickButton(auxController, Button.kBumperLeft.value).whenPressed(new IntakeRaise(intake));
+    new JoystickButton(auxController, Button.kBack.value).whenPressed(new IntakeLower(intake));
+    new JoystickButton(auxController, Button.kBumperRight.value).whenPressed(new ControlPanelExtend(controlPanel));
+    new JoystickButton(auxController, Button.kStart.value).whenPressed(new ControlPanelRetract(controlPanel));
+    new JoystickButton(auxController, Button.kX.value).whileHeld(new ControlPanelTurn(controlPanel));
   }
 
   public Command getAutonomousCommand() {
-    return new TurnDegrees(drivetrain, 180);
+    return null;//new TurnDegrees(drivetrain, 180);
   }
 
   public void setCoastMode() {
