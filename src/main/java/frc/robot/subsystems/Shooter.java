@@ -16,7 +16,6 @@ public class Shooter extends SubsystemBase {
   private final WPI_TalonFX leftTalon;
   private final WPI_TalonFX rightTalon;
   private final WPI_VictorSPX accelerator;
-  private final WPI_VictorSPX trigger;
 
   private static final int MAX_PERIOD_COUNT = 10;
 
@@ -31,7 +30,6 @@ public class Shooter extends SubsystemBase {
     leftTalon = MotorFactory.makeTalonFX(Constants.SHOOTER_LEFT_TALON, "leftTalon");
     rightTalon = MotorFactory.makeTalonFX(Constants.SHOOTER_RIGHT_TALON, "rightTalon");
     accelerator = MotorFactory.makeVictor(Constants.SHOOTER_ACCEL_VICTOR, "accelVictor");
-    trigger = MotorFactory.makeVictor(Constants.SHOOTER_TRIGGER_VICTOR, "triggerVictor");
   }
 
   // TODO: set w specific encoder value?
@@ -39,7 +37,6 @@ public class Shooter extends SubsystemBase {
     leftTalon.set(-SHOOTER_SPEED);
     rightTalon.set(SHOOTER_SPEED);
     accelerator.set(-SHOOTER_SPEED);
-    trigger.set(1);
     logger.dashboard("shooter", "on");    
   }
 
@@ -47,10 +44,10 @@ public class Shooter extends SubsystemBase {
     leftTalon.set(0);
     rightTalon.set(0);
     accelerator.set(0);
-    trigger.set(0);
     logger.dashboard("shooter", "off");
   }
 
+  
   public void acceleratorOn(){
     accelerator.set(-SHOOTER_SPEED);
   }
@@ -67,14 +64,6 @@ public class Shooter extends SubsystemBase {
   public void shooterOff(){
     leftTalon.set(0);
     rightTalon.set(0);
-  }
-
-  public void triggerOn() {
-    trigger.set(1);
-  }
-
-  public void triggerOff() {
-    trigger.set(0);
   }
 
   public double speed() {

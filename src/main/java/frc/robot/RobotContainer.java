@@ -144,9 +144,10 @@ public class RobotContainer {
 //    // new JoystickButton(driverController, Button.kB.value).whileHeld(new LockTarget(vision, shooter, turret));
     new JoystickButton(driverController, Button.kB.value).whileHeld(new LockTarget(vision, shooter, turret));
 //    new JoystickButton(driverController, Button.kX.value).whileHeld(new ShooterTrigger(shooter));
-    new JoystickButton(driverController, Button.kBumperLeft.value).whileHeld(new ShooterOn(shooter, feeder));
+    new JoystickButton(driverController, Button.kBumperLeft.value).whileHeld(new ShooterTrigger(feeder));
+    new JoystickButton(driverController, Button.kBack.value).whileHeld(new ShooterOn(shooter));
     new JoystickButton(driverController, Button.kBumperRight.value).whileHeld(new IntakeOn(intake));
-    new JoystickButton(driverController, Button.kBack.value)
+    new JoystickButton(driverController, Button.kStart.value)
       .whenPressed(new AutoShoot(vision, shooter, turret, feeder))
       .whenReleased(new ShooterOff(shooter));
   }

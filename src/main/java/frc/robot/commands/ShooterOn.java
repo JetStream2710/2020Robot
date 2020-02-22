@@ -15,21 +15,20 @@ public class ShooterOn extends CommandBase {
   private int[] rightSidePositionArray = new int[MAX_PERIOD_COUNT];
 
   private final Shooter shooter;
-  private final Feeder feeder;
   
-  public ShooterOn(Shooter shooter, Feeder feeder) {
+  public ShooterOn(Shooter shooter) {
     logger.detail("constructor");
     this.shooter = shooter;
-    this.feeder = feeder;
-    addRequirements(feeder);
+    addRequirements(shooter);
   }
 
   @Override
   public void initialize() {
     logger.info("initialize");
-    shooter.allOn();
+    shooter.shooterOn();
+    shooter.acceleratorOn();
+    //shooter.allOn();
     //shooter.triggerOn();
-    feeder.on();
   }
 
   @Override
@@ -49,9 +48,10 @@ public class ShooterOn extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     logger.info("end");
-    shooter.allOff();
+    shooter.shooterOff();
+    shooter.acceleratorOff();
     //shooter.triggerOff();
-    feeder.off();
+    //feeder.off();
   }
 
   @Override

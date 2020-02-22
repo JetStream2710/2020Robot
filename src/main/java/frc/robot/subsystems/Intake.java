@@ -12,8 +12,8 @@ import frc.robot.util.Logger.Level;
 public class Intake extends SubsystemBase {
   private static final Logger logger = new Logger(Intake.class.getName(), Level.DETAIL, true);
 
-  public static final double INTAKE_IN_SPEED = 1;
-  public static final double INTAKE_OUT_SPEED = -0.3;
+  public static final double INTAKE_IN_SPEED = -1;
+  public static final double INTAKE_OUT_SPEED = 0.3;
 
 //  private final Solenoid solenoidOn;
 //  private final Solenoid solenoidOff;

@@ -15,6 +15,7 @@ public class Feeder extends SubsystemBase {
 
   private final WPI_VictorSPX leftVictor;
   private final WPI_VictorSPX rightVictor;
+  private final WPI_VictorSPX trigger;
 
   private final SpeedControllerGroup group;
 
@@ -22,20 +23,39 @@ public class Feeder extends SubsystemBase {
     logger.detail("constructor");
     leftVictor = MotorFactory.makeVictor(Constants.FEEDER_LEFT_VICTOR, "Feeder Left Victor");
     rightVictor = MotorFactory.makeVictor(Constants.FEEDER_RIGHT_VICTOR, "Feeder Right Victor");
+    trigger = MotorFactory.makeVictor(Constants.SHOOTER_TRIGGER_VICTOR, "triggerVictor");
 
     group = new SpeedControllerGroup(leftVictor, rightVictor);
   }
 
-  public void on(){
+  public void allOn(){
+    group.set(-FEEDER_IN_SPEED);
+    trigger.set(-1);
+  }
+
+  public void allOff(){
+    group.set(0);
+    trigger.set(0);
+  }
+
+  public void feederOn(){
     group.set(-FEEDER_IN_SPEED);
   }
 
-  public void off(){
+  public void feederOff(){
     group.set(0);
   }
 
   public void setSpeed(double speed){
     group.set(speed);
+  }
+
+  public void triggerOn() {
+    trigger.set(-1);
+  }
+
+  public void triggerOff() {
+    trigger.set(0);
   }
 
 /**

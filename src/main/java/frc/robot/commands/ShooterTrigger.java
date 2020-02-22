@@ -1,24 +1,25 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Shooter;
 import frc.robot.util.Logger;
 
 public class ShooterTrigger extends CommandBase {
   private static final Logger logger = new Logger(ShooterTrigger.class.getName(), Logger.Level.DETAIL, false);
 
-  private final Shooter shooter;
+  private final Feeder feeder;
   
-  public ShooterTrigger(Shooter shooter) {
+  public ShooterTrigger( Feeder feeder) {
     logger.detail("constructor");
-    this.shooter = shooter;
-    addRequirements(shooter);
+    this.feeder = feeder;
+    addRequirements(feeder);
   }
 
   @Override
   public void initialize() {
     logger.info("initialize");
-    shooter.triggerOn();
+    feeder.allOn();
   }
 
   @Override
@@ -29,7 +30,7 @@ public class ShooterTrigger extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     logger.info("end");
-    shooter.triggerOff();
+    feeder.allOff();
   }
 
   @Override

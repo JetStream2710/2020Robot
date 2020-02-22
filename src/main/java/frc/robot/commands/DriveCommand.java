@@ -7,7 +7,7 @@ import frc.robot.util.Logger;
 import frc.robot.util.Logger.Level;
 
 public class DriveCommand extends CommandBase {
-  private static final Logger logger = new Logger(DriveCommand.class.getName(), Level.INFO, false);
+  private static final Logger logger = new Logger(DriveCommand.class.getName(), Level.WARNING, false);
 
   private final Drivetrain drivetrain;
   private final XboxController controller;

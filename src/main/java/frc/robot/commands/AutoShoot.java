@@ -10,6 +10,6 @@ import frc.robot.util.Logger;
 public class AutoShoot extends SequentialCommandGroup {
 
   public AutoShoot(Vision vision, Shooter shooter, Turret turret, Feeder feeder) {
-    super(new LockTarget(vision, shooter, turret), new ShooterOn(shooter, feeder));
+    super(new LockTarget(vision, shooter, turret), new ShooterOn(shooter));
   }
 }
