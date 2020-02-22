@@ -18,7 +18,7 @@ public class FeederOn extends CommandBase {
   @Override
   public void initialize() {
     logger.info("initialize");
-    feeder.feederOn();
+    feeder.allOn();
   }
 
   @Override
@@ -29,7 +29,7 @@ public class FeederOn extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     logger.info("end");
-    feeder.feederOff();
+    feeder.allOff();
   }
 
   @Override

@@ -29,7 +29,7 @@ public class TurretCommand extends CommandBase {
 
   @Override
   public void execute() {
-    double speed = -1 * controller.getRawAxis(0);
+    double speed = -0.3 * controller.getRawAxis(0);
     logger.info("execute speed: %f", speed);
     if ((speed < 0 && turret.getPosition() > 7000) ||
         (speed > 0 && turret.getPosition() < -7000)) {

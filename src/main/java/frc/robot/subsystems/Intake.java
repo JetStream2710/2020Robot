@@ -15,29 +15,25 @@ public class Intake extends SubsystemBase {
   public static final double INTAKE_IN_SPEED = -1;
   public static final double INTAKE_OUT_SPEED = 0.3;
 
-  private final Solenoid solenoidOn;
-  private final Solenoid solenoidOff;
+  private final Solenoid solenoid;
 
   private final WPI_VictorSPX victor;
 
   public Intake() {
     logger.detail("constructor");
-    solenoidOn = new Solenoid(Constants.PCM_NODE, Constants.INTAKE_SOLENOID_ON);
-    solenoidOff = new Solenoid(Constants.PCM_NODE, Constants.INTAKE_SOLENOID_OFF);
+    solenoid = new Solenoid(Constants.PCM_NODE, Constants.INTAKE_SOLENOID);
     victor = MotorFactory.makeVictor(Constants.INTAKE_VICTOR, "Intake Victor");
   }
 
 
   // TODO: verify solenoid values
   public void raise() {
-    solenoidOn.set(false);
-    solenoidOff.set(true);
+    solenoid.set(true);
     logger.dashboard("intake", "raised");
   }
 
   public void lower() {
-    solenoidOn.set(true);
-    solenoidOff.set(false);
+    solenoid.set(false);
     logger.dashboard("intake", "lowered");
   }
 

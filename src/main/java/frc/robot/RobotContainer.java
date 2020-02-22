@@ -17,9 +17,11 @@ import frc.robot.commands.ControlPanelExtend;
 import frc.robot.commands.ControlPanelRetract;
 import frc.robot.commands.ControlPanelTurn;
 import frc.robot.commands.DriveCommand;
+import frc.robot.commands.FeederOn;
 import frc.robot.commands.IntakeLower;
 import frc.robot.commands.IntakeOn;
 import frc.robot.commands.IntakeRaise;
+import frc.robot.commands.IntakeReverse;
 import frc.robot.commands.LockTarget;
 import frc.robot.commands.ShooterOff;
 import frc.robot.commands.ShooterOn;
@@ -145,21 +147,20 @@ public class RobotContainer {
  */
 
   private void configureButtonBindings() {
-//    new JoystickButton(driverController, Button.kA.value).whileHeld(new ShooterOn(shooter, feeder));
-//    // new JoystickButton(driverController, Button.kB.value).whileHeld(new LockTarget(vision, shooter, turret));
     new JoystickButton(driverController, Button.kB.value).whileHeld(new LockTarget(vision, shooter, turret));
-//    new JoystickButton(driverController, Button.kX.value).whileHeld(new ShooterTrigger(shooter));
-    new JoystickButton(driverController, Button.kBumperLeft.value).whileHeld(new ShooterOn(shooter, feeder));
-    new JoystickButton(driverController, Button.kBack.value)
-      .whenPressed(new AutoShoot(vision, shooter, turret, feeder))
-      .whenReleased(new ShooterOff(shooter));
+    new JoystickButton(driverController, Button.kBumperRight.value).whileHeld(new FeederOn(feeder));
+    new JoystickButton(driverController, Button.kBumperLeft.value).whileHeld(new ShooterOn(shooter));
+//    new JoystickButton(driverController, Button.kBack.value)
+//      .whenPressed(new AutoShoot(vision, shooter, turret, feeder))
+//      .whenReleased(new ShooterOff(shooter));
 
     new JoystickButton(auxController, Button.kB.value).whileHeld(new IntakeOn(intake));
+    new JoystickButton(auxController, Button.kX.value).whileHeld(new IntakeReverse(intake));
     new JoystickButton(auxController, Button.kBumperLeft.value).whenPressed(new IntakeRaise(intake));
     new JoystickButton(auxController, Button.kBack.value).whenPressed(new IntakeLower(intake));
     new JoystickButton(auxController, Button.kBumperRight.value).whenPressed(new ControlPanelExtend(controlPanel));
     new JoystickButton(auxController, Button.kStart.value).whenPressed(new ControlPanelRetract(controlPanel));
-    new JoystickButton(auxController, Button.kX.value).whileHeld(new ControlPanelTurn(controlPanel));
+    new JoystickButton(auxController, Button.kY.value).whileHeld(new ControlPanelTurn(controlPanel));
   }
 
   public Command getAutonomousCommand() {
@@ -172,5 +173,13 @@ public class RobotContainer {
 
   public void setBrakeMode() {
     drivetrain.setBrakeMode();
+  }
+
+  public void setIntakeLower() {
+    intake.lower(); 
+  }
+
+  public void setIntakeRaise() {
+    intake.raise();
   }
 } 

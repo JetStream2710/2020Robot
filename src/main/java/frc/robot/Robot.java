@@ -28,6 +28,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     robotContainer = new RobotContainer();
+    robotContainer.setIntakeLower();
 //    robotContainer.setCoastMode();
   }
 
@@ -53,11 +54,13 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledInit() {
     logger.info("Disabled Init");
+    robotContainer.setIntakeLower();
 //    robotContainer.setCoastMode();
   }
 
   @Override
   public void disabledPeriodic() {
+
   }
 
   /**
@@ -93,6 +96,7 @@ public class Robot extends TimedRobot {
     if (autonomousCommand != null) {
       autonomousCommand.cancel();
     }
+    robotContainer.setIntakeLower();
   }
 
   /**

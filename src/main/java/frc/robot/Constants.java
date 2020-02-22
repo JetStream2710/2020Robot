@@ -8,8 +8,7 @@ public final class Constants {
     public static final int CLIMB_RETRACT_TALON = 11;
     public static final int CLIMB_HORIZONTAL_VICTOR = 0;
     // control panel hardware constants
-    public static final int CONTROL_PANEL_SOLENOID_ON = 1;
-    public static final int CONTROL_PANEL_SOLENOID_OFF = 2;
+    public static final int CONTROL_PANEL_SOLENOID = 5;
     public static final int CONTROL_PANEL_TALON = 0;
     // drivetrain hardware constants
     public static final int DRIVETRAIN_FRONT_RIGHT_TALON = 1;
@@ -20,8 +19,7 @@ public final class Constants {
     public static final int FEEDER_RIGHT_VICTOR = 8;
     public static final int FEEDER_LEFT_VICTOR = 10;
     // intake hardware constants
-    public static final int INTAKE_SOLENOID_ON = 3;
-    public static final int INTAKE_SOLENOID_OFF = 4;
+    public static final int INTAKE_SOLENOID = 4;
     public static final int INTAKE_VICTOR = 14;
     // shooter hardware constants
     public static final int SHOOTER_LEFT_TALON = 5;

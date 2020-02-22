@@ -17,13 +17,11 @@ public class ControlPanel extends SubsystemBase implements DoubleSupplier {
 
   private final WPI_TalonSRX turnTalon;
 
-  private final Solenoid solenoidOn;
-  private final Solenoid solenoidOff;
+  private final Solenoid solenoid;
 
   public ControlPanel() {
     logger.detail("constructor");
-    solenoidOn = new Solenoid(Constants.PCM_NODE, Constants.CONTROL_PANEL_SOLENOID_ON);
-    solenoidOff = new Solenoid(Constants.PCM_NODE, Constants.CONTROL_PANEL_SOLENOID_OFF); 
+    solenoid = new Solenoid(Constants.PCM_NODE, Constants.CONTROL_PANEL_SOLENOID);
     turnTalon = MotorFactory.makeTalon(Constants.CONTROL_PANEL_TALON , "Control Panel Turn Talon");
   }
 
@@ -39,14 +37,12 @@ public class ControlPanel extends SubsystemBase implements DoubleSupplier {
 
   // TODO: check solenoid values
   public void extend() {
-    solenoidOn.set(true);
-    solenoidOff.set(false);
+    solenoid.set(true);
     logger.info("control panel extended", "yes");
   }
 
   public void retract() {
-    solenoidOn.set(false);
-    solenoidOff.set(true);
+    solenoid.set(false);
     logger.info("control panel extended", "no");
   }
 
