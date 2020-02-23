@@ -19,6 +19,7 @@ public class IntakeRaise extends CommandBase {
   public void initialize() {
     logger.info("initialized");
     intake.raise();
+    logger.dashboard("Intake Raised", "raised", null);
   }
 
   @Override

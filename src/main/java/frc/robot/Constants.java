@@ -9,7 +9,7 @@ public final class Constants {
     public static final int CLIMB_HORIZONTAL_VICTOR = 0;
     // control panel hardware constants
     public static final int CONTROL_PANEL_SOLENOID = 5;
-    public static final int CONTROL_PANEL_TALON = 0;
+    public static final int CONTROL_PANEL_TALON = 12; //changed from 0 to 12
     // drivetrain hardware constants
     public static final int DRIVETRAIN_FRONT_RIGHT_TALON = 1;
     public static final int DRIVETRAIN_REAR_RIGHT_TALON = 2;

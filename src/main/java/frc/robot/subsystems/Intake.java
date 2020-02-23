@@ -15,6 +15,8 @@ public class Intake extends SubsystemBase {
   public static final double INTAKE_IN_SPEED = -1;
   public static final double INTAKE_OUT_SPEED = 0.3;
 
+  public static boolean isRaised = false;
+
   private final Solenoid solenoid;
 
   private final WPI_VictorSPX victor;
@@ -29,11 +31,13 @@ public class Intake extends SubsystemBase {
   // TODO: verify solenoid values
   public void raise() {
     solenoid.set(true);
+    isRaised = true;
     logger.dashboard("intake", "raised");
   }
 
   public void lower() {
     solenoid.set(false);
+    isRaised = false;
     logger.dashboard("intake", "lowered");
   }
 

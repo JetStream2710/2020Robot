@@ -29,7 +29,7 @@ public class DriveCommand extends CommandBase {
 
   @Override
   public void execute() {
-    double moveSpeed = -1 * controller.getRawAxis(1);
+    double moveSpeed = -0.8 * controller.getRawAxis(1);
     double rotateSpeed = -0.7 * controller.getRawAxis(2);
     double currentSpeed = drivetrain.getSpeed();
 

@@ -18,6 +18,7 @@ import frc.robot.commands.ControlPanelRetract;
 import frc.robot.commands.ControlPanelTurn;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.FeederOn;
+import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeLower;
 import frc.robot.commands.IntakeOn;
 import frc.robot.commands.IntakeRaise;
@@ -92,6 +93,7 @@ public class RobotContainer {
     drivetrain.setCoastMode();
     //climb.setDefaultCommand(new ClimbMove(climb, auxController));
     turret.setDefaultCommand(new TurretCommand(turret, auxController, turretLimitSwitch));
+    intake.setDefaultCommand(new IntakeCommand(intake));
 
     /*
     chooser.addOption("Coast Mode", new Command(){

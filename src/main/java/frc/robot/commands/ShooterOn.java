@@ -43,6 +43,7 @@ public class ShooterOn extends CommandBase {
     rightSidePositionArray[periodicIndex] = shooter.getRightPosition();
 
     logger.info("shooter speed: %f   speed2: %f", shooter.speed(), getSpeed());
+    logger.dashboard("shooter speed", getSpeed());
   }
 
   @Override

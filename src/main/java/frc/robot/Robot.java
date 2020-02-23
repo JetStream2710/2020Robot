@@ -54,8 +54,7 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledInit() {
     logger.info("Disabled Init");
-    robotContainer.setIntakeLower();
-//    robotContainer.setCoastMode();
+    robotContainer.setCoastMode();
   }
 
   @Override
