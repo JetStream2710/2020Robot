@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.util.Logger;
+import edu.wpi.cscore.UsbCamera;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -30,7 +31,8 @@ public class Robot extends TimedRobot {
     robotContainer = new RobotContainer();
     robotContainer.setIntakeLower();
 //    robotContainer.setCoastMode();
-  }
+    UsbCamera camera = CameraServer.getInstance().startAutomaticCaputre();
+}
 
   /**
    * This function is called every robot packet, no matter the mode. Use this for items like
