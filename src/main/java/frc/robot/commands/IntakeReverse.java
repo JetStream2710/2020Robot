@@ -18,6 +18,7 @@ public class IntakeReverse extends CommandBase {
   @Override
   public void initialize() {
     logger.info("initialize");
+    intake.lower();
     intake.reverse();
   }
 
