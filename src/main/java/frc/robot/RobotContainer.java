@@ -1,15 +1,11 @@
 package frc.robot;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.AutoShoot;
 import frc.robot.commands.ClimbMove;
@@ -151,7 +147,8 @@ public class RobotContainer {
   private void configureButtonBindings() {
     new JoystickButton(driverController, Button.kB.value).whileHeld(new LockTarget(vision, shooter, turret));
     new JoystickButton(driverController, Button.kBumperRight.value).whileHeld(new FeederOn(feeder));
-    new JoystickButton(driverController, Button.kBumperLeft.value).whileHeld(new ShooterOn(shooter));
+//    new JoystickButton(driverController, Button.kBumperLeft.value).whileHeld(new ShooterOn(shooter));
+    new JoystickButton(driverController, Button.kBumperLeft.value).whileHeld(new AutoShoot(vision, shooter, turret, feeder));
 //    new JoystickButton(driverController, Button.kBack.value)
 //      .whenPressed(new AutoShoot(vision, shooter, turret, feeder))
 //      .whenReleased(new ShooterOff(shooter));

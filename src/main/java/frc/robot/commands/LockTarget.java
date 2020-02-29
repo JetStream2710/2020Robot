@@ -59,7 +59,7 @@ public class LockTarget extends CommandBase {
       logger.info("Distance from area: %f  horiz: %f  vert: %f",
         vision.getDistanceFromArea(), vision.getDistanceFromHorizontal(), vision.getDistanceFromVertical());
     }
-    /**
+  /**
    * first receive information from vision about distance and from navx about angle
    * second turn turret according degrees
    * third move shooter up/down according to the distance and corresponding angle w ground
