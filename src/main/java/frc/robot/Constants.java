@@ -5,7 +5,7 @@ public final class Constants {
 
     // climb hardware constants
     public static final int CLIMB_EXTEND_TALON = 15;
-    public static final int CLIMB_RETRACT_TALON = 11;
+    public static final int CLIMB_RETRACT_TALON = 14;
     public static final int CLIMB_HORIZONTAL_VICTOR = 0;
     // control panel hardware constants
     public static final int CONTROL_PANEL_SOLENOID = 5;
@@ -17,15 +17,15 @@ public final class Constants {
     public static final int DRIVETRAIN_REAR_LEFT_TALON = 4;
     // feeder hardware constants
     public static final int FEEDER_RIGHT_VICTOR = 8;
-    public static final int FEEDER_LEFT_VICTOR = 10;
+    public static final int FEEDER_LEFT_VICTOR = 13;
     // intake hardware constants
     public static final int INTAKE_SOLENOID = 4;
-    public static final int INTAKE_VICTOR = 14;
+    public static final int INTAKE_VICTOR = 10;
     // shooter hardware constants
     public static final int SHOOTER_LEFT_TALON = 5;
     public static final int SHOOTER_RIGHT_TALON = 6;
     public static final int SHOOTER_TRIGGER_VICTOR = 9;
-    public static final int SHOOTER_ACCEL_VICTOR = 13;
+    public static final int SHOOTER_ACCEL_VICTOR = 11;
     // turret hardware constants
     public static final int TURRET_TALON = 7;
     // pneumatics

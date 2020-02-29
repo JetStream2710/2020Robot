@@ -11,6 +11,7 @@ import frc.robot.commands.AutoShoot;
 import frc.robot.commands.ClimbMove;
 import frc.robot.commands.ControlPanelExtend;
 import frc.robot.commands.ControlPanelRetract;
+import frc.robot.commands.ControlPanelStage1;
 import frc.robot.commands.ControlPanelTurn;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.FeederOn;
@@ -90,6 +91,7 @@ public class RobotContainer {
     turret.setDefaultCommand(new TurretCommand(turret, auxController, turretLimitSwitch));
     intake.setDefaultCommand(new IntakeCommand(intake));
 
+  
     /*
     chooser.addOption("Coast Mode", new Command(){
       @Override
@@ -159,6 +161,7 @@ public class RobotContainer {
     new JoystickButton(auxController, Button.kBumperRight.value).whenPressed(new ControlPanelExtend(controlPanel));
     new JoystickButton(auxController, Button.kStart.value).whenPressed(new ControlPanelRetract(controlPanel));
     new JoystickButton(auxController, Button.kY.value).whileHeld(new ControlPanelTurn(controlPanel));
+//    new JoystickButton(auxController, Button.kA.value).whenPressed(new ControlPanelStage1(controlPanel));
   }
 
   public Command getAutonomousCommand() {
