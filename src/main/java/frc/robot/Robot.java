@@ -31,7 +31,7 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     robotContainer = new RobotContainer();
     robotContainer.setIntakeLower();
-//    robotContainer.setCoastMode();
+    robotContainer.setCoastMode();
     UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
 }
 

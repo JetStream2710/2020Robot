@@ -52,6 +52,8 @@ public class ControlPanel extends SubsystemBase implements DoubleSupplier {
     return position;
   }
 
+
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
