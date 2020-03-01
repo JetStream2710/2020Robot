@@ -19,7 +19,6 @@ public class IntakeLower extends CommandBase {
   public void initialize() {
     logger.info("initialize");
     intake.lower();
-    logger.dashboard("Intake Raised", "lowered", null);
   }
 
   @Override
@@ -30,6 +29,7 @@ public class IntakeLower extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     logger.detail("end");
+    intake.off();
   }
 
   @Override

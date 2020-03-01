@@ -10,12 +10,12 @@ import frc.robot.util.MotorFactory;
 import frc.robot.util.Logger.Level;
 
 public class Intake extends SubsystemBase {
-  private static final Logger logger = new Logger(Intake.class.getName(), Level.SEVERE, true);
+  private static final Logger logger = new Logger(Intake.class.getName(), Level.WARNING, true);
 
-  public static final double INTAKE_IN_SPEED = -1;
-  public static final double INTAKE_OUT_SPEED = 0.3;
+  public static final double INTAKE_IN_SPEED = 1;
+  public static final double INTAKE_OUT_SPEED = -0.3;
 
-  private boolean isRaised = false;
+  public boolean isRaised = false;
 
   private final Solenoid solenoid;
 
@@ -51,12 +51,12 @@ public class Intake extends SubsystemBase {
 
   public void on() {
     victor.set(INTAKE_IN_SPEED);
-    logger.info("intake speed %d", INTAKE_IN_SPEED);
+    logger.info("intake speed %f", INTAKE_IN_SPEED);
   }
 
   public void reverse() {
     victor.set(INTAKE_OUT_SPEED);
-    logger.info("intake speed %d", INTAKE_OUT_SPEED);
+    logger.info("intake speed %f", INTAKE_OUT_SPEED);
   }
 
   public void off() {

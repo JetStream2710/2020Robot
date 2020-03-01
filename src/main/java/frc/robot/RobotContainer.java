@@ -26,6 +26,7 @@ import frc.robot.commands.ShooterOn;
 import frc.robot.commands.ShooterTrigger;
 import frc.robot.commands.TurretCommand;
 import frc.robot.autonomous.DefaultSequence;
+import frc.robot.autonomous.DoubleShoot;
 import frc.robot.autonomous.MoveDistance;
 import frc.robot.autonomous.TurnDegrees;
 import frc.robot.subsystems.Climb;
@@ -77,6 +78,7 @@ public class RobotContainer {
     //climb = new Climb();
 
     vision = new Vision();
+//    vision.turnOffCamLeds();
     navx = new NavX();
 //    colorSensor = new ColorSensor();
     turretLimitSwitch = new DigitalInput(0);
@@ -89,7 +91,7 @@ public class RobotContainer {
     drivetrain.setCoastMode();
     //climb.setDefaultCommand(new ClimbMove(climb, auxController));
     turret.setDefaultCommand(new TurretCommand(turret, auxController, turretLimitSwitch));
-    intake.setDefaultCommand(new IntakeCommand(intake));
+    //intake.setDefaultCommand(new IntakeCommand(intake));
 
   
     /*
@@ -154,18 +156,20 @@ public class RobotContainer {
 //      .whenPressed(new AutoShoot(vision, shooter, turret, feeder))
 //      .whenReleased(new ShooterOff(shooter));
 
+//    new JoystickButton(auxController, Button.kB.value).whenPressed(new IntakeCommand(intake));
     new JoystickButton(auxController, Button.kB.value).whileHeld(new IntakeOn(intake));
     new JoystickButton(auxController, Button.kX.value).whileHeld(new IntakeReverse(intake));
     new JoystickButton(auxController, Button.kBumperLeft.value).whenPressed(new IntakeRaise(intake));
     new JoystickButton(auxController, Button.kBack.value).whenPressed(new IntakeLower(intake));
+
     new JoystickButton(auxController, Button.kBumperRight.value).whenPressed(new ControlPanelExtend(controlPanel));
     new JoystickButton(auxController, Button.kStart.value).whenPressed(new ControlPanelRetract(controlPanel));
     new JoystickButton(auxController, Button.kY.value).whileHeld(new ControlPanelTurn(controlPanel));
-//    new JoystickButton(auxController, Button.kA.value).whenPressed(new ControlPanelStage1(controlPanel));
+    new JoystickButton(auxController, Button.kA.value).whenPressed(new ControlPanelStage1(controlPanel));
   }
 
   public Command getAutonomousCommand() {
-    return null;//new TurnDegrees(drivetrain, 180);
+    return new DoubleShoot(vision, shooter, turret, feeder, drivetrain);
   }
 
   public void setCoastMode() {

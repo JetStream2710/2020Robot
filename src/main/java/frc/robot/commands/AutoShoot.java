@@ -3,6 +3,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Feeder;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.NavX;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Turret;
@@ -18,9 +19,16 @@ public class AutoShoot extends CommandBase {
   private final Shooter shooter;
   private final Turret turret;
   private final Feeder feeder;
+  private long shootTime;
+  private long endCommandTime;
+
 
   public AutoShoot(Vision vision, Shooter shooter, Turret turret, Feeder feeder) {
-    logger.detail("constructor");
+    this(vision, shooter, turret, feeder, -1);
+  }
+
+  public AutoShoot(Vision vision, Shooter shooter, Turret turret, Feeder feeder, long delayMillis) {
+      logger.detail("constructor");
     this.vision = vision;
 //    this.navx = navx;
     this.shooter = shooter;
@@ -31,13 +39,21 @@ public class AutoShoot extends CommandBase {
     addRequirements(shooter);
     addRequirements(turret);
     addRequirements(feeder);
+    if (delayMillis > 0) {
+      endCommandTime = System.currentTimeMillis() + delayMillis;
+    } else {
+      endCommandTime = -1;
+    }
   }
 
   @Override
   public void initialize() {
     logger.detail("initialize");
+    vision.turnOnCamLeds();
     shooter.shooterOn();
     shooter.acceleratorOn();
+//    intake.on();
+    shootTime = System.currentTimeMillis() + 1000;
   }
 
   @Override
@@ -48,18 +64,20 @@ public class AutoShoot extends CommandBase {
       double offset = Vision.Entry.HORIZONTAL_OFFSET.getValue();
       //double speed = 0.1 + (0.3 * offset / 160);
       double speed = offset > 2 ? -0.15 : 0.15;
-      if (offset > 2) {
+      if (offset > 1) {
         feeder.allOff();
         turret.move(speed);
         logger.info("moving positive at offset: %f   speed: %f", offset, speed);
       }
-      else if (offset < -2){
+      else if (offset < -1){
         feeder.allOff();
         turret.move(speed);
         logger.info("moving negative at offset: %f   speed: %f", offset, speed);
       } else {
         turret.move(0);
-        feeder.allOn();
+        if (System.currentTimeMillis() > shootTime) {
+          feeder.allOn();
+        }
         logger.info("shooting");
       }
 
@@ -76,10 +94,11 @@ public class AutoShoot extends CommandBase {
     shooter.shooterOff();
     shooter.acceleratorOff();
     feeder.allOff();
+//    vision.turnOffCamLeds();
   }
 
   @Override
   public boolean isFinished() {
-    return false;
+    return endCommandTime > 0 ? System.currentTimeMillis() > endCommandTime : false;
   }
 }

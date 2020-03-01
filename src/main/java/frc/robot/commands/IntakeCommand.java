@@ -6,9 +6,11 @@ import frc.robot.util.Logger;
 import frc.robot.util.Logger.Level;
 
 public class IntakeCommand extends CommandBase {
-  private static final Logger logger = new Logger(IntakeOn.class.getName(), Level.SEVERE, false);
+  private static final Logger logger = new Logger(IntakeCommand.class.getName(), Level.SEVERE, false);
 
   private final Intake intake;
+  private boolean isOn;
+  private long stopTime;
 
   public IntakeCommand(Intake intake) {
     logger.detail("constructor");
@@ -19,26 +21,35 @@ public class IntakeCommand extends CommandBase {
   @Override
   public void initialize() {
     logger.detail("initialize");
+    if (!isOn) {
+      intake.lower();
+      intake.on();
+      isOn = true;
+      stopTime = 0;
+    } else {
+      intake.raise();
+      if (stopTime == 0) {
+        stopTime = System.currentTimeMillis() + 500;
+      }
+    }
   }
 
   @Override
   public void execute() {
-    logger.detail("execute");
-    if(intake.isRaised){
-      intake.on();
-    } else{
-      intake.off();
-    }
   }
 
   @Override
   public void end(boolean interrupted) {
     logger.info("end");
-    intake.off();
+    if (stopTime != 0) {
+      intake.off();
+      isOn = false;
+      stopTime = 0;
+    }
   }
 
   @Override
   public boolean isFinished() {
-    return false;
+    return System.currentTimeMillis() > stopTime;
   }
 }

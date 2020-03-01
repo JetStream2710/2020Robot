@@ -11,7 +11,7 @@ import frc.robot.util.MotorFactory;
 public class Shooter extends SubsystemBase {
   private static final Logger logger = new Logger(Shooter.class.getName());
 
-  public static final double SHOOTER_SPEED = 1;
+  public static final double SHOOTER_SPEED = .8;
 
   private final WPI_TalonFX leftTalon;
   private final WPI_TalonFX rightTalon;

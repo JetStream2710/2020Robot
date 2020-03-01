@@ -19,13 +19,12 @@ public class IntakeOn extends CommandBase {
   @Override
   public void initialize() {
     logger.info("initialize");
-    intake.lower();
     intake.on();
   }
 
   @Override
   public void execute() {
-    //logger.detail("execute");
+    logger.detail("execute");
   }
 
   @Override
