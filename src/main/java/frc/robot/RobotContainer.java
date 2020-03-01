@@ -8,19 +8,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.AutoShoot;
-import frc.robot.commands.ClimbMove;
 import frc.robot.commands.ControlPanelExtend;
 import frc.robot.commands.ControlPanelRetract;
 import frc.robot.commands.ControlPanelStage1;
 import frc.robot.commands.ControlPanelTurn;
 import frc.robot.commands.DriveCommand;
-import frc.robot.commands.FeederOn;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeExtend;
 import frc.robot.commands.IntakeOn;
 import frc.robot.commands.IntakeRetract;
 import frc.robot.commands.IntakeReverse;
-import frc.robot.commands.LockTarget;
 import frc.robot.commands.TurretCommand;
 import frc.robot.autonomous.DefaultSequence;
 import frc.robot.autonomous.DoubleShoot;
@@ -140,13 +137,17 @@ public class RobotContainer {
  * kStart = right trigger
  * kStickLeft = back
  * kStickRight = start
+ * Raw Axis 0 = Left Joystick X Axis
+ * Raw Axis 1 = Left Joystick Y Axis
+ * Raw Axis 2 = Right Joystick X Axis
+ * Raw Axis 3 = Right Joystick Y Axis
  * 11 = left stick
  * 12 = right stick 
  */
 
   private void configureButtonBindings() {
-    new JoystickButton(driverController, Button.kB.value).whileHeld(new LockTarget(vision, shooter, turret));
-    new JoystickButton(driverController, Button.kBumperRight.value).whileHeld(new FeederOn(feeder));
+//    new JoystickButton(driverController, Button.kB.value).whileHeld(new LockTarget(vision, shooter, turret));
+//    new JoystickButton(driverController, Button.kBumperRight.value).whileHeld(new FeederOn(feeder));
 //    new JoystickButton(driverController, Button.kBumperLeft.value).whileHeld(new ShooterOn(shooter));
     new JoystickButton(driverController, Button.kBumperLeft.value).whileHeld(new AutoShoot(vision, shooter, turret, feeder));
 //    new JoystickButton(driverController, Button.kBack.value)

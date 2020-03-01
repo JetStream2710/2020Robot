@@ -16,13 +16,11 @@ public class Climb extends SubsystemBase {
 
   private final WPI_TalonSRX extendTalon;
   private final WPI_TalonSRX retractTalon;
-  private final WPI_VictorSPX horizontalVictor;
 
   public Climb() {
     logger.detail("constructor");
     extendTalon = MotorFactory.makeTalon(Constants.CLIMB_EXTEND_TALON, "Climb Extend Talon");
     retractTalon = MotorFactory.makeTalon(Constants.CLIMB_RETRACT_TALON, "Climb Retract Talon");
-    horizontalVictor = MotorFactory.makeVictor(Constants.CLIMB_HORIZONTAL_VICTOR, "Climb Horizontal Victor");
     }
 
   public void extend() {
@@ -44,11 +42,6 @@ public class Climb extends SubsystemBase {
     retractTalon.set(0);
     logger.dashboard("climb extend", 0);
     logger.dashboard("climb retract", 0);
-  }
-
-  public void move(double speed) {
-    horizontalVictor.set(speed);
-    logger.dashboard("climb move speed: %f", speed);
   }
 
   @Override
