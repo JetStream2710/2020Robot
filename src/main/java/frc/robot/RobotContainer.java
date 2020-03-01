@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.AutoShoot;
+import frc.robot.commands.ClimbCommand;
 import frc.robot.commands.ControlPanelExtend;
 import frc.robot.commands.ControlPanelRetract;
 import frc.robot.commands.ControlPanelStage1;
@@ -15,6 +16,7 @@ import frc.robot.commands.ControlPanelTurn;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeExtend;
+import frc.robot.commands.IntakeJiggle;
 import frc.robot.commands.IntakeOn;
 import frc.robot.commands.IntakeRetract;
 import frc.robot.commands.IntakeReverse;
@@ -47,7 +49,7 @@ public class RobotContainer {
   private final Shooter shooter;
   private final Turret turret;
   private final ControlPanel controlPanel;
-  //private final Climb climb;
+  private final Climb climb;
 
   // Sensor subsystems
   private final Vision vision;
@@ -69,7 +71,7 @@ public class RobotContainer {
     shooter = new Shooter();
     turret = new Turret();
     controlPanel = new ControlPanel();
-    //climb = new Climb();
+    climb = new Climb();
 
     vision = new Vision();
 //    vision.turnOffCamLeds();
@@ -83,7 +85,7 @@ public class RobotContainer {
 
     drivetrain.setDefaultCommand(new DriveCommand(drivetrain, driverController));
     drivetrain.setCoastMode();
-    //climb.setDefaultCommand(new ClimbMove(climb, auxController));
+    climb.setDefaultCommand(new ClimbCommand(climb, auxController));
     turret.setDefaultCommand(new TurretCommand(turret, auxController, turretLimitSwitch));
     //intake.setDefaultCommand(new IntakeCommand(intake));
 
@@ -155,15 +157,18 @@ public class RobotContainer {
 //      .whenReleased(new ShooterOff(shooter));
 
 //    new JoystickButton(auxController, Button.kB.value).whenPressed(new IntakeCommand(intake));
-    new JoystickButton(auxController, Button.kB.value).whileHeld(new IntakeOn(intake));
-    new JoystickButton(auxController, Button.kX.value).whileHeld(new IntakeReverse(intake));
+//    new JoystickButton(auxController, Button.kB.value).whileHeld(new IntakeOn(intake));
+//    new JoystickButton(auxController, Button.kX.value).whileHeld(new IntakeReverse(intake));
     new JoystickButton(auxController, Button.kBumperLeft.value).whenPressed(new IntakeExtend(intake));
     new JoystickButton(auxController, Button.kBack.value).whenPressed(new IntakeRetract(intake));
 
     new JoystickButton(auxController, Button.kBumperRight.value).whenPressed(new ControlPanelExtend(controlPanel));
     new JoystickButton(auxController, Button.kStart.value).whenPressed(new ControlPanelRetract(controlPanel));
-    new JoystickButton(auxController, Button.kY.value).whileHeld(new ControlPanelTurn(controlPanel));
-    new JoystickButton(auxController, Button.kA.value).whenPressed(new ControlPanelStage1(controlPanel));
+    new JoystickButton(auxController, Button.kB.value).whileHeld(new ControlPanelTurn(controlPanel));
+    new JoystickButton(auxController, Button.kX.value).whenPressed(new ControlPanelStage1(controlPanel));
+
+    
+
   }
 
   public Command getAutonomousCommand() {
