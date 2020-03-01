@@ -4,12 +4,12 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
 import frc.robot.util.Logger;
 
-public class IntakeRaise extends CommandBase {
-  private static final Logger logger = new Logger(IntakeRaise.class.getName());
+public class IntakeExtend extends CommandBase {
+  private static final Logger logger = new Logger(IntakeExtend.class.getName());
 
   private final Intake intake;
 
-  public IntakeRaise(Intake intake) {
+  public IntakeExtend(Intake intake) {
     logger.detail("constructor");
     this.intake = intake;
     addRequirements(intake);
@@ -18,7 +18,7 @@ public class IntakeRaise extends CommandBase {
   @Override
   public void initialize() {
     logger.info("initialized");
-    intake.raise();
+    intake.extend();
     intake.on();
   }
 

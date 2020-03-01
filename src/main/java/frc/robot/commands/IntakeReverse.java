@@ -29,7 +29,9 @@ public class IntakeReverse extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     logger.info("end");
-    intake.on();
+    if (intake.isExtended()) {
+      intake.on();
+    }
   }
 
   @Override

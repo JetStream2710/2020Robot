@@ -8,6 +8,8 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.util.Logger;
 
+// 1.6 66 26  80%
+// 0.4 31 16  100%
 public class Vision extends SubsystemBase implements DoubleSupplier {
   private static final Logger logger = new Logger(Vision.class.getName());
 

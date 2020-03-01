@@ -1,24 +1,24 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Intake;
 import frc.robot.util.Logger;
 
-public class ShooterOff extends CommandBase {
-  private static final Logger logger = new Logger(ShooterOn.class.getName());
+public class IntakeRetract extends CommandBase {
+  private static final Logger logger = new Logger(IntakeRetract.class.getName());
 
-  private final Shooter shooter;
+  private final Intake intake;
 
-  public ShooterOff(Shooter shooter) {
+  public IntakeRetract(Intake intake) {
     logger.detail("constructor");
-    this.shooter = shooter;
-    addRequirements(shooter);
+    this.intake = intake;
+    addRequirements(intake);
   }
 
   @Override
   public void initialize() {
     logger.info("initialize");
-    shooter.allOff();
+    intake.retract();
   }
 
   @Override
@@ -29,10 +29,11 @@ public class ShooterOff extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     logger.detail("end");
+    intake.off();
   }
 
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

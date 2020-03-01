@@ -11,7 +11,8 @@ import frc.robot.util.MotorFactory;
 public class Feeder extends SubsystemBase {
   private static final Logger logger = new Logger(Feeder.class.getName());
 
-  public static final double FEEDER_IN_SPEED = 0.5;
+  private static final double FEEDER_SPEED = -0.5;
+  private static final double TRIGGER_SPEED = -1;
 
   private final WPI_VictorSPX leftVictor;
   private final WPI_VictorSPX rightVictor;
@@ -29,8 +30,8 @@ public class Feeder extends SubsystemBase {
   }
 
   public void allOn(){
-    group.set(-FEEDER_IN_SPEED);
-    trigger.set(-1);
+    group.set(FEEDER_SPEED);
+    trigger.set(TRIGGER_SPEED);
   }
 
   public void allOff(){
@@ -39,7 +40,7 @@ public class Feeder extends SubsystemBase {
   }
 
   public void feederOn(){
-    group.set(-FEEDER_IN_SPEED);
+    group.set(FEEDER_SPEED);
   }
 
   public void feederOff(){
@@ -51,56 +52,12 @@ public class Feeder extends SubsystemBase {
   }
 
   public void triggerOn() {
-    trigger.set(-1);
+    trigger.set(TRIGGER_SPEED);
   }
 
   public void triggerOff() {
     trigger.set(0);
   }
-
-/**
-  // TODO: double check positive and negative values for forward/backwards
-  public void allOn() {
-    horizontalOn();
-    verticalOn();
-  }
-
-  public void horizontalOn() {
-    setHorizontalSpeed(FEEDER_IN_SPEED);
-  }
-
-  public void verticalOn() {
-    setVerticalSpeed(FEEDER_IN_SPEED);
-  }
-
-  public void allReverse() {
-    setHorizontalSpeed(FEEDER_OUT_SPEED);
-    setVerticalSpeed(FEEDER_OUT_SPEED);
-  }
-
-  public void allOff() {
-    horizontalOff();
-    verticalOff();
-  }
-
-  public void horizontalOff() {
-    setHorizontalSpeed(0);
-  }
-
-  public void verticalOff() {
-    setVerticalSpeed(0);
-  }
-
-  private void setHorizontalSpeed(double speed) {
-    horizontalVictor.set(speed);
-    logger.dashboard("feeder horizontal speed", speed);
-  }
-
-  private void setVerticalSpeed(double speed) {
-    verticalVictor.set(speed);
-    logger.dashboard("feeder vertical speed", speed);
-  }
-*/
 
   @Override
   public void periodic() {

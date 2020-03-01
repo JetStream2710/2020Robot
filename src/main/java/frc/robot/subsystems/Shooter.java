@@ -32,7 +32,6 @@ public class Shooter extends SubsystemBase {
     accelerator = MotorFactory.makeVictor(Constants.SHOOTER_ACCEL_VICTOR, "accelVictor");
   }
 
-  // TODO: set w specific encoder value?
   public void allOn() {
     leftTalon.set(-SHOOTER_SPEED);
     rightTalon.set(SHOOTER_SPEED);

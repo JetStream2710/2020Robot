@@ -22,12 +22,12 @@ public class IntakeCommand extends CommandBase {
   public void initialize() {
     logger.detail("initialize");
     if (!isOn) {
-      intake.lower();
+      intake.retract();
       intake.on();
       isOn = true;
       stopTime = 0;
     } else {
-      intake.raise();
+      intake.extend();
       if (stopTime == 0) {
         stopTime = System.currentTimeMillis() + 500;
       }

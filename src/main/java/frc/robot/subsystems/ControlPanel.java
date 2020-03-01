@@ -13,10 +13,9 @@ import frc.robot.util.MotorFactory;
 public class ControlPanel extends SubsystemBase implements DoubleSupplier {
   private static final Logger logger = new Logger(ControlPanel.class.getName());
 
-  private static final double TURN = 0.4;
+  private static final double TURN_SPEED = 0.4;
 
   private final WPI_TalonSRX turnTalon;
-
   private final Solenoid solenoid;
 
   public ControlPanel() {
@@ -26,8 +25,8 @@ public class ControlPanel extends SubsystemBase implements DoubleSupplier {
   }
 
   public void turn() {
-    turnTalon.set(TURN);
-    logger.dashboard("control panel turn speed", TURN);
+    turnTalon.set(TURN_SPEED);
+    logger.dashboard("control panel turn speed", TURN_SPEED);
   }
 
   public void turnStop() {
@@ -35,7 +34,6 @@ public class ControlPanel extends SubsystemBase implements DoubleSupplier {
     logger.dashboard("control panel turn speed", 0);
   }
 
-  // TODO: check solenoid values
   public void extend() {
     solenoid.set(true);
     logger.info("control panel extended", "yes");
@@ -51,8 +49,6 @@ public class ControlPanel extends SubsystemBase implements DoubleSupplier {
     logger.detail("position: %d", position);
     return position;
   }
-
-
 
   @Override
   public void periodic() {

@@ -1,9 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
 import frc.robot.subsystems.Feeder;
-import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.NavX;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Turret;
@@ -14,11 +12,14 @@ import frc.robot.util.Logger.Level;
 public class AutoShoot extends CommandBase {
   private static final Logger logger = new Logger(AutoShoot.class.getName(), Level.DETAIL, false);
 
+  private static final long SHOOT_DELAY_MILLIS = 1000;
+  private static final double TURRET_SPEED = 0.15;
+
   private final Vision vision;
-//  private final NavX navx;
   private final Shooter shooter;
   private final Turret turret;
   private final Feeder feeder;
+  // private final NavX navx;
   private long shootTime;
   private long endCommandTime;
 
@@ -28,17 +29,17 @@ public class AutoShoot extends CommandBase {
   }
 
   public AutoShoot(Vision vision, Shooter shooter, Turret turret, Feeder feeder, long delayMillis) {
-      logger.detail("constructor");
+    logger.detail("constructor");
     this.vision = vision;
-//    this.navx = navx;
     this.shooter = shooter;
     this.turret = turret;
     this.feeder = feeder;
+    // this.navx = navx;
     addRequirements(vision);
-//    addRequirements(navx);
     addRequirements(shooter);
     addRequirements(turret);
     addRequirements(feeder);
+    // addRequirements(navx);
     if (delayMillis > 0) {
       endCommandTime = System.currentTimeMillis() + delayMillis;
     } else {
@@ -52,8 +53,7 @@ public class AutoShoot extends CommandBase {
     vision.turnOnCamLeds();
     shooter.shooterOn();
     shooter.acceleratorOn();
-//    intake.on();
-    shootTime = System.currentTimeMillis() + 1000;
+    shootTime = System.currentTimeMillis() + SHOOT_DELAY_MILLIS;
   }
 
   @Override
@@ -62,17 +62,16 @@ public class AutoShoot extends CommandBase {
     if (vision.hasValidTargets()){
       logger.info("has valid target");
       double offset = Vision.Entry.HORIZONTAL_OFFSET.getValue();
-      //double speed = 0.1 + (0.3 * offset / 160);
-      double speed = offset > 2 ? -0.15 : 0.15;
+      double turretSpeed = offset > 0 ? -TURRET_SPEED : TURRET_SPEED;
       if (offset > 1) {
         feeder.allOff();
-        turret.move(speed);
-        logger.info("moving positive at offset: %f   speed: %f", offset, speed);
+        turret.move(turretSpeed);
+        logger.info("moving positive at offset: %f   speed: %f", offset, turretSpeed);
       }
       else if (offset < -1){
         feeder.allOff();
-        turret.move(speed);
-        logger.info("moving negative at offset: %f   speed: %f", offset, speed);
+        turret.move(turretSpeed);
+        logger.info("moving negative at offset: %f   speed: %f", offset, turretSpeed);
       } else {
         turret.move(0);
         if (System.currentTimeMillis() > shootTime) {
@@ -94,7 +93,7 @@ public class AutoShoot extends CommandBase {
     shooter.shooterOff();
     shooter.acceleratorOff();
     feeder.allOff();
-//    vision.turnOffCamLeds();
+    // vision.turnOffCamLeds();
   }
 
   @Override

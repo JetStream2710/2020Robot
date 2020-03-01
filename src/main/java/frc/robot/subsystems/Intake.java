@@ -15,11 +15,10 @@ public class Intake extends SubsystemBase {
   public static final double INTAKE_IN_SPEED = 1;
   public static final double INTAKE_OUT_SPEED = -0.3;
 
-  public boolean isRaised = false;
-
   private final Solenoid solenoid;
-
   private final WPI_VictorSPX victor;
+
+  private boolean isExtended = false;
 
   public Intake() {
     logger.detail("constructor");
@@ -28,44 +27,44 @@ public class Intake extends SubsystemBase {
   }
 
 
-  // TODO: verify solenoid values
-  public void raise() {
-    if (isRaised) {
+  public void extend() {
+    if (isExtended) {
       return;
     }
     solenoid.set(true);
-    // comment VV "isRaised = true;" out by putting "//" before it
-    isRaised = true;
-    logger.dashboard("intake", "raised");
+    isExtended = true;
+    logger.dashboard("intake", "extended");
   }
 
-  public void lower() {
-    if (!isRaised) {
+  public void retract() {
+    if (!isExtended) {
       return;
     }
     solenoid.set(false);
-    isRaised = false;
-    logger.dashboard("intake", "lowered");
+    isExtended = false;
+    logger.dashboard("intake", "retracted");
   }
-
 
   public void on() {
     victor.set(INTAKE_IN_SPEED);
-    logger.info("intake speed %f", INTAKE_IN_SPEED);
+    logger.info("intake speed: %f", INTAKE_IN_SPEED);
   }
 
   public void reverse() {
     victor.set(INTAKE_OUT_SPEED);
-    logger.info("intake speed %f", INTAKE_OUT_SPEED);
+    logger.info("intake speed: %f", INTAKE_OUT_SPEED);
   }
 
   public void off() {
     victor.set(0);
-    logger.info("intake speed %d", 0);
+    logger.info("intake stopped");
+  }
+
+  public boolean isExtended() {
+    return isExtended;
   }
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
   }
 }

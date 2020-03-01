@@ -16,14 +16,11 @@ import frc.robot.commands.ControlPanelTurn;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.FeederOn;
 import frc.robot.commands.IntakeCommand;
-import frc.robot.commands.IntakeLower;
+import frc.robot.commands.IntakeExtend;
 import frc.robot.commands.IntakeOn;
-import frc.robot.commands.IntakeRaise;
+import frc.robot.commands.IntakeRetract;
 import frc.robot.commands.IntakeReverse;
 import frc.robot.commands.LockTarget;
-import frc.robot.commands.ShooterOff;
-import frc.robot.commands.ShooterOn;
-import frc.robot.commands.ShooterTrigger;
 import frc.robot.commands.TurretCommand;
 import frc.robot.autonomous.DefaultSequence;
 import frc.robot.autonomous.DoubleShoot;
@@ -159,8 +156,8 @@ public class RobotContainer {
 //    new JoystickButton(auxController, Button.kB.value).whenPressed(new IntakeCommand(intake));
     new JoystickButton(auxController, Button.kB.value).whileHeld(new IntakeOn(intake));
     new JoystickButton(auxController, Button.kX.value).whileHeld(new IntakeReverse(intake));
-    new JoystickButton(auxController, Button.kBumperLeft.value).whenPressed(new IntakeRaise(intake));
-    new JoystickButton(auxController, Button.kBack.value).whenPressed(new IntakeLower(intake));
+    new JoystickButton(auxController, Button.kBumperLeft.value).whenPressed(new IntakeExtend(intake));
+    new JoystickButton(auxController, Button.kBack.value).whenPressed(new IntakeRetract(intake));
 
     new JoystickButton(auxController, Button.kBumperRight.value).whenPressed(new ControlPanelExtend(controlPanel));
     new JoystickButton(auxController, Button.kStart.value).whenPressed(new ControlPanelRetract(controlPanel));
@@ -181,10 +178,10 @@ public class RobotContainer {
   }
 
   public void setIntakeLower() {
-    intake.lower(); 
+    intake.retract(); 
   }
 
   public void setIntakeRaise() {
-    intake.raise();
+    intake.extend();
   }
 } 
