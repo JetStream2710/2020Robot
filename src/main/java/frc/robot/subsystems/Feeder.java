@@ -20,6 +20,8 @@ public class Feeder extends SubsystemBase {
 
   private final SpeedControllerGroup group;
 
+  private boolean isFeederOn;
+
   public Feeder() {
     logger.detail("constructor");
     leftVictor = MotorFactory.makeVictor(Constants.FEEDER_LEFT_VICTOR, "Feeder Left Victor");
@@ -27,28 +29,36 @@ public class Feeder extends SubsystemBase {
     trigger = MotorFactory.makeVictor(Constants.SHOOTER_TRIGGER_VICTOR, "triggerVictor");
 
     group = new SpeedControllerGroup(leftVictor, rightVictor);
+    isFeederOn = false;
   }
 
   public void allOn(){
-    group.set(FEEDER_SPEED);
-    trigger.set(TRIGGER_SPEED);
+    feederOn();
+    triggerOn();
   }
 
   public void allOff(){
-    group.set(0);
-    trigger.set(0);
+    feederOff();
+    triggerOff();
   }
 
   public void feederOn(){
     group.set(FEEDER_SPEED);
+    isFeederOn = true;
   }
 
   public void feederOff(){
     group.set(0);
+    isFeederOn = false;
   }
   
   public void feederReverse(){
+    // This must not change isFeederOn.
     group.set(-FEEDER_SPEED);
+  }
+
+  public boolean isFeederOn() {
+    return isFeederOn;
   }
 
   public void setSpeed(double speed){

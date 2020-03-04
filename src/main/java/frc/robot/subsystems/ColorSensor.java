@@ -1,13 +1,15 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.ColorSensorV3;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.util.Logger;
 
 public class ColorSensor extends SubsystemBase {
   private static final Logger logger = new Logger(ColorSensor.class.getName());
-  
+
   public enum Color{
     RED,
     GREEN,
@@ -21,6 +23,25 @@ public class ColorSensor extends SubsystemBase {
   public ColorSensor() {
     logger.detail("constructor");
     colorSensor = new ColorSensorV3(I2C.Port.kOnboard);
+  }
+
+  public boolean isColorMatch() {
+    Color gameColor = getGameColor();
+    if (gameColor == Color.UNKNOWN) {
+      return false;
+    }
+    Color sensorColor = getColor();
+    if (sensorColor == Color.UNKNOWN) {
+      return false;
+    }
+    switch (gameColor) {
+      case YELLOW: return sensorColor == Color.GREEN;
+      case GREEN: return sensorColor == Color.YELLOW;
+      case BLUE: return sensorColor == Color.RED;
+      case RED: return sensorColor == Color.BLUE;
+      default:
+        return false;
+    }
   }
 
   public Color getColor() {
@@ -79,5 +100,32 @@ public class ColorSensor extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+  }
+
+  public Color getGameColor() {
+    Color color = Color.UNKNOWN;
+    String gameData = DriverStation.getInstance().getGameSpecificMessage();
+    if (gameData.length() > 0) {
+      switch (gameData.charAt(0)) {
+        case 'B':
+          color = Color.BLUE;
+          break;
+        case 'G':
+          color = Color.GREEN;
+          break;
+        case 'R':
+          color = Color.RED;
+          break;
+        case 'Y':
+          color = Color.YELLOW;
+          break;
+        default:
+          break;
+      }
+    }
+    if (color != Color.UNKNOWN) {
+      SmartDashboard.putString("Game Color", color.toString());
+    }
+    return color;
   }
 }

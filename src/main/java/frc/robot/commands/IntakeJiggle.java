@@ -31,7 +31,11 @@ public class IntakeJiggle extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
-    feeder.feederOff();
+    if (feeder.isFeederOn()) {
+      feeder.feederOn();
+    } else {
+      feeder.feederOff();
+    }
     intake.retract();
   }
 

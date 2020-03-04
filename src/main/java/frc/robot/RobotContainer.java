@@ -19,15 +19,11 @@ import frc.robot.commands.FeederReverse;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeExtend;
 import frc.robot.commands.IntakeJiggle;
-import frc.robot.commands.IntakeOn;
 import frc.robot.commands.IntakeRetract;
-import frc.robot.commands.IntakeReverse;
 import frc.robot.commands.JustShoot;
 import frc.robot.commands.TurretCommand;
 import frc.robot.autonomous.DefaultSequence;
 import frc.robot.autonomous.DoubleShoot;
-import frc.robot.autonomous.MoveDistance;
-import frc.robot.autonomous.TurnDegrees;
 import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.ControlPanel;
@@ -78,7 +74,7 @@ public class RobotContainer {
     climb = new Climb();
 
     vision = new Vision();
-//    vision.turnOffCamLeds();
+    // vision.turnOffCamLeds();
     navx = new NavX();
     navx.reset();
 //    colorSensor = new ColorSensor();
@@ -89,53 +85,18 @@ public class RobotContainer {
     configureButtonBindings();
 
     drivetrain.setDefaultCommand(new DriveCommand(drivetrain, driverController));
-    drivetrain.setCoastMode();
     climb.setDefaultCommand(new ClimbCommand(climb, auxController));
     turret.setDefaultCommand(new TurretCommand(turret, auxController, turretLimitSwitch));
     intake.setDefaultCommand(new IntakeCommand(intake, feeder, auxController));
     intake.off();
 
-    speedChooser.addOption("0.6", 0.8);
-    speedChooser.addOption("0.7", 0.8);
+    speedChooser.addOption("0.6", 0.6);
+    speedChooser.addOption("0.7", 0.7);
     speedChooser.addDefault("0.8", 0.8);
     speedChooser.addOption("0.9", 0.9);
     speedChooser.addOption("1.0", 1.0);
-
     SmartDashboard.putData("Shooter Speed", speedChooser);
   
-    /*
-    chooser.addOption("Coast Mode", new Command(){
-      @Override
-      public Set<Subsystem> getRequirements() {
-        Set<Subsystem> subsystems = new HashSet<>();
-        subsystems.add(drivetrain);
-        return subsystems;
-      }
-      @Override
-      public void initialize() {
-        logger.dashboard("Brake Mode", "COAST");
-        setCoastMode();
-      }
-    });
-
-    chooser.addOption("Brake Mode", new Command(){
-      @Override
-      public Set<Subsystem> getRequirements() {
-        Set<Subsystem> subsystems = new HashSet<>();
-        subsystems.add(drivetrain);
-        return subsystems;
-      }
-      @Override
-      public void initialize() {
-        logger.dashboard("Brake Mode", "BRAKE");
-        setCoastMode();
-      }
-    });
-    */
-
-    //chooser.addOption("Autonomous Command 1", new MoveDistance(drivetrain, 1));
-    //Shuffleboard.getTab("Autonomous").add(chooser);
-
     CANDeviceFinder can = new CANDeviceFinder();
     can.debug();
   }
@@ -161,18 +122,11 @@ public class RobotContainer {
  */
 
   private void configureButtonBindings() {
-//    new JoystickButton(driverController, Button.kB.value).whileHeld(new LockTarget(vision, shooter, turret));
-//    new JoystickButton(driverController, Button.kBumperRight.value).whileHeld(new FeederOn(feeder));
-//    new JoystickButton(driverController, Button.kBumperLeft.value).whileHeld(new ShooterOn(shooter));
+    // Driver buttons
     new JoystickButton(driverController, Button.kBumperLeft.value).whileHeld(new AutoShoot(vision, shooter, turret, feeder));
     new JoystickButton(driverController, Button.kBumperRight.value).whileHeld(new JustShoot(feeder, shooter));
-//    new JoystickButton(driverController, Button.kBack.value)
-//      .whenPressed(new AutoShoot(vision, shooter, turret, feeder))
-//      .whenReleased(new ShooterOff(shooter));
 
-//    new JoystickButton(auxController, Button.kB.value).whenPressed(new IntakeCommand(intake));
-//    new JoystickButton(auxController, Button.kB.value).whileHeld(new IntakeOn(intake));
-//    new JoystickButton(auxController, Button.kX.value).whileHeld(new IntakeReverse(intake));
+    // Aux buttons
     new JoystickButton(auxController, Button.kBumperLeft.value).whenPressed(new IntakeExtend(intake));
     new JoystickButton(auxController, Button.kBack.value).whenPressed(new IntakeRetract(intake));
 
@@ -180,6 +134,7 @@ public class RobotContainer {
     new JoystickButton(auxController, Button.kStart.value).whenPressed(new ControlPanelRetract(controlPanel));
     new JoystickButton(auxController, Button.kB.value).whileHeld(new ControlPanelTurn(controlPanel));
     new JoystickButton(auxController, Button.kX.value).whenPressed(new ControlPanelStage1(controlPanel));
+    //new JoystickButton(auxController, Button.kStickRight.value).whenPressed(new ControlPanelStage2(controlPanel, colorSensor));
 
     new JoystickButton(auxController, Button.kA.value).whileHeld(new FeederReverse(feeder));
     new JoystickButton(auxController, Button.kY.value).whenPressed(new IntakeJiggle(intake, feeder));
@@ -201,11 +156,8 @@ public class RobotContainer {
     drivetrain.setBrakeMode();
   }
 
-  public void setIntakeLower() {
-    intake.retract(); 
-  }
-
-  public void setIntakeRaise() {
-    intake.extend();
+  public void retractIntake() {
+    intake.retract();
+    intake.off();
   }
 } 

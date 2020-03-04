@@ -94,7 +94,7 @@ public class Shooter extends SubsystemBase {
     leftSidePositionArray[periodicIndex] = getLeftPosition();
     rightSidePositionArray[periodicIndex] = getRightPosition();
 
-    logger.info("shooter speed: %f   speed2: %f", speed(), getSpeed());
+    logger.detail("shooter speed: %f   speed2: %f", speed(), getSpeed());
   }
 
   public double getSpeed() {

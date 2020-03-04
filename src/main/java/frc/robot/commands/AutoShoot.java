@@ -98,7 +98,6 @@ public class AutoShoot extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    System.out.println("current: " + System.currentTimeMillis() + " end: " + endCommandTime);
     return endCommandTime > 0 ? System.currentTimeMillis() > endCommandTime : false;
   }
 }

@@ -30,7 +30,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     robotContainer = new RobotContainer();
-    robotContainer.setIntakeLower();
+    robotContainer.retractIntake();
     robotContainer.setCoastMode();
     UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
 }
@@ -62,7 +62,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
-
   }
 
   /**
@@ -85,7 +84,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
-    //System.out.println("angle: " + robotContainer.navx.getAngle());
     robotContainer.updateShooterSpeed();
   }
 
@@ -100,7 +98,7 @@ public class Robot extends TimedRobot {
     if (autonomousCommand != null) {
       autonomousCommand.cancel();
     }
-    robotContainer.setIntakeLower();
+    robotContainer.retractIntake();
   }
 
   /**
