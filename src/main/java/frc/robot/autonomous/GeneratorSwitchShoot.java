@@ -12,25 +12,21 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.Vision;
 
-public class DoubleShoot extends SequentialCommandGroup {
+public class GeneratorSwitchShoot extends SequentialCommandGroup {
 
-  public DoubleShoot(Vision vision, Shooter shooter, Turret turret, Feeder feeder, Drivetrain drivetrain, Intake intake, NavX navx) {
+  public GeneratorSwitchShoot(Vision vision, Shooter shooter, Turret turret, Feeder feeder, Drivetrain drivetrain, Intake intake, NavX navx) {
     addCommands(
-      new AutoShoot(vision, shooter, turret, feeder, 1000),
-      new IntakeExtend(intake),
-      new AutoShoot(vision, shooter, turret, feeder, 1000),
-      new IntakeRetract(intake),
       new AutoShoot(vision, shooter, turret, feeder, 2000),
-      new TurnDegrees(drivetrain, navx, 168),
+      new TurnDegrees(drivetrain, navx, 180),
+      new MoveDistance(drivetrain, 4),
+      new TurnDegrees(drivetrain, navx, 60),
       new IntakeExtend(intake),
-      new MoveDistance(drivetrain, 13),
-      new IntakeRetract(intake),
-      new TurnDegrees(drivetrain, navx, 174),
       new MoveDistance(drivetrain, 10),
-      new AutoShoot(vision, shooter, turret, feeder, 1000),
-      new IntakeExtend(intake),
-      new AutoShoot(vision, shooter, turret, feeder, 1000),
       new IntakeRetract(intake),
+      new TurnDegrees(drivetrain, navx, 180),
+      new MoveDistance(drivetrain, 10),
+      new TurnDegrees(drivetrain, navx, -30),
+      new MoveDistance(drivetrain, 4),
       new AutoShoot(vision, shooter, turret, feeder, 2000));
-  }
+    }
 }

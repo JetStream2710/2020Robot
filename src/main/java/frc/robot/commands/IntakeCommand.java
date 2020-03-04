@@ -29,6 +29,7 @@ public class IntakeCommand extends CommandBase {
     dPov = auxController.getPOV();
     if (dPov == 0){
       // intake jiggle
+      new IntakeJiggle(intake);
     } else if (dPov == 90){
       intake.on();
     } else if (dPov == 270){

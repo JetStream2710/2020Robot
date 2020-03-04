@@ -2,6 +2,7 @@ package frc.robot.autonomous;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.NavX;
 import frc.robot.util.Logger;
 
 public class TurnDegrees extends CommandBase {
@@ -11,7 +12,7 @@ public class TurnDegrees extends CommandBase {
   private static final double ENCODER_UNITS_PER_DEGREE = ((24000 / (Math.PI * 6)) * (2 * Math.PI * WHEELBASE_RADIUS)) / 360;
 //  private static final double ENCODER_UNITS_PER_DEGREE = (Math.sqrt(25*25 + 23*23) * 24000) / (360 * 6);
   private static final double INIT_OUTPUT = 0.4;
-  private static final double MAX_OUTPUT = 0.55;
+  private static final double MAX_OUTPUT = 0.5;
   private static final double MIN_OUTPUT = 0.0;
   private static final double ACCELERATION_OUTPUT_PER_PERIOD = 0.05;
   // multiplied deceleration by 5
@@ -36,7 +37,7 @@ public class TurnDegrees extends CommandBase {
   private int rightTargetPosition;
   private double output;
  
-  public TurnDegrees(Drivetrain drivetrain, double distanceInDegrees) {
+  public TurnDegrees(Drivetrain drivetrain, NavX navx, double distanceInDegrees) {
     logger.detail("constructor");
     this.drivetrain = drivetrain;
     targetEncoderDistance = (int) (distanceInDegrees * ENCODER_UNITS_PER_DEGREE);

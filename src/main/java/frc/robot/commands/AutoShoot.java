@@ -22,7 +22,7 @@ public class AutoShoot extends CommandBase {
   // private final NavX navx;
   private long shootTime;
   private long endCommandTime;
-
+  private long delayMillis;
 
   public AutoShoot(Vision vision, Shooter shooter, Turret turret, Feeder feeder) {
     this(vision, shooter, turret, feeder, -1);
@@ -34,17 +34,13 @@ public class AutoShoot extends CommandBase {
     this.shooter = shooter;
     this.turret = turret;
     this.feeder = feeder;
+    this.delayMillis = delayMillis;
     // this.navx = navx;
     addRequirements(vision);
     addRequirements(shooter);
     addRequirements(turret);
     addRequirements(feeder);
     // addRequirements(navx);
-    if (delayMillis > 0) {
-      endCommandTime = System.currentTimeMillis() + delayMillis;
-    } else {
-      endCommandTime = -1;
-    }
   }
 
   @Override
@@ -53,6 +49,11 @@ public class AutoShoot extends CommandBase {
     vision.turnOnCamLeds();
     shooter.shooterOn();
     shooter.acceleratorOn();
+    if (delayMillis > 0) {
+      endCommandTime = System.currentTimeMillis() + delayMillis;
+    } else {
+      endCommandTime = -1;
+    }
     shootTime = System.currentTimeMillis() + SHOOT_DELAY_MILLIS;
   }
 
@@ -98,6 +99,7 @@ public class AutoShoot extends CommandBase {
 
   @Override
   public boolean isFinished() {
+    System.out.println("current: " + System.currentTimeMillis() + " end: " + endCommandTime);
     return endCommandTime > 0 ? System.currentTimeMillis() > endCommandTime : false;
   }
 }

@@ -26,6 +26,7 @@ public class ControlPanel extends SubsystemBase implements DoubleSupplier {
 
   public void turn() {
     turnTalon.set(TURN_SPEED);
+    System.out.println("position: " + getPosition());
     logger.dashboard("control panel turn speed", TURN_SPEED);
   }
 

@@ -46,6 +46,10 @@ public class Feeder extends SubsystemBase {
   public void feederOff(){
     group.set(0);
   }
+  
+  public void feederReverse(){
+    group.set(-FEEDER_SPEED);
+  }
 
   public void setSpeed(double speed){
     group.set(speed);

@@ -14,6 +14,7 @@ import frc.robot.commands.ControlPanelRetract;
 import frc.robot.commands.ControlPanelStage1;
 import frc.robot.commands.ControlPanelTurn;
 import frc.robot.commands.DriveCommand;
+import frc.robot.commands.FeederReverse;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeExtend;
 import frc.robot.commands.IntakeJiggle;
@@ -53,7 +54,7 @@ public class RobotContainer {
 
   // Sensor subsystems
   private final Vision vision;
-  private final NavX navx;
+  public final NavX navx;
 //  private final ColorSensor colorSensor;
   private final DigitalInput turretLimitSwitch;
 
@@ -76,6 +77,7 @@ public class RobotContainer {
     vision = new Vision();
 //    vision.turnOffCamLeds();
     navx = new NavX();
+    navx.reset();
 //    colorSensor = new ColorSensor();
     turretLimitSwitch = new DigitalInput(0);
     
@@ -87,7 +89,7 @@ public class RobotContainer {
     drivetrain.setCoastMode();
     climb.setDefaultCommand(new ClimbCommand(climb, auxController));
     turret.setDefaultCommand(new TurretCommand(turret, auxController, turretLimitSwitch));
-    //intake.setDefaultCommand(new IntakeCommand(intake));
+    intake.setDefaultCommand(new IntakeCommand(intake, auxController));
 
   
     /*
@@ -167,12 +169,12 @@ public class RobotContainer {
     new JoystickButton(auxController, Button.kB.value).whileHeld(new ControlPanelTurn(controlPanel));
     new JoystickButton(auxController, Button.kX.value).whenPressed(new ControlPanelStage1(controlPanel));
 
-    
+    new JoystickButton(auxController, Button.kA.value).whileHeld(new FeederReverse(feeder));
 
   }
 
   public Command getAutonomousCommand() {
-    return new DoubleShoot(vision, shooter, turret, feeder, drivetrain);
+    return new DoubleShoot(vision, shooter, turret, feeder, drivetrain, intake, navx);
   }
 
   public void setCoastMode() {

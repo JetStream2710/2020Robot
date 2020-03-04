@@ -4,8 +4,8 @@ public final class Constants {
     // HARDWARE CONSTANTS
 
     // climb hardware constants
-    public static final int CLIMB_EXTEND_TALON = 15;
-    public static final int CLIMB_RETRACT_TALON = 14;
+    public static final int CLIMB_EXTEND_VICTOR = 15;
+    public static final int CLIMB_RETRACT_VICTOR = 14;
     public static final int CLIMB_HORIZONTAL_VICTOR = 0;
     // control panel hardware constants
     public static final int CONTROL_PANEL_SOLENOID = 5;

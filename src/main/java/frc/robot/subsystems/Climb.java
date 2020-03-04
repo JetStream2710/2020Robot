@@ -12,34 +12,34 @@ public class Climb extends SubsystemBase {
   private static final Logger logger = new Logger(Climb.class.getName());
 
   private static final double EXTEND = 0.4;
-  private static final double RETRACT = 0.4;
+  private static final double RETRACT = 1;
 
-  private final WPI_TalonSRX extendTalon;
-  private final WPI_TalonSRX retractTalon;
+  private final WPI_VictorSPX extendVictor;
+  private final WPI_VictorSPX retractVictor;
 
   public Climb() {
     logger.detail("constructor");
-    extendTalon = MotorFactory.makeTalon(Constants.CLIMB_EXTEND_TALON, "Climb Extend Talon");
-    retractTalon = MotorFactory.makeTalon(Constants.CLIMB_RETRACT_TALON, "Climb Retract Talon");
+    extendVictor = MotorFactory.makeVictor(Constants.CLIMB_EXTEND_VICTOR, "Climb Extend Victor");
+    retractVictor = MotorFactory.makeVictor(Constants.CLIMB_RETRACT_VICTOR, "Climb Retract Victor");
     }
 
   public void extend() {
-    extendTalon.set(EXTEND);
-    retractTalon.set(-RETRACT);
+    extendVictor.set(EXTEND);
+    retractVictor.set(-RETRACT);
     logger.dashboard("climb extend", EXTEND);
     logger.dashboard("climb retract", -RETRACT);
   }
 
   public void retract() {
-    extendTalon.set(-EXTEND);
-    retractTalon.set(RETRACT);
+    extendVictor.set(-EXTEND);
+    retractVictor.set(RETRACT);
     logger.dashboard("climb extend", -EXTEND);
     logger.dashboard("climb retract", RETRACT);
   }
   
   public void stop() {
-    extendTalon.set(0);
-    retractTalon.set(0);
+    extendVictor.set(0);
+    retractVictor.set(0);
     logger.dashboard("climb extend", 0);
     logger.dashboard("climb retract", 0);
   }

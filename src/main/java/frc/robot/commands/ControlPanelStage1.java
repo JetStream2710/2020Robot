@@ -29,11 +29,8 @@ public class ControlPanelStage1 extends CommandBase {
   @Override
   public void execute() {
     position = cp.getPosition();
-    if(position >= target) {
-      isFinished();
-    }
     cp.turn();
-    logger.info("execute position: %f", position);
+//    logger.info("execute position: %f", position);
   }
 
   @Override
@@ -43,6 +40,7 @@ public class ControlPanelStage1 extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return false;
+    System.out.println("position: " + position + " target: " + target);
+    return position >= target;
   }
 }

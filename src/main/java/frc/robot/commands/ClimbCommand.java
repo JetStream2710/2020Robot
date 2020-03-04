@@ -6,7 +6,7 @@ import frc.robot.subsystems.Climb;
 import frc.robot.util.Logger;
 
 public class ClimbCommand extends CommandBase {
-  private static final Logger logger = new Logger(ClimbCommand.class.getName());
+  private static final Logger logger = new Logger(ClimbCommand.class.getName(), Logger.Level.DETAIL, true);
 
   private final Climb climb;
   private final XboxController auxController;
@@ -30,10 +30,12 @@ public class ClimbCommand extends CommandBase {
     logger.detail("execute");
     value = auxController.getRawAxis(3);
     logger.info("controller position: %f", value);
-    if (value > 0.02){
+    if (value > 0.1){
       climb.extend();
-    } else if (value < -0.02){
+    } else if (value < -0.1){
       climb.retract();
+    } else {
+      climb.stop();
     }
   }
 

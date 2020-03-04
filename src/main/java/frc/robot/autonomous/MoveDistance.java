@@ -10,7 +10,7 @@ public class MoveDistance extends CommandBase {
 
   private static final double ENCODER_UNITS_PER_FOOT = (12 * 24000) / (Math.PI * 6);
   private static final double INIT_OUTPUT = 0.5;
-  private static final double MAX_OUTPUT = 1.0;
+  private static final double MAX_OUTPUT = 0.6;
   private static final double MIN_OUTPUT = 0.2;
   private static final double ACCELERATION_OUTPUT_PER_PERIOD = 0.01;
   private static final double DECELERATION_OUTPUT_PER_PERIOD = 0.1;

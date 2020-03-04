@@ -19,13 +19,17 @@ public class NavX extends SubsystemBase implements DoubleSupplier {
   }
 
   public double getAngle() {
-    double angle = ahrs.getAngle() - offset;
+    double angle = ahrs.getAngle();
     logger.dashboard("navx angle", angle);
     return angle;
   }
 
+  public void zeroYaw() {
+    ahrs.zeroYaw();
+  }
+  
   public void reset() {
-    offset = ahrs.getAngle();
+    ahrs.reset();
     logger.dashboard("navx offset", offset);
   }
 
