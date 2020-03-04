@@ -86,6 +86,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     //System.out.println("angle: " + robotContainer.navx.getAngle());
+    robotContainer.updateShooterSpeed();
   }
 
   @Override
@@ -107,6 +108,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+    robotContainer.updateShooterSpeed();
   }
 
   @Override
@@ -122,5 +124,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
+    robotContainer.updateShooterSpeed();
   }
 }

@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.AutoShoot;
@@ -63,6 +64,7 @@ public class RobotContainer {
   private final XboxController auxController;
 
   SendableChooser<Command> chooser = new SendableChooser<>();
+  SendableChooser<Double> speedChooser = new SendableChooser<>();
 
   public RobotContainer() {
     drivetrain = new Drivetrain();
@@ -91,6 +93,11 @@ public class RobotContainer {
     turret.setDefaultCommand(new TurretCommand(turret, auxController, turretLimitSwitch));
     intake.setDefaultCommand(new IntakeCommand(intake, auxController));
 
+    speedChooser.addOption("0.1", 0.1);
+    speedChooser.addOption("0.9", 0.9);
+    speedChooser.addOption("1.0", 1.0);
+
+    SmartDashboard.putData("Shooter Speed", speedChooser);
   
     /*
     chooser.addOption("Coast Mode", new Command(){
@@ -175,6 +182,10 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     return new DoubleShoot(vision, shooter, turret, feeder, drivetrain, intake, navx);
+  }
+
+  public void updateShooterSpeed() {
+    shooter.setSpeed(speedChooser.getSelected());
   }
 
   public void setCoastMode() {
