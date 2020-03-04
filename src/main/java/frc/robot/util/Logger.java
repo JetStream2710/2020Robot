@@ -63,20 +63,20 @@ public class Logger{
     if (logDashboard){
       System.out.println(String.format("%s %s %s: %s", Level.INFO.toString(), name, label, msg));
     }
-    SmartDashboard.putString(label, msg);
+    //SmartDashboard.putString(label, msg);
   }
 
   public void dashboard(String label, int i) {
     if (logDashboard){
       System.out.println(String.format("%s %s %s: %d", Level.INFO.toString(), name, label, i));
     }
-    SmartDashboard.putNumber(label, i);
+    //SmartDashboard.putNumber(label, i);
   }
 
   public void dashboard(String label, double d) {
     if (logDashboard){
       System.out.println(String.format("%s %s %s: %f", Level.INFO.toString(), name, label, d));
     }
-    SmartDashboard.putNumber(label, d);
+    //SmartDashboard.putNumber(label, d);
   }
 }
