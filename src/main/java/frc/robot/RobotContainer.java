@@ -63,8 +63,8 @@ public class RobotContainer {
   private final XboxController driverController;
   private final XboxController auxController;
 
-  SendableChooser<Command> chooser = new SendableChooser<>();
-  SendableChooser<Double> speedChooser = new SendableChooser<>();
+  SendableChooser<Command> chooser = new SendableChooser<Command>();
+  SendableChooser<Double> speedChooser = new SendableChooser<Double>();
 
   public RobotContainer() {
     drivetrain = new Drivetrain();
@@ -92,8 +92,11 @@ public class RobotContainer {
     climb.setDefaultCommand(new ClimbCommand(climb, auxController));
     turret.setDefaultCommand(new TurretCommand(turret, auxController, turretLimitSwitch));
     intake.setDefaultCommand(new IntakeCommand(intake, auxController));
+    intake.off();
 
-    speedChooser.addOption("0.1", 0.1);
+    speedChooser.addOption("0.6", 0.8);
+    speedChooser.addOption("0.7", 0.8);
+    speedChooser.addDefault("0.8", 0.8);
     speedChooser.addOption("0.9", 0.9);
     speedChooser.addOption("1.0", 1.0);
 
@@ -185,7 +188,7 @@ public class RobotContainer {
   }
 
   public void updateShooterSpeed() {
-    shooter.setSpeed(speedChooser.getSelected());
+    shooter.setSpeed((Double) speedChooser.getSelected());
   }
 
   public void setCoastMode() {
