@@ -91,7 +91,7 @@ public class RobotContainer {
     drivetrain.setCoastMode();
     climb.setDefaultCommand(new ClimbCommand(climb, auxController));
     turret.setDefaultCommand(new TurretCommand(turret, auxController, turretLimitSwitch));
-    intake.setDefaultCommand(new IntakeCommand(intake, auxController));
+//    intake.setDefaultCommand(new IntakeCommand(intake, feeder, auxController));
 
     speedChooser.addOption("0.1", 0.1);
     speedChooser.addOption("0.9", 0.9);
@@ -177,7 +177,7 @@ public class RobotContainer {
     new JoystickButton(auxController, Button.kX.value).whenPressed(new ControlPanelStage1(controlPanel));
 
     new JoystickButton(auxController, Button.kA.value).whileHeld(new FeederReverse(feeder));
-
+    new JoystickButton(auxController, Button.kY.value).whenPressed(new IntakeJiggle(intake, feeder));
   }
 
   public Command getAutonomousCommand() {

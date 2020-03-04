@@ -39,7 +39,7 @@ public class AutoShoot extends CommandBase {
     addRequirements(vision);
     addRequirements(shooter);
     addRequirements(turret);
-    addRequirements(feeder);
+    // addRequirements(feeder);
     // addRequirements(navx);
   }
 
@@ -88,7 +88,6 @@ public class AutoShoot extends CommandBase {
     }
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     shooter.shooterOff();
