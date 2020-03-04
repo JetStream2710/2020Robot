@@ -22,6 +22,7 @@ import frc.robot.commands.IntakeJiggle;
 import frc.robot.commands.IntakeOn;
 import frc.robot.commands.IntakeRetract;
 import frc.robot.commands.IntakeReverse;
+import frc.robot.commands.JustShoot;
 import frc.robot.commands.TurretCommand;
 import frc.robot.autonomous.DefaultSequence;
 import frc.robot.autonomous.DoubleShoot;
@@ -164,6 +165,7 @@ public class RobotContainer {
 //    new JoystickButton(driverController, Button.kBumperRight.value).whileHeld(new FeederOn(feeder));
 //    new JoystickButton(driverController, Button.kBumperLeft.value).whileHeld(new ShooterOn(shooter));
     new JoystickButton(driverController, Button.kBumperLeft.value).whileHeld(new AutoShoot(vision, shooter, turret, feeder));
+    new JoystickButton(driverController, Button.kBumperRight.value).whileHeld(new JustShoot(feeder, shooter));
 //    new JoystickButton(driverController, Button.kBack.value)
 //      .whenPressed(new AutoShoot(vision, shooter, turret, feeder))
 //      .whenReleased(new ShooterOff(shooter));
