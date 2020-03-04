@@ -11,13 +11,13 @@ import frc.robot.util.MotorFactory;
 public class Shooter extends SubsystemBase {
   private static final Logger logger = new Logger(Shooter.class.getName());
 
-  public static final double SHOOTER_SPEED = .8;
-
   private final WPI_TalonFX leftTalon;
   private final WPI_TalonFX rightTalon;
   private final WPI_VictorSPX accelerator;
 
   private static final int MAX_PERIOD_COUNT = 10;
+
+  private double shooterSpeed = 0.8;
 
   private int periodicIndex;
   private long[] periodicTimestampArray = new long[MAX_PERIOD_COUNT];
@@ -33,9 +33,9 @@ public class Shooter extends SubsystemBase {
   }
 
   public void allOn() {
-    leftTalon.set(-SHOOTER_SPEED);
-    rightTalon.set(SHOOTER_SPEED);
-    accelerator.set(SHOOTER_SPEED);
+    leftTalon.set(-shooterSpeed);
+    rightTalon.set(shooterSpeed);
+    accelerator.set(shooterSpeed);
     logger.dashboard("shooter", "on");    
   }
 
@@ -48,7 +48,7 @@ public class Shooter extends SubsystemBase {
 
   
   public void acceleratorOn(){
-    accelerator.set(SHOOTER_SPEED);
+    accelerator.set(shooterSpeed);
   }
 
   public void acceleratorOff(){
@@ -56,13 +56,17 @@ public class Shooter extends SubsystemBase {
   }
 
   public void shooterOn(){
-    leftTalon.set(-SHOOTER_SPEED);
-    rightTalon.set(SHOOTER_SPEED);
+    leftTalon.set(-shooterSpeed);
+    rightTalon.set(shooterSpeed);
   }
 
   public void shooterOff(){
     leftTalon.set(0);
     rightTalon.set(0);
+  }
+
+  public void setSpeed(double speed) {
+    this.shooterSpeed = speed;
   }
 
   public double speed() {
