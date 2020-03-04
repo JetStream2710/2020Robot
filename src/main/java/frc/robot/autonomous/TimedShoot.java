@@ -14,9 +14,9 @@ public class TimedShoot extends ParallelCommandGroup {
 
   private static final Logger logger = new Logger(TimedShoot.class.getName(), Level.INFO, false);
 
-  public TimedShoot(Vision vision, Shooter shooter, Turret turret, Feeder feeder, Intake intake) {
+  public TimedShoot(Vision vision, Shooter shooter, Turret turret, Feeder feeder, Intake intake, long time) {
     super(
-      new AutoShoot(vision, shooter, turret, feeder, 4000),
+      new AutoShoot(vision, shooter, turret, feeder, time),
       new ShooterIntake(intake)
     );
     logger.info("TimedShoot executed");
