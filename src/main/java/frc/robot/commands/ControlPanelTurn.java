@@ -19,6 +19,7 @@ public class ControlPanelTurn extends CommandBase {
   public void initialize() {
     logger.info("initialize");
     cp.turn();
+    logger.detail("execute position: %d", cp.getPosition());
   }
 
   @Override

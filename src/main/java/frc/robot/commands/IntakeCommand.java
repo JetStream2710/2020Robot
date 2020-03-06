@@ -38,6 +38,9 @@ public class IntakeCommand extends CommandBase {
     } else if (dPov == 270){
       intake.reverse();
     }
+    if (dPov == 180){
+      intake.off();
+    }
   }
 
   // Called once the command ends or is interrupted.

@@ -6,7 +6,7 @@ import frc.robot.subsystems.Climb;
 import frc.robot.util.Logger;
 
 public class ClimbCommand extends CommandBase {
-  private static final Logger logger = new Logger(ClimbCommand.class.getName(), Logger.Level.DETAIL, true);
+  private static final Logger logger = new Logger(ClimbCommand.class.getName(), Logger.Level.SEVERE, true);
 
   private final Climb climb;
   private final XboxController auxController;

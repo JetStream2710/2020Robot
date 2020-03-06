@@ -11,7 +11,7 @@ public class Climb extends SubsystemBase {
   private static final Logger logger = new Logger(Climb.class.getName());
 
   private static final double EXTEND = 0.4;
-  private static final double RETRACT = 1;
+  private static final double RETRACT = 0.6;
 
   private final WPI_VictorSPX extendVictor;
   private final WPI_VictorSPX retractVictor;
@@ -24,15 +24,15 @@ public class Climb extends SubsystemBase {
 
   public void extend() {
     extendVictor.set(EXTEND);
-    retractVictor.set(-RETRACT);
+//    retractVictor.set(-RETRACT);
     logger.dashboard("climb extend", EXTEND);
-    logger.dashboard("climb retract", -RETRACT);
+//    logger.dashboard("climb retract", -RETRACT);
   }
 
   public void retract() {
-    extendVictor.set(-EXTEND);
+//    extendVictor.set(-EXTEND);
     retractVictor.set(RETRACT);
-    logger.dashboard("climb extend", -EXTEND);
+//    logger.dashboard("climb extend", -EXTEND);
     logger.dashboard("climb retract", RETRACT);
   }
   

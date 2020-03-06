@@ -133,7 +133,7 @@ public class RobotContainer {
     new JoystickButton(auxController, Button.kBumperRight.value).whenPressed(new ControlPanelExtend(controlPanel));
     new JoystickButton(auxController, Button.kStart.value).whenPressed(new ControlPanelRetract(controlPanel));
     new JoystickButton(auxController, Button.kB.value).whileHeld(new ControlPanelTurn(controlPanel));
-    new JoystickButton(auxController, Button.kX.value).whenPressed(new ControlPanelStage1(controlPanel));
+//    new JoystickButton(auxController, Button.kX.value).whenPressed(new ControlPanelStage1(controlPanel));
     //new JoystickButton(auxController, Button.kStickRight.value).whenPressed(new ControlPanelStage2(controlPanel, colorSensor));
 
     new JoystickButton(auxController, Button.kA.value).whileHeld(new FeederReverse(feeder));

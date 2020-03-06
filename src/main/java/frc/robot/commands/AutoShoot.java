@@ -13,7 +13,7 @@ public class AutoShoot extends CommandBase {
   private static final Logger logger = new Logger(AutoShoot.class.getName(), Level.DETAIL, false);
 
   private static final long SHOOT_DELAY_MILLIS = 1000;
-  private static final double TURRET_SPEED = 0.15;
+  private static final double TURRET_SPEED = 0.13;
 
   private final Vision vision;
   private final Shooter shooter;
