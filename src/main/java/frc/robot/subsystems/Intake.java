@@ -64,6 +64,10 @@ public class Intake extends SubsystemBase {
     return isExtended;
   }
 
+  public void setIntakeFalse(){
+    isExtended = false;
+  }
+
   @Override
   public void periodic() {
   }

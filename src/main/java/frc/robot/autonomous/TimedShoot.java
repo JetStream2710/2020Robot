@@ -16,7 +16,7 @@ public class TimedShoot extends ParallelCommandGroup {
 
   public TimedShoot(Vision vision, Shooter shooter, Turret turret, Feeder feeder, Intake intake, long time) {
     super(
-      new AutoShoot(vision, shooter, turret, feeder, time),
+      new AutoShoot(vision, shooter, turret, feeder, time, 0.8),
       new ShooterIntake(intake)
     );
     logger.info("TimedShoot executed");

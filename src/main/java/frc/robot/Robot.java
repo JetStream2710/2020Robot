@@ -32,6 +32,8 @@ public class Robot extends TimedRobot {
     robotContainer = new RobotContainer();
     robotContainer.retractIntake();
     robotContainer.setCoastMode();
+    robotContainer.visionOff();
+    robotContainer.climbOff();
     UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
 }
 
@@ -58,6 +60,7 @@ public class Robot extends TimedRobot {
   public void disabledInit() {
     logger.info("Disabled Init");
     robotContainer.setCoastMode();
+    robotContainer.visionOff();
   }
 
   @Override
@@ -71,6 +74,7 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     logger.info("Autonomous Init");
     robotContainer.setBrakeMode();
+    robotContainer.visionOn();
     autonomousCommand = robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
@@ -99,6 +103,7 @@ public class Robot extends TimedRobot {
       autonomousCommand.cancel();
     }
     robotContainer.retractIntake();
+    robotContainer.visionOn();
   }
 
   /**
@@ -107,6 +112,8 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     robotContainer.updateShooterSpeed();
+    //System.out.println(robotContainer.controlPanel.getPosition());
+//robotContainer.navx.getAngle();
   }
 
   @Override

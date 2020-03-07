@@ -23,18 +23,20 @@ public class AutoShoot extends CommandBase {
   private long shootTime;
   private long endCommandTime;
   private long delayMillis;
+  private double speed;
 
   public AutoShoot(Vision vision, Shooter shooter, Turret turret, Feeder feeder) {
-    this(vision, shooter, turret, feeder, -1);
+    this(vision, shooter, turret, feeder, -1, 0.8);
   }
 
-  public AutoShoot(Vision vision, Shooter shooter, Turret turret, Feeder feeder, long delayMillis) {
+  public AutoShoot(Vision vision, Shooter shooter, Turret turret, Feeder feeder, long delayMillis, double speed) {
     logger.detail("constructor");
     this.vision = vision;
     this.shooter = shooter;
     this.turret = turret;
     this.feeder = feeder;
     this.delayMillis = delayMillis;
+    this.speed = speed;
     // this.navx = navx;
     addRequirements(vision);
     addRequirements(shooter);
@@ -47,7 +49,7 @@ public class AutoShoot extends CommandBase {
   public void initialize() {
     logger.detail("initialize");
     vision.turnOnCamLeds();
-    shooter.shooterOn();
+    shooter.shooterOn(speed);
     shooter.acceleratorOn();
     if (delayMillis > 0) {
       endCommandTime = System.currentTimeMillis() + delayMillis;

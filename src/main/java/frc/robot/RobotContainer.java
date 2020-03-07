@@ -10,6 +10,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.AutoShoot;
 import frc.robot.commands.ClimbCommand;
+import frc.robot.commands.ClimbExtendForward;
+import frc.robot.commands.ClimbRetract;
+import frc.robot.commands.ClimbReverse;
 import frc.robot.commands.ControlPanelExtend;
 import frc.robot.commands.ControlPanelRetract;
 import frc.robot.commands.ControlPanelStage1;
@@ -24,6 +27,7 @@ import frc.robot.commands.JustShoot;
 import frc.robot.commands.TurretCommand;
 import frc.robot.autonomous.DefaultSequence;
 import frc.robot.autonomous.DoubleShoot;
+import frc.robot.autonomous.SingleShoot;
 import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.ControlPanel;
@@ -47,7 +51,7 @@ public class RobotContainer {
   private final Feeder feeder;
   private final Shooter shooter;
   private final Turret turret;
-  private final ControlPanel controlPanel;
+  public final ControlPanel controlPanel;
   private final Climb climb;
 
   // Sensor subsystems
@@ -60,7 +64,7 @@ public class RobotContainer {
   private final XboxController driverController;
   private final XboxController auxController;
 
-  SendableChooser<Command> chooser = new SendableChooser<Command>();
+  SendableChooser<Command> autoChooser = new SendableChooser<Command>();
   SendableChooser<Double> speedChooser = new SendableChooser<Double>();
 
   public RobotContainer() {
@@ -96,6 +100,10 @@ public class RobotContainer {
     speedChooser.addOption("0.9", 0.9);
     speedChooser.addOption("1.0", 1.0);
     SmartDashboard.putData("Shooter Speed", speedChooser);
+
+    autoChooser.addOption("DoubleShoot", new DoubleShoot(vision, shooter, turret, feeder, drivetrain, intake, navx));
+    autoChooser.addOption("SingleShoot", new SingleShoot(vision, shooter, turret, feeder, drivetrain, intake, navx));
+    SmartDashboard.putData("Autonomous", autoChooser);
   
     CANDeviceFinder can = new CANDeviceFinder();
     can.debug();
@@ -123,8 +131,13 @@ public class RobotContainer {
 
   private void configureButtonBindings() {
     // Driver buttons
-    new JoystickButton(driverController, Button.kBumperLeft.value).whileHeld(new AutoShoot(vision, shooter, turret, feeder));
-    new JoystickButton(driverController, Button.kBumperRight.value).whileHeld(new JustShoot(feeder, shooter));
+    new JoystickButton(driverController, Button.kBumperLeft.value).whileHeld(new AutoShoot(vision, shooter, turret, feeder, -1, 0.8));
+    new JoystickButton(driverController, Button.kBumperRight.value).whileHeld(new AutoShoot(vision, shooter, turret, feeder, -1, 0.9));
+    new JoystickButton(driverController, Button.kBack.value).whileHeld(new JustShoot(feeder, shooter));
+
+    new JoystickButton(driverController, Button.kA.value).whileHeld(new ClimbExtendForward(climb));
+    new JoystickButton(driverController, Button.kB.value).whileHeld(new ClimbReverse(climb));
+    new JoystickButton(driverController, Button.kX.value).whileHeld(new ClimbRetract(climb));
 
     // Aux buttons
     new JoystickButton(auxController, Button.kBumperLeft.value).whenPressed(new IntakeExtend(intake));
@@ -133,7 +146,7 @@ public class RobotContainer {
     new JoystickButton(auxController, Button.kBumperRight.value).whenPressed(new ControlPanelExtend(controlPanel));
     new JoystickButton(auxController, Button.kStart.value).whenPressed(new ControlPanelRetract(controlPanel));
     new JoystickButton(auxController, Button.kB.value).whileHeld(new ControlPanelTurn(controlPanel));
-//    new JoystickButton(auxController, Button.kX.value).whenPressed(new ControlPanelStage1(controlPanel));
+    new JoystickButton(auxController, Button.kX.value).whenPressed(new ControlPanelStage1(controlPanel));
     //new JoystickButton(auxController, Button.kStickRight.value).whenPressed(new ControlPanelStage2(controlPanel, colorSensor));
 
     new JoystickButton(auxController, Button.kA.value).whileHeld(new FeederReverse(feeder));
@@ -141,7 +154,11 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return new DoubleShoot(vision, shooter, turret, feeder, drivetrain, intake, navx);
+    Command cmd = autoChooser.getSelected();
+    if (cmd == null) {
+      return new SingleShoot(vision, shooter, turret, feeder, drivetrain, intake, navx);
+    }
+    return cmd;
   }
 
   public void updateShooterSpeed() {
@@ -150,14 +167,28 @@ public class RobotContainer {
 
   public void setCoastMode() {
     drivetrain.setCoastMode();
+    climb.setCoastMode();
   }
 
   public void setBrakeMode() {
     drivetrain.setBrakeMode();
+    climb.setBrakeMode();
   }
 
   public void retractIntake() {
     intake.retract();
     intake.off();
+  }
+
+  public void visionOff(){
+    vision.turnOffCamLeds();
+  }
+
+  public void visionOn(){
+    vision.turnOnCamLeds();
+  }
+
+  public void climbOff(){
+    climb.stop();
   }
 } 
