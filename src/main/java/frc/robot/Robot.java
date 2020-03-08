@@ -32,7 +32,7 @@ public class Robot extends TimedRobot {
     robotContainer = new RobotContainer();
     robotContainer.retractIntake();
     robotContainer.setCoastMode();
-    robotContainer.visionOff();
+    robotContainer.visionOn();
     robotContainer.climbOff();
     UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
 }
@@ -60,7 +60,7 @@ public class Robot extends TimedRobot {
   public void disabledInit() {
     logger.info("Disabled Init");
     robotContainer.setCoastMode();
-    robotContainer.visionOff();
+//    robotContainer.visionOff();
   }
 
   @Override

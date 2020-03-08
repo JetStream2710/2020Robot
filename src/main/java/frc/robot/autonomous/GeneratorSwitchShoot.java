@@ -16,7 +16,7 @@ public class GeneratorSwitchShoot extends SequentialCommandGroup {
 
   public GeneratorSwitchShoot(Vision vision, Shooter shooter, Turret turret, Feeder feeder, Drivetrain drivetrain, Intake intake, NavX navx) {
     addCommands(
-      new AutoShoot(vision, shooter, turret, feeder, 2000, 0.8),
+      new AutoShoot(vision, shooter, turret, feeder, 2000, 0.8, 1000),
       new TurnDegrees(drivetrain, navx, 180),
       new MoveDistance(drivetrain, 4, 0.6),
       new TurnDegrees(drivetrain, navx, 60),
@@ -27,6 +27,6 @@ public class GeneratorSwitchShoot extends SequentialCommandGroup {
       new MoveDistance(drivetrain, 10, 0.6),
       new TurnDegrees(drivetrain, navx, -30),
       new MoveDistance(drivetrain, 4, 0.6),
-      new AutoShoot(vision, shooter, turret, feeder, 2000, 0.8));
+      new AutoShoot(vision, shooter, turret, feeder, 2000, 0.8, 1000));
     }
 }

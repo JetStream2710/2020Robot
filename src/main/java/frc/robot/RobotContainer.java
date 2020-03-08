@@ -133,8 +133,8 @@ public class RobotContainer {
 
   private void configureButtonBindings() {
     // Driver buttons
-    new JoystickButton(driverController, Button.kBumperLeft.value).whileHeld(new AutoShoot(vision, shooter, turret, feeder, -1, 0.8));
-    new JoystickButton(driverController, Button.kBumperRight.value).whileHeld(new AutoShoot(vision, shooter, turret, feeder, -1, 0.85));
+    new JoystickButton(driverController, Button.kBumperLeft.value).whileHeld(new AutoShoot(vision, shooter, turret, feeder, -1, 0.8, 1000));
+    new JoystickButton(driverController, Button.kBumperRight.value).whileHeld(new AutoShoot(vision, shooter, turret, feeder, -1, 0.9, 500));
     new JoystickButton(driverController, Button.kBack.value).whileHeld(new JustShoot(feeder, shooter));
 
     new JoystickButton(driverController, Button.kA.value).whileHeld(new ClimbExtendForward(climb));
