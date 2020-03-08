@@ -8,7 +8,7 @@ public class DefaultSequence extends SequentialCommandGroup {
   public DefaultSequence(Drivetrain drivetrain) {
     addCommands(
         // move forward 2 feet
-        new MoveDistance(drivetrain, 2)
+        new MoveDistance(drivetrain, 2, 0.6)
 
         // turn right 90 degrees
         // new TurnDegrees(drivetrain, navx, 90)

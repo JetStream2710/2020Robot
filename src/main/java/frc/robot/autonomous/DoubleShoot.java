@@ -25,13 +25,13 @@ public class DoubleShoot extends SequentialCommandGroup {
     addCommands(
 //      new TimedShoot(vision, shooter, turret, feeder, intake, 4000),
       new AutoShoot(vision, shooter, turret, feeder, 3000, 0.8),
-      new TurnDegrees(drivetrain, navx, 171),
+      new TurnDegrees(drivetrain, navx, 183),
       new IntakeExtend(intake),
-      new MoveDistance(drivetrain, 14),
+      new MoveDistance(drivetrain, 14, 0.4),
       new IntakeQuickRetract(intake),
 //      new WaitCommand(0.5),
-      new TurnDegrees(drivetrain, navx, 184),
-      new MoveDistance(drivetrain, 12),
+      new TurnDegrees(drivetrain, navx, 183),
+      new MoveDistance(drivetrain, 12, 1),
       new TimedShoot(vision, shooter, turret, feeder, intake, 10000)
     );
     logger.info("... DoubleShoot executed");

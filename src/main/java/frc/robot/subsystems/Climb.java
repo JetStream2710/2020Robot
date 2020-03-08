@@ -11,7 +11,7 @@ import frc.robot.util.MotorFactory;
 public class Climb extends SubsystemBase {
   private static final Logger logger = new Logger(Climb.class.getName());
 
-  private static final double EXTEND = 0.6;
+  private static final double EXTEND = 1;
   private static final double RETRACT = 0.6;
 
   private final WPI_VictorSPX extendVictor;

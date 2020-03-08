@@ -14,10 +14,10 @@ public class ShooterIntake extends SequentialCommandGroup {
   private static final Logger logger = new Logger(ShooterIntake.class.getName(), Level.INFO, false);
 
   public ShooterIntake(Intake intake) {
-    super(
-      new WaitCommand(2),
+    addCommands(
+//      new WaitCommand(2),
       new IntakeExtend(intake),
-//      new WaitCommand(1),
+      new WaitCommand(1),
       new IntakeQuickRetract(intake)
       // new WaitCommand(1),
       // new IntakeExtend(intake),

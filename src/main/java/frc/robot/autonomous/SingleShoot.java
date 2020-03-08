@@ -22,7 +22,7 @@ public class SingleShoot extends SequentialCommandGroup {
     addCommands(
       new TimedShoot(vision, shooter, turret, feeder, intake, 10000),
       new TurnDegrees(drivetrain, navx, 180),
-      new MoveDistance(drivetrain, 4)
+      new MoveDistance(drivetrain, 4, 0.6)
     );
     logger.info("... DoubleShoot executed");
     }
