@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -10,7 +11,7 @@ import frc.robot.util.MotorFactory;
 public class Climb extends SubsystemBase {
   private static final Logger logger = new Logger(Climb.class.getName());
 
-  private static final double EXTEND = 0.4;
+  private static final double EXTEND = 1;
   private static final double RETRACT = 0.6;
 
   private final WPI_VictorSPX extendVictor;
@@ -24,9 +25,14 @@ public class Climb extends SubsystemBase {
 
   public void extend() {
     extendVictor.set(EXTEND);
+    System.out.println("EXTEND: " + EXTEND);
 //    retractVictor.set(-RETRACT);
     logger.dashboard("climb extend", EXTEND);
 //    logger.dashboard("climb retract", -RETRACT);
+  }
+
+  public void extendReverse() {
+    retractVictor.set(-RETRACT);
   }
 
   public void retract() {
@@ -35,6 +41,7 @@ public class Climb extends SubsystemBase {
 //    logger.dashboard("climb extend", -EXTEND);
     logger.dashboard("climb retract", RETRACT);
   }
+
   
   public void stop() {
     extendVictor.set(0);
@@ -42,6 +49,16 @@ public class Climb extends SubsystemBase {
     logger.dashboard("climb extend", 0);
     logger.dashboard("climb retract", 0);
   }
+
+  public void setCoastMode(){
+    extendVictor.setNeutralMode(NeutralMode.Coast);
+    retractVictor.setNeutralMode(NeutralMode.Coast);
+   }
+
+   public void setBrakeMode(){
+    extendVictor.setNeutralMode(NeutralMode.Brake);
+    retractVictor.setNeutralMode(NeutralMode.Brake);
+   }
 
   @Override
   public void periodic() {

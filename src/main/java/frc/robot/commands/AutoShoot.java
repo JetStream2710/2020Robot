@@ -12,7 +12,7 @@ import frc.robot.util.Logger.Level;
 public class AutoShoot extends CommandBase {
   private static final Logger logger = new Logger(AutoShoot.class.getName(), Level.DETAIL, false);
 
-  private static final long SHOOT_DELAY_MILLIS = 1000;
+  private long SHOOT_DELAY_MILLIS;
   private static final double TURRET_SPEED = 0.13;
 
   private final Vision vision;
@@ -23,18 +23,21 @@ public class AutoShoot extends CommandBase {
   private long shootTime;
   private long endCommandTime;
   private long delayMillis;
+  private double speed;
 
   public AutoShoot(Vision vision, Shooter shooter, Turret turret, Feeder feeder) {
-    this(vision, shooter, turret, feeder, -1);
+    this(vision, shooter, turret, feeder, -1, 0.8, 1000);
   }
 
-  public AutoShoot(Vision vision, Shooter shooter, Turret turret, Feeder feeder, long delayMillis) {
+  public AutoShoot(Vision vision, Shooter shooter, Turret turret, Feeder feeder, long delayMillis, double speed, long SHOOT_DELAY_MILLIS) {
     logger.detail("constructor");
     this.vision = vision;
     this.shooter = shooter;
     this.turret = turret;
     this.feeder = feeder;
     this.delayMillis = delayMillis;
+    this.speed = speed;
+    this.SHOOT_DELAY_MILLIS = SHOOT_DELAY_MILLIS;
     // this.navx = navx;
     addRequirements(vision);
     addRequirements(shooter);
@@ -47,7 +50,7 @@ public class AutoShoot extends CommandBase {
   public void initialize() {
     logger.detail("initialize");
     vision.turnOnCamLeds();
-    shooter.shooterOn();
+    shooter.shooterOn(speed);
     shooter.acceleratorOn();
     if (delayMillis > 0) {
       endCommandTime = System.currentTimeMillis() + delayMillis;
@@ -60,16 +63,18 @@ public class AutoShoot extends CommandBase {
   @Override
   public void execute() {
     logger.info("execute");
+    double leftOffset = SHOOT_DELAY_MILLIS <= 500 ? 0 : 1;
+    double rightOffset = SHOOT_DELAY_MILLIS <= 500 ? -2 : -1;
     if (vision.hasValidTargets()){
       logger.info("has valid target");
       double offset = Vision.Entry.HORIZONTAL_OFFSET.getValue();
       double turretSpeed = offset > 0 ? -TURRET_SPEED : TURRET_SPEED;
-      if (offset > 1) {
+      if (offset > leftOffset) {
         feeder.allOff();
         turret.move(turretSpeed);
         logger.info("moving positive at offset: %f   speed: %f", offset, turretSpeed);
       }
-      else if (offset < -1){
+      else if (offset < rightOffset){
         feeder.allOff();
         turret.move(turretSpeed);
         logger.info("moving negative at offset: %f   speed: %f", offset, turretSpeed);

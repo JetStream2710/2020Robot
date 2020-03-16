@@ -55,7 +55,8 @@ public class Shooter extends SubsystemBase {
     accelerator.set(0);
   }
 
-  public void shooterOn(){
+  public void shooterOn(double speed){
+    shooterSpeed = speed;
     leftTalon.set(-shooterSpeed);
     rightTalon.set(shooterSpeed);
   }

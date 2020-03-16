@@ -13,6 +13,7 @@ public class ControlPanelStage1 extends CommandBase {
 
   private static int position;
   private static int target;
+  private long targetTime;
 
   public ControlPanelStage1(ControlPanel cp) {
     logger.detail("constructor");
@@ -24,11 +25,12 @@ public class ControlPanelStage1 extends CommandBase {
   public void initialize() {
     position = cp.getPosition();
     target = position + SPINS*ENCODER_UNITS_PER_SPIN;
+    targetTime = System.currentTimeMillis() + 4000;
   }
 
   @Override
   public void execute() {
-    position = cp.getPosition();
+//    position = cp.getPosition();
     cp.turn();
 //    logger.info("execute position: %f", position);
   }
@@ -41,6 +43,6 @@ public class ControlPanelStage1 extends CommandBase {
   @Override
   public boolean isFinished() {
     System.out.println("position: " + position + " target: " + target);
-    return position >= target;
+    return System.currentTimeMillis() > targetTime;
   }
 }

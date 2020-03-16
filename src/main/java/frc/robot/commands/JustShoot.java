@@ -26,7 +26,7 @@ public class JustShoot extends CommandBase {
 
   @Override
   public void initialize() {
-    shooter.shooterOn();
+    shooter.shooterOn(0.8);
     shooter.acceleratorOn();
     shootTime = System.currentTimeMillis() + SHOOT_DELAY_MILLIS;
   }

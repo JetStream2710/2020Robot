@@ -19,8 +19,17 @@ public class NavX extends SubsystemBase implements DoubleSupplier {
   }
 
   public double getAngle() {
+    /*
     double angle = ahrs.getAngle();
     logger.dashboard("navx angle", angle);
+    return angle;
+*/
+//System.out.println("X: " + convert(ahrs.getRawGyroX()) + "  Y: " + convert(ahrs.getRawGyroY()) + "  Z: " + convert(ahrs.getRawGyroZ()));
+System.out.println( "  Yaw: " + convert(ahrs.getYaw()) + "  Roll: " + convert(ahrs.getRoll()));
+return ahrs.getRawGyroY();
+  }
+
+  private double convert(double angle) {
     return angle;
   }
 

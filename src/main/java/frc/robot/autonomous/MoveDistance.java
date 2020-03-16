@@ -10,7 +10,7 @@ public class MoveDistance extends CommandBase {
 
   private static final double ENCODER_UNITS_PER_FOOT = (12 * 24000) / (Math.PI * 6);
   private static final double INIT_OUTPUT = 0.5;
-  private static final double MAX_OUTPUT = 0.6;
+  private static double MAX_OUTPUT;
   private static final double MIN_OUTPUT = 0.2;
   private static final double ACCELERATION_OUTPUT_PER_PERIOD = 0.01;
   private static final double DECELERATION_OUTPUT_PER_PERIOD = 0.1;
@@ -29,9 +29,10 @@ public class MoveDistance extends CommandBase {
   private int leftDecelPosition;
   private int rightDecelPosition;
 
-  public MoveDistance(Drivetrain drivetrain, double distanceInFeet) {
+  public MoveDistance(Drivetrain drivetrain, double distanceInFeet, double speed) {
     logger.detail("constructor");
     this.drivetrain = drivetrain;
+    MAX_OUTPUT = speed;
     addRequirements(drivetrain);
     targetEncoderDistance = (int)(distanceInFeet * ENCODER_UNITS_PER_FOOT);
     isMovingForward = distanceInFeet > 0;
