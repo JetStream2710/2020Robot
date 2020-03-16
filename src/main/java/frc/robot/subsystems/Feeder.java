@@ -43,13 +43,17 @@ public class Feeder extends SubsystemBase {
   }
 
   public void feederOn(){
-    group.set(FEEDER_SPEED);
-    isFeederOn = true;
+    if (!isFeederOn) {
+      group.set(FEEDER_SPEED);
+      isFeederOn = true;
+    }
   }
 
   public void feederOff(){
-    group.set(0);
-    isFeederOn = false;
+    if (isFeederOn) {
+      group.set(0);
+      isFeederOn = false;
+    }
   }
   
   public void feederReverse(){
